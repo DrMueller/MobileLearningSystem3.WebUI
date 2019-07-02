@@ -1,0 +1,7 @@
+<div *ngIf="!isFormControlValid">
+  <p *ngFor="let validationError of validationErrors">
+    <span class="text-danger">
+      {{ validationError.errorMessage }}
+    </span>
+  </p>
+</div>

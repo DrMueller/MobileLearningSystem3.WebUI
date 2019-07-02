@@ -1,0 +1,10 @@
+<app-app-navigation class="main-container">
+    <p *ngIf="!isAppInitialized">
+      Warming up...
+    </p>
+    <main *ngIf="isAppInitialized">
+      <router-outlet>
+      </router-outlet>
+    </main>
+  </app-app-navigation>
+  
