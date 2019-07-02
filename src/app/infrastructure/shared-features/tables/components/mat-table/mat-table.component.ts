@@ -8,7 +8,7 @@ import { MatPaginator, MatSort, MatTable, MatTableDataSource } from '@angular/ma
 import { ColumnDefinitionsContainer, TableRowSelectionType } from '../../models/index';
 
 @Component({
-  selector: 'drm-mat-table',
+  selector: 'app-mat-table',
   templateUrl: './mat-table.component.html',
   styleUrls: ['./mat-table.component.scss']
 })

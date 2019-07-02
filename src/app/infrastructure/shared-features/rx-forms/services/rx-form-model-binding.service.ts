@@ -4,8 +4,8 @@ import { FormGroup } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
-export class RxFormModelBindingService {
-  public bindFormGroupToModel(formGroup: FormGroup, model: any) {
+export class RxFormGroupBindingService {
+  public bindToModel(formGroup: FormGroup, model: any) {
     const controlKeys = Object.keys(formGroup.controls);
 
     controlKeys.forEach(ck => {
@@ -13,7 +13,7 @@ export class RxFormModelBindingService {
     });
   }
 
-  public bindModelToFormGroup(model: any, formGroup: FormGroup) {
+  public bindToFormGroup(model: any, formGroup: FormGroup) {
     const modelKeys = Object.keys(model);
 
     modelKeys.forEach(mk => {

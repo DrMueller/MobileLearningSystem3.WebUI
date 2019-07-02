@@ -1,0 +1,12 @@
+.form-fields-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: yellow; 
+  }
+  
+  .form-field {
+    margin-right: 10px;
+    flex-basis: 50%;
+  }
+  

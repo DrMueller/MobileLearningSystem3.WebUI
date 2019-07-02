@@ -1,1 +1,25 @@
-<p>fact-edit works!</p>
+<mat-card>
+    <mat-card-title>Facts</mat-card-title>
+    <mat-card-content>
+        <form class="example-form" [formGroup]="formGroup">
+            <div class="form-fields-row">
+                <div class="form-field">
+                    <mat-form-field>
+                        <textarea matInput type="text" class="form-control" placeholder="Enter question"
+                            formControlName="questionText"></textarea>
+                    </mat-form-field>
+                    <app-validation-errors [formControlToValidate]="formGroup.controls['questionText']">
+                    </app-validation-errors>
+                </div>
+                <div class="form-field">
+                    <mat-form-field>
+                        <input matInput type="text" class="form-control" placeholder="Enter answer"
+                            formControlName="answerText">
+                    </mat-form-field>
+                    <app-validation-errors [formControlToValidate]="formGroup.controls['answerText']">
+                    </app-validation-errors>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
