@@ -12,12 +12,15 @@
             [data]="overviewEntries">
         </app-mat-table>
 
-        <!-- <ng-template #delete>
-            <app-delete-individual (deletionRequested)="deleteIndividualAsync($event)"></app-delete-individual>
+        <ng-template #deleteTemplate>
+            <app-button-template #deleteTemplate materialIcon="delete_outline" materialColor="warn"
+                (buttonClick)=deleteAsync($event)></app-button-template>
         </ng-template>
 
-        <ng-template #edit>
-            <app-edit-individual (editRequested)="editIndividual($event)"></app-edit-individual>
-        </ng-template> -->
+        <ng-template #editTemplate>
+            <app-button-template #editTemplate materialIcon="edit" materialColor="primary"
+                (buttonClick)=edit($event)></app-button-template>
+        </ng-template>
+
     </mat-card-content>
 </mat-card>

@@ -1,5 +1,5 @@
 export abstract class TableTemplateBaseComponent {
-    protected fetchRowId(event: any): string | undefined {
+    protected tryFetchingRowId(event: any): string | undefined {
         let target = <any>event.target;
         if (target) {
 

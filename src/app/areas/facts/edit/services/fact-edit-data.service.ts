@@ -13,7 +13,7 @@ export class FactEditDataService {
     return factEdit;
   }
 
-  public async saveDetailsAsync(editEntry: FactEditEntry): Promise<void> {
+  public async saveEntryAsync(editEntry: FactEditEntry): Promise<void> {
     await this.httpService.putAsync('edit', editEntry);
   }
 }

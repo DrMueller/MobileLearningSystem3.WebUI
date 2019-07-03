@@ -5,13 +5,16 @@ import { FormsModule } from '@angular/forms';
 import { MatDependenciesModule } from '../../mat-dependencies';
 
 import { MatTableComponent } from './components/mat-table';
+import { ButtonTemplateComponent } from './components/button-template';
 
 @NgModule({
   declarations: [
-    MatTableComponent
+    MatTableComponent,
+    ButtonTemplateComponent
   ],
   exports: [
-    MatTableComponent
+    MatTableComponent,
+    ButtonTemplateComponent
   ],
   imports: [
     CommonModule,
