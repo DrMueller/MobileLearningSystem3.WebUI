@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FactsHttpService } from '../../common/services';
 import { FactEditEntry } from '../models';
+import { FactsHttpService } from 'src/app/areas/shared-domain/services';
 
 @Injectable({
   providedIn: 'root'

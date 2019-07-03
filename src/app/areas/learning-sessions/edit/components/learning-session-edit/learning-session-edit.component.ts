@@ -1,0 +1,62 @@
+import { Component, OnInit } from '@angular/core';
+import { LearningSessionEditEntry } from '../../models';
+import { FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { LearningSessionEditFormBuilderService, LearningSessionEditDataService } from '../../services';
+import { RxFormGroupBindingService } from 'src/app/infrastructure/shared-features/rx-forms/services';
+import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
+
+@Component({
+  selector: 'app-learning-session-edit',
+  templateUrl: './learning-session-edit.component.html',
+  styleUrls: ['./learning-session-edit.component.scss']
+})
+export class LearningSessionEditComponent implements OnInit {
+  public editEntry: LearningSessionEditEntry;
+  public formGroup: FormGroup;
+  public initialSelectedFactIds: number[] = [];
+
+  public constructor(
+    private route: ActivatedRoute,
+    private formBuilder: LearningSessionEditFormBuilderService,
+    private formGroupBinder: RxFormGroupBindingService,
+    private dataService: LearningSessionEditDataService,
+    private navigator: LearningSessionsNavigationService) { }
+
+  public async saveAsync(): Promise<void> {
+    this.formGroupBinder.bindToModel(this.formGroup, this.editEntry);
+    await this.dataService.saveEntryAsync(this.editEntry);
+    this.navigator.navigateToOverview();
+  }
+
+  public get canSave(): boolean {
+    return this.formGroup.valid;
+  }
+
+  public cancel(): void {
+    this.navigator.navigateToOverview();
+  }
+
+  public factsSelectionChanged(factIds: number[]) {
+    this.editEntry.factIds = factIds;
+  }
+
+  public ngOnInit(): void {
+    this.formGroup = this.formBuilder.buildFormGroup();
+
+    this.route.data.subscribe(data => {
+      this.editEntry = <LearningSessionEditEntry>data['session'];
+      debugger;
+      this.editEntry.factIds.forEach(factId => this.initialSelectedFactIds.push(factId));
+      this.formGroupBinder.bindToFormGroup(this.editEntry, this.formGroup);
+    });
+  }
+
+  public get title(): string {
+    if (this.editEntry.id) {
+      return `Edit Session - ${this.editEntry.id}`;
+    }
+
+    return 'New Session';
+  }
+}

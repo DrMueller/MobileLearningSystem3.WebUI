@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FactsHttpService } from '../../common/services';
 import { FactOverviewEntry } from '../models/fact-overview-entry.model';
+import { FactsHttpService } from './facts-http.service';
 
 @Injectable({
   providedIn: 'root'

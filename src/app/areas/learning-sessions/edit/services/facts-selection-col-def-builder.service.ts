@@ -1,25 +1,20 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ColDefBuilderFactoryService } from 'src/app/infrastructure/shared-features/tables/services';
 import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
-import { FactOverviewEntry } from '../../../shared-domain/models/fact-overview-entry.model';
+import { FactOverviewEntry } from 'src/app/areas/shared-domain/models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FactsOverviewColDefBuilderService {
+export class FactsSelectionColDefBuilderService {
   public constructor(private builderFactory: ColDefBuilderFactoryService) { }
 
-  public buildDefinitions(
-    editTemplate: TemplateRef<any>,
-    deleteTemplate: TemplateRef<any>
-  ): ColumnDefinitionsContainer {
+  public buildDefinitions(): ColumnDefinitionsContainer {
     return this.builderFactory
       .startBuilding()
       .withColumn('id', 'ID', 'id-cell').bindingTo<FactOverviewEntry>('id')
       .withColumn('creationDate', 'Created', 'creation-cell').bindingTo<FactOverviewEntry>('creationDateDescription')
       .withColumn('questionText', 'Question').bindingTo<FactOverviewEntry>('questionText')
-      .withColumn('editTemplate', '', 'button-cell').withTemplate(editTemplate)
-      .withColumn('deleteTemplate', '', 'button-cell').withTemplate(deleteTemplate)
       .build();
   }
 }
