@@ -10,4 +10,9 @@ resources:
 
 
 jobs:
-- template: AzureDevOps/Templates/JobTemplates/Angular/Build_And_Save_Artifact.yaml@ALMStuff
+- job: 'BuildAndSaveArtifact'
+  displayName: 'Build and save zipped Artifact'
+  pool:
+    name: 'Hosted Ubuntu 1604'
+  steps:
+  - template: AzureDevOps/Templates/JobTemplates/Angular/Build_And_Save_Artifact.yaml@ALMStuff
