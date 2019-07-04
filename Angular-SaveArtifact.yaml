@@ -18,5 +18,4 @@ jobs:
   pool:
     name: 'Hosted Ubuntu 1604'
   steps:
-  - template: AzureDevOps/Templates/StepTemplates/NetCore/Initialize_And_Test.yaml@ALMStuff
-
+  - template: AzureDevOps/Templates/JobTemplates/Angular/Build_And_Save_Artifact.yaml@ALMStuff
