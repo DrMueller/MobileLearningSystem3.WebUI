@@ -13,16 +13,9 @@ resources:
     endpoint: GitHub-DrMueller
 
 jobs:
-- job: 'BuildAndPublishAsArtifact'
+- job: 'BuildAndSaveArtifact'
   displayName: 'Build and save zipped Artifact'
   pool:
-    name: 'Hosted Windows 2019 with VS2019'
+    name: 'Hosted Ubuntu 1604'
   steps:
-  - template: AzureDevOps/Templates/StepTemplates/NetCore/Initialize_And_Test.yaml@ALMStuff
-    parameters:
-      buildConfiguration: $(BuildConfiguration)
-  - template: AzureDevOps/Templates/StepTemplates/NetCore/Publish.yaml@ALMStuff
-    parameters:
-      BuildConfiguration: $(BuildConfiguration)
-      FolderToPublish: $(FolderToPublish)
-  - template: AzureDevOps/Templates/StepTemplates/NetCore/Zip_And_Save_Artifact.yaml@ALMStuff
+  - template: AzureDevOps/Templates/JobTemplates/Angular/Build_And_Save_Artifact.yaml@ALMStuff
