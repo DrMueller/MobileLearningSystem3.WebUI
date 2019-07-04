@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FactEditEntry } from '../../models';
-import { FactEditFormBuilderService, FactEditDataService } from '../../services';
 import { FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { RxFormGroupBindingService } from 'src/app/infrastructure/shared-features/rx-forms/services';
+
 import { FactsNavigationService } from '../../../common/services';
+import { FactEditEntry } from '../../models';
+import { FactEditDataService, FactEditFormBuilderService } from '../../services';
 
 @Component({
   selector: 'app-fact-edit',
@@ -32,7 +33,7 @@ export class FactEditComponent implements OnInit {
   }
 
   public get title(): string {
-    if (this.editEntry.id){
+    if (this.editEntry.id) {
       return `Edit Fact - ${this.editEntry.id}`;
     }
 

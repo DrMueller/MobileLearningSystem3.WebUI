@@ -1,1 +1,34 @@
-<p>session-run works!</p>
+<div class="main-flex-container">
+    <div class="main-flex-row">
+
+        <div class="command-flex-item">
+            <button (click)="showPreviousFact" [disabled]="!canShowPreviousFact">
+                <mat-icon color="primary">arrow_backward</mat-icon>
+            </button>
+        </div>
+
+        <div class="command-flex-item">
+            <label>{{ runStateDescription }}</label>
+        </div>
+
+        <div class="command-flex-item">
+            <button (click)="showNextFact" [disabled]="!canShowNextFact">
+                <mat-icon color="primary">arrow_forward</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-flex-row">
+        <div class="question-flex-item">
+            <label>{{ currentFact.questionText }}</label>
+        </div>
+    </div>
+
+    <div class="main-flex-row">
+        <div class="answer-flex-item">
+            <textarea>
+                {{ currentFact.answerText }}
+            </textarea>
+        </div>
+    </div>
+</div>

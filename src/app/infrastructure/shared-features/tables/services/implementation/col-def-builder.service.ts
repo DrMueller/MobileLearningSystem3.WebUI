@@ -2,7 +2,8 @@ import { TemplateRef } from '@angular/core';
 
 import { IColDefBuilderOrchestratorService, IColDefBuilderService } from '..';
 import { ColumnDefinitionBase } from '../../models/col-defs';
-import { IColDefValueBuilderService, BindingColDefValueBuilderService, TemplateColDefValueBuilderService } from './col-def-values';
+
+import { BindingColDefValueBuilderService, IColDefValueBuilderService, TemplateColDefValueBuilderService } from './col-def-values';
 
 export class ColDefBuilderService implements IColDefBuilderService {
   private _valueBuilder: IColDefValueBuilderService;

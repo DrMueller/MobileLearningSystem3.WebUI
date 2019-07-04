@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { FactsOverviewColDefBuilderService } from '../../services';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
+import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
+
 import { FactOverviewEntry } from '../../../../shared-domain/models/fact-overview-entry.model';
 import { FactsNavigationService } from '../../../common/services';
-import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
-import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
+import { FactsOverviewColDefBuilderService } from '../../services';
 
 @Component({
   selector: 'app-facts-overview',

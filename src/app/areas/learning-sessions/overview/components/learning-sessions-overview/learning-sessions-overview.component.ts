@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
-import { LearningSessionOverviewEntry } from '../../models';
 import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
-import { LearningSessionsOverviewColDefBuilderService } from '../../services/learning-sessions-overview-col-def-builder.service';
+
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
+import { LearningSessionOverviewEntry } from '../../models';
+import { LearningSessionsOverviewColDefBuilderService } from '../../services/learning-sessions-overview-col-def-builder.service';
 import { LearningSessionsOverviewEntryDataService } from '../../services/learning-sessions-overview-entry-data.service';
 
 @Component({

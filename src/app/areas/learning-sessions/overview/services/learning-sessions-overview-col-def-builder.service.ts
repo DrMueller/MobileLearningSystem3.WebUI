@@ -1,6 +1,7 @@
 import { Injectable, TemplateRef } from '@angular/core';
-import { ColDefBuilderFactoryService } from 'src/app/infrastructure/shared-features/tables/services';
 import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
+import { ColDefBuilderFactoryService } from 'src/app/infrastructure/shared-features/tables/services';
+
 import { LearningSessionOverviewEntry } from '../models';
 
 @Injectable({
@@ -11,7 +12,7 @@ export class LearningSessionsOverviewColDefBuilderService {
 
   public buildDefinitions(
     editTemplate: TemplateRef<any>,
-    deleteTemplate: TemplateRef<any>) : ColumnDefinitionsContainer {
+    deleteTemplate: TemplateRef<any>): ColumnDefinitionsContainer {
     return this.builderFactory
       .startBuilding()
       .withColumn('id', 'ID', 'id-cell').bindingTo<LearningSessionOverviewEntry>('id')

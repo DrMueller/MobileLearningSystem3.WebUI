@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { FactsComponent } from './entry-point/components/facts';
-import { FactsOverviewComponent } from './overview/components/facts-overview';
+import { RouterModule, Routes } from '@angular/router';
+
 import { FactEditComponent } from './edit/components/fact-edit';
 import { FactEditResolver } from './edit/resolvers';
+import { FactsComponent } from './entry-point/components/facts';
+import { FactsOverviewComponent } from './overview/components/facts-overview';
 
 const routes: Routes = [
   {

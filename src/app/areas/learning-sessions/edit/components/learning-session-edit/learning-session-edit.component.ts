@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { LearningSessionEditEntry } from '../../models';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { LearningSessionEditFormBuilderService, LearningSessionEditDataService } from '../../services';
 import { RxFormGroupBindingService } from 'src/app/infrastructure/shared-features/rx-forms/services';
+
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
+import { LearningSessionEditEntry } from '../../models';
+import { LearningSessionEditDataService, LearningSessionEditFormBuilderService } from '../../services';
 
 @Component({
   selector: 'app-learning-session-edit',
@@ -46,7 +47,6 @@ export class LearningSessionEditComponent implements OnInit {
 
     this.route.data.subscribe(data => {
       this.editEntry = <LearningSessionEditEntry>data['session'];
-      debugger;
       this.editEntry.factIds.forEach(factId => this.initialSelectedFactIds.push(factId));
       this.formGroupBinder.bindToFormGroup(this.editEntry, this.formGroup);
     });

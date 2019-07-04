@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+
 import { FactServicesModule } from '../../fact-services.module';
 import { FactEditEntry } from '../models';
 import { FactEditDataService } from '../services';

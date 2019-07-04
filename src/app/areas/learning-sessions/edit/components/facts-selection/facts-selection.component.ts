@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FactOverviewEntry } from 'src/app/areas/shared-domain/models';
-import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
-import { FactsSelectionColDefBuilderService } from '../../services';
 import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
 import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
+import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
+
+import { FactsSelectionColDefBuilderService } from '../../services';
 
 @Component({
   selector: 'app-facts-selection',

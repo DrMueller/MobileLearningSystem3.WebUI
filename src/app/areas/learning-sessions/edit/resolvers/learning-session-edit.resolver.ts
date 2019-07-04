@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+
 import { LearningSessionsServicesModule } from '../../learning-sessions-services.module';
-import { LearningSessionEditDataService } from '../services';
 import { LearningSessionEditEntry } from '../models';
+import { LearningSessionEditDataService } from '../services';
 
 @Injectable({
     providedIn: LearningSessionsServicesModule
