@@ -8,7 +8,6 @@ resources:
     ref: refs/heads/master
     endpoint: GitHub-DrMueller
 
-
 jobs:
 - job: 'BuildAndSaveArtifact'
   displayName: 'Build and save zipped Artifact'
