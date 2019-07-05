@@ -12,10 +12,14 @@ export class LearningSessionsNavigationService {
   }
 
   public navigateToEdit(sessionId: number) {
-    this.navigateTo(sessionId.toString());
+    this.navigateTo('edit', sessionId);
   }
 
-  private navigateTo(urlPart: string): void {
-    this.router.navigate(['learningsessions', urlPart]);
+  public navigateToSessionRun(sessionId: number) {
+    this.navigateTo('runs', sessionId);
+  }
+
+  private navigateTo(...urlParts: any[]): void {
+    this.router.navigate(['learningsessions', ...urlParts]);
   }
 }

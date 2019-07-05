@@ -21,7 +21,7 @@ const routes: Routes = [
         component: LearningSessionsOverviewComponent
       },
       {
-        path: ':sessionid',
+        path: 'edit/:sessionid',
         component: LearningSessionEditComponent,
         resolve: { session: LearningSessionEditResolver }
       },

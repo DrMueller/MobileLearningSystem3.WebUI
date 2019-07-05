@@ -49,7 +49,7 @@ export class LearningSessionsOverviewComponent implements OnInit {
   }
 
   public runSession(): void {
-
+    this.navigator.navigateToSessionRun(this._selectedEntry!.id);
   }
 
   public selectionChanged(entries: LearningSessionOverviewEntry[]): void {
