@@ -12,4 +12,4 @@ resources:
 jobs:
 - template: AzureDevOps/Templates/JobTemplates/Angular/Build_And_Save_Artifact.yaml@ALMStuff
   parameters:
-    ZipArtifact: false
+    ZipArtifacts: true
