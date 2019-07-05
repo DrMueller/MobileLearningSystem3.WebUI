@@ -24,6 +24,4 @@
     </mat-card-content>
 </mat-card>
 
-{{ initialfactIds | json  }}
-
-<app-facts-selection (factsSelectionChanged)="factsSelectionChanged($event)" [selectedFactIds]="initialSelectedFactIds"></app-facts-selection>
+<app-facts-selection (factsSelectionChanged)="factsSelectionChanged($event)" [selectedFactIds]="initiallySelectedFactIds"></app-facts-selection>

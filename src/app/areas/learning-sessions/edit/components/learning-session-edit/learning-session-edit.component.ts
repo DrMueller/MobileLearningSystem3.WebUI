@@ -15,7 +15,7 @@ import { LearningSessionEditDataService, LearningSessionEditFormBuilderService }
 export class LearningSessionEditComponent implements OnInit {
   public editEntry: LearningSessionEditEntry;
   public formGroup: FormGroup;
-  public initialSelectedFactIds: number[] = [];
+  public initialementSelectedFactIds: number[] = [];
 
   public constructor(
     private route: ActivatedRoute,
@@ -47,7 +47,7 @@ export class LearningSessionEditComponent implements OnInit {
 
     this.route.data.subscribe(data => {
       this.editEntry = <LearningSessionEditEntry>data['session'];
-      this.editEntry.factIds.forEach(factId => this.initialSelectedFactIds.push(factId));
+      this.editEntry.factIds.forEach(factId => this.initialementSelectedFactIds.push(factId));
       this.formGroupBinder.bindToFormGroup(this.editEntry, this.formGroup);
     });
   }
