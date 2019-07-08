@@ -16,44 +16,36 @@ export class MatTableComponent<T> implements OnInit {
   @Input() public columnDefinitions: ColumnDefinitionsContainer;
   @Input() public idSelector: keyof T;
   @Output() public selectionChanged = new EventEmitter<T[]>();
-
-  public searchText: string;
-  public selection: SelectionModel<T>;
-
-  @ViewChild(MatPaginator, { static: false }) public matPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) public matSort: MatSort;
-  @ViewChild(MatTable, { static: false }) public matTable: MatTable<T>;
-
-  private _dataSource: MatTableDataSource<T>;
-  private _rowSelectionType: TableRowSelectionType;
-  private _data: T[];
-
-  public get dataSource(): MatTableDataSource<T> {
-    return this._dataSource;
-  }
-
   @Input() public set data(values: T[]) {
     this._data = values;
     if (this.matTable) {
-      this.bindDataIfReady();
+      this.bindData();
     }
   }
 
   @Input() public set rowSelectionType(value: TableRowSelectionType) {
     this._rowSelectionType = value;
-    this.bindDataIfReady();
+    this.initializeDataSource();
+    this.bindData();
   }
 
-  public deleteEntries(entries: T[]): void {
-    entries.forEach(entry => {
-      const dtoIndex = this._data.indexOf(entry);
-      this._data.splice(dtoIndex, 1);
-    });
+  @ViewChild(MatPaginator, { static: false }) public matPaginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) public matSort: MatSort;
+  @ViewChild(MatTable, { static: false }) public matTable: MatTable<T>;
 
-    this.selection.deselect(...entries);
-    this.bindDataIfReady();
-    this.selectionChanged.emit(this.selection.selected);
-    this.matTable.renderRows();
+  public searchText: string;
+  public selection: SelectionModel<T>;
+
+  private _dataSource: MatTableDataSource<T>;
+  private _rowSelectionType: TableRowSelectionType;
+  private _data: T[];
+
+  public get canToggleAllSelections(): boolean {
+    return this._rowSelectionType === TableRowSelectionType.Multi;
+  }
+
+  public get dataSource(): MatTableDataSource<T> {
+    return this._dataSource;
   }
 
   public get allColumnHeaders(): string[] {
@@ -71,12 +63,24 @@ export class MatTableComponent<T> implements OnInit {
     return this._rowSelectionType !== TableRowSelectionType.ReadOnly;
   }
 
+  public deleteEntries(entries: T[]): void {
+    entries.forEach(entry => {
+      const dtoIndex = this._data.indexOf(entry);
+      this._data.splice(dtoIndex, 1);
+    });
+
+    this.selection.deselect(...entries);
+    this.bindData();
+    this.selectionChanged.emit(this.selection.selected);
+    this.matTable.renderRows();
+  }
+
   public isRowSelected(row: T): boolean {
     return this.selection.isSelected(row);
   }
 
   public ngOnInit(): void {
-    this.bindDataIfReady();
+    this.initializeDataSource();
   }
 
   public searchTextChanged(newSearchText: string): void {
@@ -88,12 +92,21 @@ export class MatTableComponent<T> implements OnInit {
     this.selectionChanged.emit(this.selection.selected);
   }
 
-  private bindDataIfReady(): void {
-    if (this._data) {
-      this.selection = new SelectionModel<T>(this._rowSelectionType === TableRowSelectionType.Multi, []);
-      this._dataSource = new MatTableDataSource<T>(this._data);
-      this.dataSource.paginator = this.matPaginator;
-      this.dataSource.sort = this.matSort;
+  public toggleAllSelections(): void {
+    if (this._rowSelectionType === TableRowSelectionType.Multi) {
+      this._data.forEach(row => this.selection.toggle(row));
+      this.selectionChanged.emit(this.selection.selected);
     }
+  }
+
+  private bindData(): void {
+    this._dataSource = new MatTableDataSource<T>(this._data);
+    this.dataSource.paginator = this.matPaginator;
+    this.dataSource.sort = this.matSort;
+  }
+
+  private initializeDataSource(): void {
+    this.selection = new SelectionModel<T>(this._rowSelectionType === TableRowSelectionType.Multi, []);
+    this._dataSource = new MatTableDataSource<T>(this._data);
   }
 }
