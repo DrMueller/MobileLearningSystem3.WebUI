@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RxFormGroupBindingService } from 'src/app/infrastructure/shared-features/rx-forms/services';
@@ -15,6 +16,7 @@ import { FactEditDataService, FactEditFormBuilderService } from '../../services'
 export class FactEditComponent implements OnInit {
   public editEntry: FactEditEntry;
   public formGroup: FormGroup;
+  @ViewChild('autosize', { static: false }) public autosize: CdkTextareaAutosize;
 
   constructor(
     private route: ActivatedRoute,

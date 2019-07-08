@@ -34,9 +34,12 @@
             </div>
 
             <div *ngIf="isAnswerShown" class="answer-flex-container">
-                <textarea class="answer-text">
-                        {{ currentFact.answerText }}
-                    </textarea>
+                <div class="answer-flex-editor">
+                    <p-editor readonly="true" [(ngModel)]="currentFact.answerText">
+                        <p-header>
+                        </p-header>
+                    </p-editor>
+                </div>
             </div>
         </div>
     </div>

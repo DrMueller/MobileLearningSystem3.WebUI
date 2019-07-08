@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { EditorModule } from 'primeng/editor';
 import { MatDependenciesModule } from 'src/app/infrastructure/mat-dependencies';
 import { RxFormsModule } from 'src/app/infrastructure/shared-features/rx-forms';
 import { TablesModule } from 'src/app/infrastructure/shared-features/tables';
@@ -22,6 +24,8 @@ import { SessionRunComponent } from './runs/components/session-run';
   ],
   imports: [
     CommonModule,
+    EditorModule,
+    FormsModule,
     LearningSessionsRoutingModule,
     LearningSessionsServicesModule,
     MatDependenciesModule,

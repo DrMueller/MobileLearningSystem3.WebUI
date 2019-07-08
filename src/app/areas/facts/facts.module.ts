@@ -1,5 +1,7 @@
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { EditorModule } from 'primeng/editor';
 import { MatDependenciesModule } from 'src/app/infrastructure/mat-dependencies';
 import { RxFormsModule } from 'src/app/infrastructure/shared-features/rx-forms';
 import { TablesModule } from 'src/app/infrastructure/shared-features/tables';
@@ -12,16 +14,18 @@ import { FactsOverviewComponent } from './overview/components/facts-overview';
 
 @NgModule({
   declarations: [
-      FactEditComponent,
-      FactsComponent,
-      FactsOverviewComponent
+    FactEditComponent,
+    FactsComponent,
+    FactsOverviewComponent
   ],
   imports: [
     CommonModule,
+    EditorModule,
     FactsRoutingModule,
     FactServicesModule,
     MatDependenciesModule,
     TablesModule,
+    TextFieldModule,
     RxFormsModule
   ]
 })
