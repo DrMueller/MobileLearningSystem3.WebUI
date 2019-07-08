@@ -34,7 +34,6 @@ export class MatTableComponent<T> implements OnInit {
 
   @Input() public set data(values: T[]) {
     this._data = values;
-    debugger;
     if (this.matTable) {
       this.bindDataIfReady();
     }
