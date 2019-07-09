@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { LoginRequest, SecurityUser } from '../../models';
+import { SecurityUser } from '../../models';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SecurityUserSingletonService } from '../../services/security-user-singleton.service';
 
@@ -13,7 +14,8 @@ import { SecurityUserSingletonService } from '../../services/security-user-singl
 export class UserMenuComponent {
   public constructor(
     private authService: AuthenticationService,
-    private securityUserSingleton: SecurityUserSingletonService
+    private securityUserSingleton: SecurityUserSingletonService,
+    private router: Router
   ) {
   }
 
@@ -29,12 +31,8 @@ export class UserMenuComponent {
     return this.securityUserSingleton.userChanged$;
   }
 
-  public async logInAsync(): Promise<void> {
-    const loginRequest = new LoginRequest();
-    loginRequest.password = 'test';
-    loginRequest.userName = 'Matthias';
-
-    await this.authService.logInAsync(loginRequest);
+  public logIn(): void {
+    this.router.navigate(['login']);
   }
 
   public logOut(): void {

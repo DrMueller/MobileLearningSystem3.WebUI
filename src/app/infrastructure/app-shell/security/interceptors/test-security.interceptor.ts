@@ -13,7 +13,7 @@ export class TestSecurityInterceptor implements HttpInterceptor {
         if (this.securityUserSingleton.instance.isAuthenticated) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: `Basic ${this.securityUserSingleton.instance.token}`
+                    Authorization: `Bearer ${this.securityUserSingleton.instance.token}`
                 }
             });
         }
