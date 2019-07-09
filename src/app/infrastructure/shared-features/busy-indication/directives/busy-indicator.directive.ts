@@ -1,7 +1,6 @@
-import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ComponentFactory, ComponentFactoryResolver, Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 import { BusyIndicatorComponent } from '../components/busy-indicator';
-
 
 @Directive({
   selector: '[appBusyIndicator]'
@@ -13,7 +12,6 @@ export class BusyIndicatorDirective {
     private templateRef: TemplateRef<any>,
     private vcRef: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver) {
-
     this._indicatorFactory = this.componentFactoryResolver.resolveComponentFactory(BusyIndicatorComponent);
   }
 

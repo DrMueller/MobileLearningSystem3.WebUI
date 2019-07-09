@@ -5,7 +5,7 @@ const inactiveStyle = style({
   opacity: 0,
 });
 
-const timing = '500ms ease';
+const timing = '3000ms ease';
 
 @Component({
   selector: 'app-busy-indicator',

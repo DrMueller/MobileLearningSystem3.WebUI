@@ -9,9 +9,9 @@
 
 .rotating {
   animation: rotating 2s linear infinite;
+  vertical-align: center;
 }
 
-.indicator-span {
-    width: 100%;
-    background: yellow;
+.material-icons {
+  vertical-align: middle;
 }
