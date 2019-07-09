@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material';
+import { environment } from 'src/environments/environment';
 
 import { AppNavigationEntry } from '../../models';
 import { AppNavigationEntryFactoryService } from '../../services';
@@ -27,8 +28,7 @@ export class AppNavigationComponent implements OnInit {
   }
 
   public get versionDescription(): string {
-    // return environment.version;
-    return '1.3.3.7';
+    return environment.version;
   }
 
   public ngOnInit(): void {
