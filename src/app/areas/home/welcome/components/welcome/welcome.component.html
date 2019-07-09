@@ -10,3 +10,9 @@
     <button mat-raised-button color="accent">Accent Native</button>
     <button mat-raised-button color="warn">Warn Native</button>
 </p>
+
+<p>
+    <button mat-raised-button color="primary" (click)="toggleBusyIndicator()">
+        <span *appBusyIndicator="isBusyIndicatorShown"></span>Busy!
+    </button>
+</p>
