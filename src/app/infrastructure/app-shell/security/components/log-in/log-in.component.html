@@ -1,33 +1,40 @@
-<mat-card class="mat-card">
-    <mat-card-title>Actions</mat-card-title>
-    <mat-card-content>
-        <button mat-raised-button color="primary" (click)="logInAsync()" [disabled]="!canLogIn">Log In!</button>
-    </mat-card-content>
-</mat-card>
+<div class="log-in-container">
+    <div class="log-in-content">
+        <mat-card>
+            <mat-card-title>Actions</mat-card-title>
+            <mat-card-content>
+                <button mat-raised-button color="primary" (click)="logInAsync()" [disabled]="!canLogIn">
+                    <span *appBusyIndicator="isLoggingIn"></span>
+                    Log In!
+                </button>
+            </mat-card-content>
+        </mat-card>
 
-<mat-card>
-    <mat-card-title>Credentials</mat-card-title>
-    <mat-card-content>
-        <form class="example-form" [formGroup]="formGroup">
-            <div>
-                <div>
-                    <mat-form-field>
-                        <input matInput type="text" class="form-control" placeholder="Enter user name"
-                            formControlName="userName">
-                    </mat-form-field>
-                    <app-validation-errors [formControlToValidate]="formGroup.controls['userName']">
-                    </app-validation-errors>
-                </div>
+        <mat-card>
+            <mat-card-title>Credentials</mat-card-title>
+            <mat-card-content>
+                <form class="example-form" [formGroup]="formGroup">
+                    <div>
+                        <div>
+                            <mat-form-field>
+                                <input matInput type="text" class="form-control" placeholder="Enter user name"
+                                    formControlName="userName">
+                            </mat-form-field>
+                            <app-validation-errors [formControlToValidate]="formGroup.controls['userName']">
+                            </app-validation-errors>
+                        </div>
 
-                <div>
-                    <mat-form-field>
-                        <input matInput type="password" class="form-control" placeholder="Enter password"
-                            formControlName="password">
-                    </mat-form-field>
-                    <app-validation-errors [formControlToValidate]="formGroup.controls['password']">
-                    </app-validation-errors>
-                </div>
-            </div>
-        </form>
-    </mat-card-content>
-</mat-card>
+                        <div>
+                            <mat-form-field>
+                                <input matInput type="password" class="form-control" placeholder="Enter password"
+                                    formControlName="password">
+                            </mat-form-field>
+                            <app-validation-errors [formControlToValidate]="formGroup.controls['password']">
+                            </app-validation-errors>
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

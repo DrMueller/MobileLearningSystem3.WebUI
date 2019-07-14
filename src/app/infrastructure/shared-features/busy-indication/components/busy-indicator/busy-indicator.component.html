@@ -1,5 +1,3 @@
-<span @fadeInOut>
-  <i class="material-icons rotating">
-    refresh
-  </i>
-</span>
+<span [@fadeInOut]="showIndicator">
+    <mat-spinner color="accent" diameter="15" class="spinner"></mat-spinner>
+  </span>

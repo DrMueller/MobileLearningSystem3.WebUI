@@ -14,6 +14,7 @@ import { AuthenticationService, LogInFormBuilderService } from '../../services';
 export class LogInComponent implements OnInit {
 
   public formGroup: FormGroup;
+  public isLoggingIn = false;
 
   public constructor(
     private formGroupBinder: RxFormGroupBindingService,
@@ -26,9 +27,11 @@ export class LogInComponent implements OnInit {
   }
 
   public async logInAsync(): Promise<void> {
+    this.isLoggingIn = true;
     const request = new LoginRequest();
     this.formGroupBinder.bindToModel(this.formGroup, request);
     await this.authenticationService.logInAsync(request);
+    this.isLoggingIn = false;
     this.router.navigate(['home']);
   }
 

@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { MatDependenciesModule } from '../../mat-dependencies';
+
 import { BusyIndicatorComponent } from './components/busy-indicator';
 import { BusyIndicatorDirective } from './directives';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        MatDependenciesModule
     ],
     exports: [
         BusyIndicatorDirective
@@ -16,7 +19,7 @@ import { BusyIndicatorDirective } from './directives';
     ],
     declarations: [
         BusyIndicatorDirective,
-        BusyIndicatorComponent
+        BusyIndicatorComponent,
     ]
 })
 export class BusyIndicationModule { }

@@ -1,27 +1,27 @@
-import { animate, style, transition, trigger } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
-
-const inactiveStyle = style({
-  opacity: 0,
-});
-
-const timing = '3000ms ease';
 
 @Component({
   selector: 'app-busy-indicator',
   templateUrl: './busy-indicator.component.html',
   styleUrls: ['./busy-indicator.component.scss'],
   animations: [
-    trigger('fadeInOut', [
-      transition('void => *', [
-        inactiveStyle,
-        animate(timing)
-      ]),
-      transition('* => void', [
-        animate(timing, inactiveStyle)
+    trigger('fadeInOut',
+      [
+        state('*', style(
+          {
+            opacity: 0,
+            display: 'none'
+          })),
+        state('1', style(
+          {
+            opacity: 100,
+            display: 'inline-block'
+          })),
+        transition('* => *', animate('600ms ease-out'))
       ])
-    ])
   ]
 })
 export class BusyIndicatorComponent {
+  public showIndicator: boolean;
 }

@@ -1,4 +1,4 @@
-import { ComponentFactory, ComponentFactoryResolver, Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, ComponentRef, Directive, Injector, Input, ViewContainerRef } from '@angular/core';
 
 import { BusyIndicatorComponent } from '../components/busy-indicator';
 
@@ -6,23 +6,20 @@ import { BusyIndicatorComponent } from '../components/busy-indicator';
   selector: '[appBusyIndicator]'
 })
 export class BusyIndicatorDirective {
-  private _indicatorFactory: ComponentFactory<BusyIndicatorComponent>;
+  private _busyIndicatorComponent: ComponentRef<BusyIndicatorComponent>;
 
   public constructor(
-    private templateRef: TemplateRef<any>,
     private vcRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver) {
-    this._indicatorFactory = this.componentFactoryResolver.resolveComponentFactory(BusyIndicatorComponent);
+    private componentFactoryResolver: ComponentFactoryResolver,
+    injector: Injector) {
+    const factory = this.componentFactoryResolver.resolveComponentFactory(BusyIndicatorComponent);
+    this._busyIndicatorComponent = factory.create(injector);
+    this._busyIndicatorComponent.instance.showIndicator = false;
+    this.vcRef.insert(this._busyIndicatorComponent.hostView);
   }
 
   @Input()
   public set appBusyIndicator(isBusy: boolean) {
-    this.vcRef.clear();
-
-    if (isBusy) {
-      this.vcRef.createComponent(this._indicatorFactory);
-    } else {
-      this.vcRef.createEmbeddedView(this.templateRef);
-    }
+    this._busyIndicatorComponent.instance.showIndicator = isBusy;
   }
 }
