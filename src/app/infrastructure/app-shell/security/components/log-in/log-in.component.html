@@ -3,7 +3,7 @@
         <mat-card>
             <mat-card-title>Actions</mat-card-title>
             <mat-card-content>
-                <button mat-raised-button color="primary" (click)="logInAsync()" [disabled]="!canLogIn">
+                <button mat-stroked-button color="primary" (click)="logInAsync()" [disabled]="!canLogIn">
                     <span *appBusyIndicator="isLoggingIn"></span>
                     Log In!
                 </button>
