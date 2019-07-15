@@ -36,6 +36,6 @@ export class LogInComponent implements OnInit {
   }
 
   public get canLogIn(): boolean {
-    return !this.formGroup.invalid;
+    return !this.formGroup.invalid && !this.isLoggingIn;
   }
 }
