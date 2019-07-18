@@ -1,11 +1,15 @@
 ::ng-deep.id-cell {
     width: 20px;
-  }
-  
-  ::ng-deep.creation-cell {
+}
+
+::ng-deep.creation-cell {
     width: 200px;
-  }
-  
-  ::ng-deep.button-cell {
-    width: 20px;    
-  }
+}
+
+::ng-deep.button-cell {
+    width: 20px;
+}
+
+button {
+    margin-right: 10px;
+}

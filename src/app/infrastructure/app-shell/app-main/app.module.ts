@@ -25,7 +25,7 @@ import { AppComponent } from './app.component';
     ErrorHandlingModule.forRoot(),
     HttpClientModule,
     MatDependenciesModule.forRoot(),
-    RxFormsModule.forRoot()
+    RxFormsModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

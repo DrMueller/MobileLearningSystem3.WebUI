@@ -17,4 +17,8 @@ export class FactOverviewEntryDataService {
   public async deleteFactAsync(factId: number): Promise<void> {
     await this.httpService.deleteAsync(factId.toString());
   }
+
+  public async deleteAllFactsAsync(): Promise<void> {
+    this.httpService.deleteAsync('');
+  }
 }

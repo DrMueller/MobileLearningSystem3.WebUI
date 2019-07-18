@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { EditorModule } from 'primeng/editor';
 import { MatDependenciesModule } from 'src/app/infrastructure/mat-dependencies';
+import { EnquiryDialogModule } from 'src/app/infrastructure/shared-features/enquiry-dialog';
 import { RxFormsModule } from 'src/app/infrastructure/shared-features/rx-forms';
 import { TablesModule } from 'src/app/infrastructure/shared-features/tables';
 
@@ -21,6 +22,7 @@ import { FactsOverviewComponent } from './overview/components/facts-overview';
   imports: [
     CommonModule,
     EditorModule,
+    EnquiryDialogModule,
     FactsRoutingModule,
     FactServicesModule,
     MatDependenciesModule,

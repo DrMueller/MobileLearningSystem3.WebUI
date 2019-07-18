@@ -1,5 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
+import { Enquiry, QuestionResult } from 'src/app/infrastructure/shared-features/enquiry-dialog/model';
+import { EnquiryService } from 'src/app/infrastructure/shared-features/enquiry-dialog/services';
 import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
 
@@ -22,7 +24,8 @@ export class FactsOverviewComponent implements OnInit {
   public constructor(
     private colDefBuilder: FactsOverviewColDefBuilderService,
     private dataService: FactOverviewEntryDataService,
-    private navigator: FactsNavigationService) { }
+    private navigator: FactsNavigationService,
+    private enquiryService: EnquiryService) { }
 
   public async deleteAsync(factId: string): Promise<void> {
     const factIdParsed = parseInt(factId, 10);
@@ -39,6 +42,17 @@ export class FactsOverviewComponent implements OnInit {
 
   public createFact(): void {
     this.navigator.navigateToEdit(-1);
+  }
+
+  public async deleteAllFactsAsync(): Promise<void> {
+    this.enquiryService.ask(new Enquiry('Deleting all Facts', 'Are you sure to delete all Facts?'))
+      .subscribe(async qr => {
+        if (qr === QuestionResult.Yes) {
+          await this.dataService.deleteAllFactsAsync();
+          const clonsedArray = Object.assign([], this.overviewEntries);
+          this.table.deleteEntries(clonsedArray);
+        }
+      });
   }
 
   public edit(factId: string): void {

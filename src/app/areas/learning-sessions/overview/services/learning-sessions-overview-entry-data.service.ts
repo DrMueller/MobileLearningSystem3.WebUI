@@ -16,4 +16,8 @@ export class LearningSessionsOverviewEntryDataService {
   public async deleteSessionAsync(sessionId: number): Promise<void> {
     await this.httpService.deleteAsync(sessionId.toString());
   }
+
+  public async deleteAllSessionsAsync(): Promise<void> {
+    await this.httpService.deleteAsync('');
+  }
 }

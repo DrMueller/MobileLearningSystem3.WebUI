@@ -27,7 +27,6 @@ export class CustomErrorHandlerService extends ErrorHandler {
     }
 
     this._previousError = error;
-
     const unpackedError = this.errorUnwrappingService.unwrapError(error);
     console.log(unpackedError);
 

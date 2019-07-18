@@ -1,4 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Enquiry, QuestionResult } from 'src/app/infrastructure/shared-features/enquiry-dialog/model';
+import { EnquiryService } from 'src/app/infrastructure/shared-features/enquiry-dialog/services';
 import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
 
@@ -24,7 +26,8 @@ export class LearningSessionsOverviewComponent implements OnInit {
   public constructor(
     private colDefBuilder: LearningSessionsOverviewColDefBuilderService,
     private dataService: LearningSessionsOverviewEntryDataService,
-    private navigator: LearningSessionsNavigationService) { }
+    private navigator: LearningSessionsNavigationService,
+    private enquiryService: EnquiryService) { }
 
   public async deleteAsync(sessionId: string): Promise<void> {
     const factIdParsed = parseInt(sessionId, 10);
@@ -41,6 +44,18 @@ export class LearningSessionsOverviewComponent implements OnInit {
 
   public createSession(): void {
     this.navigator.navigateToEdit(-1);
+  }
+
+
+  public async deleteAllSessionsAsync(): Promise<void> {
+    this.enquiryService.ask(new Enquiry('Deleting all Sessions', 'Are you sure to delete all Sessions?'))
+      .subscribe(async qr => {
+        if (qr === QuestionResult.Yes) {
+          await this.dataService.deleteAllSessionsAsync();
+          const clonsedArray = Object.assign([], this.overviewEntries);
+          this.table.deleteEntries(clonsedArray);
+        }
+      });
   }
 
   public edit(sessionId: string): void {
