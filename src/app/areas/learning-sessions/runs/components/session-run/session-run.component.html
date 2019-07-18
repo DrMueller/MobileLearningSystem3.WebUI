@@ -3,7 +3,7 @@
         <div class="main-flex-container">
             <div class="command-flex-row">
                 <div class="command-flex-item">
-                    <button class="command-button" mat-raised-button color="primary" (click)="showPreviousFact()"
+                    <button class="command-button" mat-icon-button color="primary" (click)="showPreviousFact()"
                         [disabled]="!canShowPreviousFact">
                         <mat-icon>arrow_backward</mat-icon>
                     </button>
@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="command-flex-item">
-                    <button class="command-button" mat-raised-button color="primary" (click)="showNextFact()"
+                    <button class="command-button" mat-icon-button color="primary" (click)="showNextFact()"
                         [disabled]="!canShowNextFact">
                         <mat-icon>arrow_forward</mat-icon>
                     </button>
@@ -28,7 +28,7 @@
             </div>
 
             <div *ngIf="!isAnswerShown" class="answer-flex-container">
-                <button class="command-button" mat-raised-button color="accent" (click)="showAnswer()">
+                <button class="command-button" mat-icon-button color="accent" (click)="showAnswer()">
                     <mat-icon>slideshow</mat-icon>
                 </button>
             </div>

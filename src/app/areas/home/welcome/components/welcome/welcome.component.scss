@@ -2,21 +2,20 @@
 
 .btn {
     margin-right: 10px;
-    color:white;
 }
 
 .btn-primary {
-    background: $primary;
+    color: $primary;
 }
 
 .btn-accent {
-    background: $accent;
+    color: $accent;
 }
 
 .btn-warn {
-    background: $warn;
+    color: $warn;
 }
 
 .btn-disabled {
-    background: $disabled;
+    color: $disabled;
 }
