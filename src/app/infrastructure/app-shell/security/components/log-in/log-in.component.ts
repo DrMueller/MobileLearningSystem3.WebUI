@@ -31,10 +31,9 @@ export class LogInComponent implements OnInit {
     const request = new LoginRequest();
     this.formGroupBinder.bindToModel(this.formGroup, request);
 
-    await  new Promise( resolve => setTimeout(resolve, 5000) );
-    // await this.authenticationService.logInAsync(request);
+    await this.authenticationService.logInAsync(request);
     this.isLoggingIn = false;
-    // this.router.navigate(['home']);
+    this.router.navigate(['home']);
   }
 
   public get canLogIn(): boolean {
