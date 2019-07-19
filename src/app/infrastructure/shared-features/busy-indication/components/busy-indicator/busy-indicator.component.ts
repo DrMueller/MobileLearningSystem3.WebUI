@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
             opacity: 100,
             display: 'inline-block'
           })),
-        transition('* => *', animate('600ms ease-out'))
+        transition('1 => *', animate('1000ms ease-out'))
       ])
   ]
 })

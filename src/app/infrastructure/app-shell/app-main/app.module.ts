@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from 'src/environments/environment';
 
 import { MatDependenciesModule } from '../../mat-dependencies';
 import { BusyIndicationModule } from '../../shared-features/busy-indication/busy-indication.module';
@@ -27,7 +28,7 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     MatDependenciesModule.forRoot(),
     RxFormsModule.forRoot(),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent]
