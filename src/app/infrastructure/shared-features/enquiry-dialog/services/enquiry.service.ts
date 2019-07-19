@@ -6,9 +6,7 @@ import { map } from 'rxjs/operators';
 import { EnquiryDialogComponent } from '../components/enquiry-dialog';
 import { Enquiry, QuestionResult } from '../model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class EnquiryService {
   constructor(private dialog: MatDialog) { }
 
