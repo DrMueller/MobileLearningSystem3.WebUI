@@ -10,7 +10,6 @@ import { Enquiry, QuestionResult } from '../model';
   providedIn: 'root'
 })
 export class EnquiryService {
-
   constructor(private dialog: MatDialog) { }
 
   public ask(enquiry: Enquiry): Observable<QuestionResult> {
