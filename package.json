@@ -11,7 +11,9 @@
     "ci-unit-test": "ng run mls3-webui:ci-unit-test",
     "ci-lint": "tslint --project tslint.json --format junit --out testresults/lint-tests.xml",
     "ci-git-commit": "git add -A && git commit -am \"Build\"",
-    "ci-git-config": "git config --global user.email \"matthiasm@live.de\" && git config --global user.name \"Matthias Mueller\""
+    "ci-git-config": "git config --global user.email \"matthiasm@live.de\" && git config --global user.name \"Matthias Mueller\"",
+    "start-prod-local": "http-server -c-1 dist -p 8081",
+    "build-and-start-local": "npm run ci-build-prod && npm run start-prod-local"
   },
   "private": true,
   "dependencies": {
@@ -26,6 +28,7 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
+    "@angular/service-worker": "~8.0.0",
     "moment": "^2.24.0",
     "primeicons": "^1.0.0",
     "primeng": "^8.0.0",
@@ -43,6 +46,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
+    "http-server": "^0.9.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
