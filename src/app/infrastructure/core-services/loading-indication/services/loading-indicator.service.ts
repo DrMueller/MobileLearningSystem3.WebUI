@@ -11,7 +11,12 @@ export class LoadingIndicatorService {
     return this._showLoadingIndicator;
   }
 
-  public toggleLoadingIndicator(show: boolean): void {
-    setTimeout(() => this._showLoadingIndicator.next(show));
+  public async withLoadingIndicator<T>(callback: () => Promise<T>): Promise<T> {
+    try {
+      setTimeout(() => this._showLoadingIndicator.next(true));
+      return await callback();
+    } finally {
+      setTimeout(() => this._showLoadingIndicator.next(false));
+    }
   }
 }

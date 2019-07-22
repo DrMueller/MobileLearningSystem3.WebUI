@@ -40,10 +40,10 @@ export class LearningSessionsOverviewComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    this.loadingIndicator.toggleLoadingIndicator(true);
-    this.columnDefinitions = this.colDefBuilder.buildDefinitions(this.editTemplate, this.deleteTemplate);
-    this.overviewEntries = await this.dataService.loadOverviewAsync();
-    this.loadingIndicator.toggleLoadingIndicator(false);
+    this.loadingIndicator.withLoadingIndicator(async () => {
+      this.columnDefinitions = this.colDefBuilder.buildDefinitions(this.editTemplate, this.deleteTemplate);
+      this.overviewEntries = await this.dataService.loadOverviewAsync();
+    });
   }
 
   public createSession(): void {
