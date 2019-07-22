@@ -4,15 +4,18 @@
     right: 0;
     bottom: 0;
     top: 0;
-  }
-  
-  .main-container {
+}
+
+.main-container {
     display: flex;
     height: 100%;
     flex-direction: column;
-  }
-  
-  main {
+}
+
+main {
     flex: 1 1 auto;
-  }
-  
+}
+
+.toolbar-loading {
+  height: 7px;
+}

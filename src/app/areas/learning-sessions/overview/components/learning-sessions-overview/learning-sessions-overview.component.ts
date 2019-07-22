@@ -1,4 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { LoadingIndicatorService } from 'src/app/infrastructure/core-services/loading-indication/services';
 import { Enquiry, QuestionResult } from 'src/app/infrastructure/shared-features/enquiry-dialog/model';
 import { EnquiryService } from 'src/app/infrastructure/shared-features/enquiry-dialog/services';
 import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
@@ -27,7 +28,8 @@ export class LearningSessionsOverviewComponent implements OnInit {
     private colDefBuilder: LearningSessionsOverviewColDefBuilderService,
     private dataService: LearningSessionsOverviewEntryDataService,
     private navigator: LearningSessionsNavigationService,
-    private enquiryService: EnquiryService) { }
+    private enquiryService: EnquiryService,
+    private loadingIndicator: LoadingIndicatorService) { }
 
   public async deleteAsync(sessionId: string): Promise<void> {
     const factIdParsed = parseInt(sessionId, 10);
@@ -38,14 +40,15 @@ export class LearningSessionsOverviewComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
+    this.loadingIndicator.toggleLoadingIndicator(true);
     this.columnDefinitions = this.colDefBuilder.buildDefinitions(this.editTemplate, this.deleteTemplate);
     this.overviewEntries = await this.dataService.loadOverviewAsync();
+    this.loadingIndicator.toggleLoadingIndicator(false);
   }
 
   public createSession(): void {
     this.navigator.navigateToEdit(-1);
   }
-
 
   public async deleteAllSessionsAsync(): Promise<void> {
     this.enquiryService.ask(new Enquiry('Deleting all Sessions', 'Are you sure to delete all Sessions?'))

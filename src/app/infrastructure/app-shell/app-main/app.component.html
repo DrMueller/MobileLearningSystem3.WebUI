@@ -1,10 +1,13 @@
 <app-app-navigation class="main-container">
-    <p *ngIf="!isAppInitialized">
-      Warming up...
-    </p>
-    <main *ngIf="isAppInitialized">
-      <router-outlet>
-      </router-outlet>
-    </main>
-  </app-app-navigation>
-  
+  <p *ngIf="!isAppInitialized">
+    Warming up...
+  </p>
+  <main *ngIf="isAppInitialized">
+    <div *ngIf="showLoadingIndicator$ | async">
+      <mat-progress-bar class="toolbar-loading" mode="indeterminate" color="warn">
+      </mat-progress-bar>
+    </div>
+    <router-outlet>
+    </router-outlet>
+  </main>
+</app-app-navigation>

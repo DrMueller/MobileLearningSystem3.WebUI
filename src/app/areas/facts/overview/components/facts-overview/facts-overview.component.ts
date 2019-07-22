@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
+import { LoadingIndicatorService } from 'src/app/infrastructure/core-services/loading-indication/services';
 import { Enquiry, QuestionResult } from 'src/app/infrastructure/shared-features/enquiry-dialog/model';
 import { EnquiryService } from 'src/app/infrastructure/shared-features/enquiry-dialog/services';
 import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
@@ -25,7 +26,8 @@ export class FactsOverviewComponent implements OnInit {
     private colDefBuilder: FactsOverviewColDefBuilderService,
     private dataService: FactOverviewEntryDataService,
     private navigator: FactsNavigationService,
-    private enquiryService: EnquiryService) { }
+    private enquiryService: EnquiryService,
+    private loadingIndicator: LoadingIndicatorService) { }
 
   public async deleteAsync(factId: string): Promise<void> {
     const factIdParsed = parseInt(factId, 10);
@@ -36,8 +38,11 @@ export class FactsOverviewComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
+    this.loadingIndicator.toggleLoadingIndicator(true);
+
     this.columnDefinitions = this.colDefBuilder.buildDefinitions(this.editTemplate, this.deleteTemplate);
     this.overviewEntries = await this.dataService.loadOverviewAsync();
+    this.loadingIndicator.toggleLoadingIndicator(false);
   }
 
   public createFact(): void {

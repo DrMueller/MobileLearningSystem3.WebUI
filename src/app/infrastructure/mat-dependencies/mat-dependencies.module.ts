@@ -6,8 +6,8 @@ import {
   MatDialogModule, MatFormFieldModule,
   MatIconModule, MatInputModule,
   MatListModule, MatMenuModule,
-  MatPaginatorModule, MatProgressSpinnerModule, MatSidenavModule,
-  MatSortModule, MatTableModule, MatToolbarModule
+  MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule,
+  MatSidenavModule, MatSortModule, MatTableModule, MatToolbarModule
 } from '@angular/material';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
 
@@ -30,6 +30,7 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/m
     MatMomentDateModule,
     MatPaginatorModule,
     MatSortModule,
+    MatProgressBarModule,
     MatProgressSpinnerModule,
     MatTableModule,
     MatToolbarModule,
