@@ -8,14 +8,15 @@ export class FactsNavigationService {
   constructor(private router: Router) { }
 
   public navigateToOverview() {
-    this.navigateTo('overview');
+    this.router.navigate(['facts', 'overview']);
   }
 
-  public navigateToEdit(factId: number) {
-    this.navigateTo(factId.toString());
-  }
-
-  private navigateTo(urlPart: string): void {
-    this.router.navigate(['facts', urlPart]);
+  public navigateToEdit(factId: number, createCopy: boolean) {
+    const route = this.router.createUrlTree(['facts', factId.toString()], { queryParams: { createCopy: createCopy } });
+    if (createCopy) {
+      window.open(route.toString(), '_blank');
+    } else {
+      this.router.navigateByUrl(route);
+    }
   }
 }

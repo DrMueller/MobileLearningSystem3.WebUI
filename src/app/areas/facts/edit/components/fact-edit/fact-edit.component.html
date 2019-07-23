@@ -2,6 +2,8 @@
     <mat-card-title>Actions</mat-card-title>
     <mat-card-content>
         <button mat-stroked-button color="primary" (click)="saveAsync()" [disabled]="!canSave">Save</button>
+        <button mat-stroked-button color="accent" (click)="copySavedFact()" [disabled]="!canCopySavedFact">Copy saved
+            Fact</button>
         <button mat-stroked-button color="warn" (click)="cancel()">Cancel</button>
     </mat-card-content>
 </mat-card>

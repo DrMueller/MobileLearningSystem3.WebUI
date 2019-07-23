@@ -15,11 +15,16 @@ export class FactEditResolver implements Resolve<Promise<FactEditEntry>>  {
 
     public async resolve(route: ActivatedRouteSnapshot): Promise<FactEditEntry> {
         const factId = parseInt(route.paramMap.get('factid')!, 10);
+        const createCopy = route.queryParamMap.get('createCopy') === 'true';
         if (factId === -1) {
             return new FactEditEntry();
         }
 
         const editEntry = await this.dataService.loadEntryEditAsync(factId);
+        if (createCopy) {
+            editEntry.id = undefined;
+        }
+
         return editEntry;
     }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SessionStorageService } from 'src/app/infrastructure/core-services/session-storage/services';
+import { StorageService } from 'src/app/infrastructure/core-services/storage/services';
 
 import { SecurityUser } from '../models';
 
@@ -12,7 +12,7 @@ export class SecurityUserSingletonService {
 
   private readonly Key = 'securityUser';
 
-  constructor(private sessionStorage: SessionStorageService) {
+  constructor(private sessionStorage: StorageService) {
     this._userChanged$ = new BehaviorSubject<SecurityUser>(this.instance);
   }
 

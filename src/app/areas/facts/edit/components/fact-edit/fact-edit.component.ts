@@ -42,12 +42,20 @@ export class FactEditComponent implements OnInit {
     return 'New Fact';
   }
 
+  public get canCopySavedFact(): boolean {
+    return !!this.editEntry.id;
+  }
+
   public get canSave(): boolean {
     return this.formGroup.valid;
   }
 
   public cancel(): void {
     this.navigator.navigateToOverview();
+  }
+
+  public copySavedFact(): void {
+    this.navigator.navigateToEdit(this.editEntry.id!, true);
   }
 
   public async saveAsync(): Promise<void> {
