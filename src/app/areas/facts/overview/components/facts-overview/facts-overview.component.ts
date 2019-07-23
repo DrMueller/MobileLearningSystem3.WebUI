@@ -45,7 +45,7 @@ export class FactsOverviewComponent implements OnInit {
   }
 
   public createFact(): void {
-    this.navigator.navigateToEdit(-1);
+    this.navigator.navigateToEdit(-1, false);
   }
 
   public async deleteAllFactsAsync(): Promise<void> {
@@ -61,6 +61,6 @@ export class FactsOverviewComponent implements OnInit {
 
   public edit(factId: string): void {
     const f = parseInt(factId, 10);
-    this.navigator.navigateToEdit(f);
+    this.navigator.navigateToEdit(f, false);
   }
 }
