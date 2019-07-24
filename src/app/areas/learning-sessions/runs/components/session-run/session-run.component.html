@@ -2,8 +2,8 @@
     <div class="main">
         <div class="main-flex-container">
             <div class="command-flex-row">
-                <div class="command-flex-item">
-                    <button class="command-button" mat-icon-button color="primary" (click)="showPreviousFact()"
+                <div>
+                    <button mat-icon-button color="primary" (click)="showPreviousFact()"
                         [disabled]="!canShowPreviousFact">
                         <mat-icon>arrow_backward</mat-icon>
                     </button>
@@ -13,16 +13,15 @@
                     <h3>{{ runStateDescription }}</h3>
                 </div>
 
-                <div class="command-flex-item">
-                    <button class="command-button" mat-icon-button color="primary" (click)="showNextFact()"
-                        [disabled]="!canShowNextFact">
+                <div>
+                    <button mat-icon-button color="primary" (click)="showNextFact()" [disabled]="!canShowNextFact">
                         <mat-icon>arrow_forward</mat-icon>
                     </button>
                 </div>
             </div>
 
             <div class="question-flex-container">
-                <div class="question-flex-item">
+                <div>
                     <label>{{ currentFact.questionText }}</label>
                 </div>
             </div>
@@ -40,6 +39,10 @@
                         </p-header>
                     </p-editor>
                 </div>
+            </div>
+
+            <div class="bottom-command-flex-row">
+                <button mat-stroked-button color="primary" (click)="reShuffleRun()">Reshuffle</button>
             </div>
         </div>
     </div>

@@ -10,14 +10,14 @@ import { RunFact } from '../../models';
   styleUrls: ['./session-run.component.scss']
 })
 export class SessionRunComponent implements OnInit {
-  private _runfacts: RunFact[] = [];
+  private _runFacts: RunFact[] = [];
   private _selectedFactIndex: number;
   private _isAnswerShown: boolean;
 
   public constructor(private route: ActivatedRoute) { }
 
   public get canShowNextFact(): boolean {
-    return this._selectedFactIndex < this._runfacts.length - 1;
+    return this._selectedFactIndex < this._runFacts.length - 1;
   }
 
   public get canShowPreviousFact(): boolean {
@@ -25,7 +25,7 @@ export class SessionRunComponent implements OnInit {
   }
 
   public get currentFact(): RunFact | undefined {
-    return this._runfacts[this._selectedFactIndex];
+    return this._runFacts[this._selectedFactIndex];
   }
 
   public get isAnswerShown(): boolean {
@@ -38,14 +38,13 @@ export class SessionRunComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.data.subscribe(data => {
-      const runFacts = <RunFact[]>data['runfacts'];
-      this._runfacts = ArrayExtensions.shuffleEntries(runFacts);
-      this._selectedFactIndex = 0;
+      this._runFacts = <RunFact[]>data['runfacts'];
+      this.shuffleAndStart();
     });
   }
 
   public get runStateDescription(): string {
-    return `${this._selectedFactIndex + 1} / ${this._runfacts.length}`;
+    return `${this._selectedFactIndex + 1} / ${this._runFacts.length}`;
   }
 
   public showNextFact(): void {
@@ -53,8 +52,18 @@ export class SessionRunComponent implements OnInit {
     this._selectedFactIndex += 1;
   }
 
+  public reShuffleRun(): void {
+    this.shuffleAndStart();
+  }
+
   public showPreviousFact(): void {
     this._isAnswerShown = false;
     this._selectedFactIndex -= 1;
+  }
+
+  private shuffleAndStart(): void {
+    this._isAnswerShown = false;
+    this._runFacts = ArrayExtensions.shuffleEntries(this._runFacts);
+    this._selectedFactIndex = 0;
   }
 }
