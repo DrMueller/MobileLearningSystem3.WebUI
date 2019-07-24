@@ -15,14 +15,11 @@
             <div class="form-fields-container">
                 <mat-form-field>
                     <input matInput type="text" placeholder="Enter question" formControlName="questionText">
+                    <mat-error [appValidationErrors]="formGroup.controls['questionText']"></mat-error>
                 </mat-form-field>
-                <app-validation-errors [formControlToValidate]="formGroup.controls['questionText']">
-                </app-validation-errors>
 
                 <p-editor formControlName="answerText" [style]="{'height':'320px'}"></p-editor>
-
-                <app-validation-errors [formControlToValidate]="formGroup.controls['answerText']">
-                </app-validation-errors>
+                <mat-error [appValidationErrors]="formGroup.controls['answerText']"></mat-error>
             </div>
         </form>
     </mat-card-content>

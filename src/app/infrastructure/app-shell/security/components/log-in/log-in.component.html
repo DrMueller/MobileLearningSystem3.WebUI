@@ -19,18 +19,16 @@
                             <mat-form-field>
                                 <input matInput type="text" class="form-control" placeholder="Enter user name"
                                     formControlName="userName">
+                                <mat-error [appValidationErrors]="formGroup.controls['userName']"></mat-error>
                             </mat-form-field>
-                            <app-validation-errors [formControlToValidate]="formGroup.controls['userName']">
-                            </app-validation-errors>
                         </div>
 
                         <div>
                             <mat-form-field>
                                 <input matInput type="password" class="form-control" placeholder="Enter password"
                                     formControlName="password">
+                                <mat-error [appValidationErrors]="formGroup.controls['password']"></mat-error>
                             </mat-form-field>
-                            <app-validation-errors [formControlToValidate]="formGroup.controls['password']">
-                            </app-validation-errors>
                         </div>
                     </div>
                 </form>
