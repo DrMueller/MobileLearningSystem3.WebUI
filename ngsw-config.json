@@ -14,11 +14,11 @@
         ],
         "urls": [
           "https://fonts.googleapis.com/icon?family=Material+Icons",
-          "https://fonts.googleapis.com/css?family=Roboto:300,400,500",
-          "**/api/**"
+          "https://fonts.googleapis.com/css?family=Roboto:300,400,500"
         ]
       }
-    }, {
+    },
+    {
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",
@@ -27,6 +27,20 @@
           "/assets/**",
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api",
+      "urls": [
+        "/api/**"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 15,
+        "maxAge": "1h",
+        "timeout": "5s"
       }
     }
   ]

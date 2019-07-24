@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { SecurityUserSingletonService } from '../services';
 
 @Injectable()
-export class TestSecurityInterceptor implements HttpInterceptor {
+export class BearerAuthInterceptor implements HttpInterceptor {
     public constructor(private securityUserSingleton: SecurityUserSingletonService) {
     }
 

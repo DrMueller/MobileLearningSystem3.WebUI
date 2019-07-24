@@ -1,1 +1,1 @@
-export * from './test-security.interceptor';
+export * from './bearer-auth.interceptor';

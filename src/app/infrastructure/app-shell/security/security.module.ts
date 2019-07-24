@@ -8,7 +8,7 @@ import { RxFormsModule } from '../../shared-features/rx-forms';
 
 import { LogInComponent } from './components/log-in/log-in.component';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
-import { TestSecurityInterceptor } from './interceptors';
+import { BearerAuthInterceptor } from './interceptors';
 
 @NgModule({
     declarations: [
@@ -27,7 +27,7 @@ import { TestSecurityInterceptor } from './interceptors';
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: TestSecurityInterceptor,
+            useClass: BearerAuthInterceptor,
             multi: true
         }
     ]

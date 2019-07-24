@@ -13,11 +13,13 @@ export class AuthorizationGuard implements CanActivate {
   }
 
   public canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const canActivate = this.securityUserSingleton.instance.isAuthenticated;
-    if (!canActivate) {
+    const isAuthenticated = this.securityUserSingleton.instance.isAuthenticated;
+    const notAllowedArea = state.url.startsWith('/facts');
+
+    if (!isAuthenticated && notAllowedArea) {
       this.router.navigate(['/home/welcome'], { queryParams: { returnUrl: state.url } });
     }
 
-    return canActivate;
+    return true;
   }
 }
