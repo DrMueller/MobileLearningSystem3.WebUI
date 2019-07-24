@@ -17,13 +17,13 @@ export class ValidationErrorsDirective {
 
   @Input() public set appValidationErrors(formControl: FormControl) {
     this._formControlToValidate = formControl;
-    this._formControlToValidate.statusChanges.subscribe(sr => this.validate(sr));
+    this._formControlToValidate.statusChanges.subscribe(validity => this.validate(validity));
   }
 
-  private validate(valididy: string): void {
+  private validate(validity: string): void {
     this.vcRef.element.nativeElement.innerHTML = '';
 
-    if (valididy !== 'VALID') {
+    if (validity !== 'VALID') {
       const validationErrors = this.validator.validateFormControl(this._formControlToValidate);
       const firstError = validationErrors[0]; // Material Best practices: Only show one error at a time
       const label = <HTMLElement>this.renderer.createElement('label');
