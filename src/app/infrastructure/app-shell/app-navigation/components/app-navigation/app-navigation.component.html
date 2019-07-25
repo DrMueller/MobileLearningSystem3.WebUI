@@ -4,7 +4,7 @@
       <button mat-icon-button (click)="toggleSideNav()">
         <mat-icon>menu</mat-icon>
       </button>
-      <span>MLS3</span>
+      <span>Navigation</span>
     </mat-toolbar>
     <div>
       <mat-nav-list>
@@ -22,11 +22,11 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="sidenav-content">
+    <div>
       <div class="toolbar-container">
         <app-app-toolbar [isSidebarOpen]="isSidebarOpen" (toggleSideNavRequested)="toggleSideNav()"></app-app-toolbar>
       </div>
-      <div class="content-inside">
+      <div>
         <ng-content></ng-content>
       </div>
     </div>

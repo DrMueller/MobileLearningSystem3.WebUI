@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { MatDependenciesModule } from '../../mat-dependencies';
+import { PwaModule } from '../../shared-features/pwa';
 import { SecurityModule } from '../security';
 
 import { AppNavigationComponent } from './components/app-navigation';
@@ -24,6 +25,7 @@ import { AppNavigationEntryFactoryService } from './services';
     CommonModule,
     RouterModule,
     MatDependenciesModule,
+    PwaModule,
     SecurityModule
   ]
 })

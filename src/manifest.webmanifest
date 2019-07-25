@@ -1,6 +1,6 @@
 {
-  "name": "mls3-webui",
-  "short_name": "mls3-webui",
+  "name": "Mobile Learning System 3",
+  "short_name": "mls3",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

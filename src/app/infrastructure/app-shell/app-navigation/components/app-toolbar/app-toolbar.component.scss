@@ -1,23 +1,17 @@
-.flex-container{
-  display:flex;
+@import "src/styles.scss";
+
+.toolbar-container {
+  display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: left;
-  align-content: center;
   align-items: center;
+  width: 100%;
 }
 
-.icon-button {
-  display: flex;
-  justify-content: center;
-}
-
-.flex-item {
-  flex-basis: auto;
-  max-width: 640px;
-  max-height: 480px;
-}
-
-.flex-item-right {
+.toolbar-container-item-right {
   margin-left: auto;
+}
+
+.toolbar-container-item-connectivity {
+  margin-left: 10px;
 }

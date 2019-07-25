@@ -1,43 +1,7 @@
-@import "src/styles.scss";
-
 .sidenav-container {
     height: 100%;
 }
 
-.sidenav-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.content-inside {
-    height: 100%;
-    flex: 1 1 auto;
-    position: relative;
-}
-
 .sidenav {
     min-width: 200px;
-}
-
-.toolbar {
-    top: 0;
-}
-
-a.disabled {
-    pointer-events: none;
-    color: $disabled;
-}
-
-.menu-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.spacer {
-    flex: 1 1 auto;
-}
-
-.toolbar-container {
-    position: relative;
 }

@@ -1,4 +1,4 @@
-<mat-card class="mat-card">
+<mat-card>
     <mat-card-title>Actions</mat-card-title>
     <mat-card-content>
         <button mat-stroked-button color="primary" (click)="saveAsync()" [disabled]="!canSave">Save</button>
@@ -9,7 +9,7 @@
 <mat-card>
     <mat-card-title>{{ title }}</mat-card-title>
     <mat-card-content>
-        <form class="example-form" [formGroup]="formGroup">
+        <form [formGroup]="formGroup">
             <div class="form-fields-row">
                 <div class="form-field">
                     <mat-form-field>

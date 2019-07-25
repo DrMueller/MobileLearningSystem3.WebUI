@@ -1,19 +1,33 @@
-<p>
-    <button mat-stroked-button class="btn btn-primary">Primary</button>
-    <button mat-stroked-button class="btn btn-accent">Accent</button>
-    <button mat-stroked-button class="btn btn-warn">Warn</button>
-    <button mat-stroked-button class="btn btn-disabled">Disabled</button>
-</p>
+<mat-card>
+    <mat-card-title>Progressive Web App</mat-card-title>
+    <mat-card-content>
+        <button mat-stroked-button color="primary" (click)="installAsPwa()" [disabled]="!canInstallAsPwa">Install as PWA</button>
+    </mat-card-content>
+</mat-card>
 
-<p>
-    <button mat-stroked-button color="primary">Primary Native</button>
-    <button mat-stroked-button color="accent">Accent Native</button>
-    <button mat-stroked-button color="warn">Warn Native</button>
-</p>
+{{ event | json }}
 
-<p>
-    <button mat-stroked-button color="primary" (click)="toggleBusyIndicator()">
-        <span *appBusyIndicator="isBusyIndicatorShown"></span>
-        <span>Busy!</span>
-    </button>
-</p>
+<mat-card>
+    <mat-card-title>Fun with Buttons</mat-card-title>
+    <mat-card-content>
+        <p>
+            <button mat-stroked-button class="btn btn-primary">Primary</button>
+            <button mat-stroked-button class="btn btn-accent">Accent</button>
+            <button mat-stroked-button class="btn btn-warn">Warn</button>
+            <button mat-stroked-button class="btn btn-disabled">Disabled</button>
+        </p>
+
+        <p>
+            <button mat-stroked-button color="primary">Primary Native</button>
+            <button mat-stroked-button color="accent">Accent Native</button>
+            <button mat-stroked-button color="warn">Warn Native</button>
+        </p>
+
+        <p>
+            <button mat-stroked-button color="primary" (click)="toggleBusyIndicator()">
+                <span *appBusyIndicator="isBusyIndicatorShown"></span>
+                <span>Busy!</span>
+            </button>
+        </p>
+    </mat-card-content>
+</mat-card>
