@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { FactServicesModule } from '../../fact-services.module';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: FactServicesModule
 })
 export class FactsNavigationService {
   constructor(private router: Router) { }

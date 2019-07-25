@@ -3,8 +3,10 @@ import { FactOverviewEntry } from 'src/app/areas/shared-domain/models';
 import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
 import { ColDefBuilderFactoryService } from 'src/app/infrastructure/shared-features/tables/services';
 
+import { LearningSessionsServicesModule } from '../../learning-sessions-services.module';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: LearningSessionsServicesModule
 })
 export class FactsSelectionColDefBuilderService {
   public constructor(private builderFactory: ColDefBuilderFactoryService) { }

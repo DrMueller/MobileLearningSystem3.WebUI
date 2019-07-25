@@ -3,9 +3,10 @@ import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-featur
 import { ColDefBuilderFactoryService } from 'src/app/infrastructure/shared-features/tables/services';
 
 import { FactOverviewEntry } from '../../../shared-domain/models/fact-overview-entry.model';
+import { FactServicesModule } from '../../fact-services.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: FactServicesModule
 })
 export class FactsOverviewColDefBuilderService {
   public constructor(private builderFactory: ColDefBuilderFactoryService) { }

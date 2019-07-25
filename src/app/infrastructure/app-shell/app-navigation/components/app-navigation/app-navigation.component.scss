@@ -1,7 +1,15 @@
-.sidenav-container {
-    height: 100%;
-}
+ @import "src/styles.scss";
 
-.sidenav {
-    min-width: 200px;
-}
+ .sidenav-container {
+     height: 100%;
+ }
+
+ .sidenav {
+     min-width: 200px;
+ }
+
+ .disabled-area {
+     pointer-events: none;
+     cursor: default;
+     color: $disabled !important;
+ }

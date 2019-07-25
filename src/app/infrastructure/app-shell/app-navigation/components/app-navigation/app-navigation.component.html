@@ -9,7 +9,7 @@
     <div>
       <mat-nav-list>
         <span *ngFor="let nav of appNavigationEntries">
-          <a (click)="toggleSideNav()" mat-list-item class="nav-link" routerLinkActive="active"
+          <a (click)="toggleSideNav()" [class.disabled-area]="!(nav.isActive$ | async)" mat-list-item class="nav-link" routerLinkActive="active"
             [routerLink]="nav.baseUrl">{{ nav.displayText }}</a>
         </span>
       </mat-nav-list>

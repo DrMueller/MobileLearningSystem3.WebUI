@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { LearningSessionsHttpService } from '../../common/services';
+import { LearningSessionsServicesModule } from '../../learning-sessions-services.module';
 import { LearningSessionEditEntry } from '../models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: LearningSessionsServicesModule
 })
 export class LearningSessionEditDataService {
   public constructor(private httpService: LearningSessionsHttpService) { }

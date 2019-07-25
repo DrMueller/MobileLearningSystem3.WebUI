@@ -2,10 +2,11 @@ import { Injectable, TemplateRef } from '@angular/core';
 import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
 import { ColDefBuilderFactoryService } from 'src/app/infrastructure/shared-features/tables/services';
 
+import { LearningSessionsServicesModule } from '../../learning-sessions-services.module';
 import { LearningSessionOverviewEntry } from '../models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: LearningSessionsServicesModule
 })
 export class LearningSessionsOverviewColDefBuilderService {
   public constructor(private builderFactory: ColDefBuilderFactoryService) { }

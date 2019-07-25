@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { FactServicesModule } from '../../fact-services.module';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: FactServicesModule
 })
 export class FactEditFormBuilderService {
   public constructor(private formBuilder: FormBuilder) { }

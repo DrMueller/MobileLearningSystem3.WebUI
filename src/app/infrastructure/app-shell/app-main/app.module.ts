@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { FactsModule } from 'src/app/areas/facts';
+import { HomeModule } from 'src/app/areas/home/home.module';
+import { LearningSessionsModule } from 'src/app/areas/learning-sessions/learning-sessions.module';
 import { environment } from 'src/environments/environment';
 
 import { MatDependenciesModule } from '../../mat-dependencies';
@@ -29,6 +32,12 @@ import { AppComponent } from './app.component';
     MatDependenciesModule.forRoot(),
     RxFormsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+
+    // Areas
+    HomeModule.forRoot(),
+    FactsModule.forRoot(),
+    LearningSessionsModule.forRoot()
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
+import { AppAreaProviderToken } from 'src/app/infrastructure/app-shell/app-areas/constants';
 import { MatDependenciesModule } from 'src/app/infrastructure/mat-dependencies';
 import { EnquiryDialogModule } from 'src/app/infrastructure/shared-features/enquiry-dialog';
 import { RxFormsModule } from 'src/app/infrastructure/shared-features/rx-forms';
 import { TablesModule } from 'src/app/infrastructure/shared-features/tables';
 
+import { LearningSessionsAreaProviderService } from './common/services';
 import { FactsSelectionComponent } from './edit/components/facts-selection';
 import { LearningSessionEditComponent } from './edit/components/learning-session-edit/learning-session-edit.component';
 import { LearningSessionsComponent } from './entry-point/components/learning-sessions/learning-sessions.component';
@@ -35,4 +37,17 @@ import { SessionRunComponent } from './runs/components/session-run';
     TablesModule
   ]
 })
-export class LearningSessionsModule { }
+export class LearningSessionsModule {
+  public static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: LearningSessionsModule,
+      providers: [
+        {
+          provide: AppAreaProviderToken,
+          multi: true,
+          useClass: LearningSessionsAreaProviderService
+        }
+      ]
+    };
+  }
+}

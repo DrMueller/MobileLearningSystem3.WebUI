@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { LearningSessionsServicesModule } from '../../learning-sessions-services.module';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: LearningSessionsServicesModule
 })
 export class LearningSessionsNavigationService {
   constructor(private router: Router) { }

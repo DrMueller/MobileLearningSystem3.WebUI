@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { LearningSessionsServicesModule } from '../../learning-sessions-services.module';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: LearningSessionsServicesModule
 })
 export class LearningSessionEditFormBuilderService {
   public constructor(private formBuilder: FormBuilder) { }
