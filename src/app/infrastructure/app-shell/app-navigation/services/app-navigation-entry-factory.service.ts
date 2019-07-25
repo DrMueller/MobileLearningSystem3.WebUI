@@ -22,7 +22,7 @@ export class AppNavigationEntryFactoryService {
   }
 
   private assureInitialized(): void {
-    const areas = this.areaLocator.locateAreas();
+    const areas = this.areaLocator.locateAllAreas();
 
     const userAuthenticationChanged$ = this.userSingleton
       .userChanged$.pipe(map(user => user.isAuthenticated));
