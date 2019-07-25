@@ -15,8 +15,7 @@ export class UserMenuComponent {
   public constructor(
     private authService: AuthenticationService,
     private securityUserSingleton: SecurityUserSingletonService,
-    private router: Router
-  ) {
+    private router: Router) {
   }
 
   public get userText(): string {
@@ -37,5 +36,6 @@ export class UserMenuComponent {
 
   public logOut(): void {
     this.authService.logOut();
+    this.router.navigate(['/home/welcome']);
   }
 }
