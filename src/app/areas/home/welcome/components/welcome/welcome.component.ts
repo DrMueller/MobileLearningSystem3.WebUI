@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { InstallPwaPromptService, PwaInstallationService } from 'src/app/infrastructure/shared-features/pwa/pwa-installation/services';
+import { PwaInstallationService } from 'src/app/infrastructure/shared-features/pwa/pwa-installation/services';
 
 @Component({
   selector: 'app-welcome',
@@ -9,14 +9,10 @@ import { InstallPwaPromptService, PwaInstallationService } from 'src/app/infrast
 export class WelcomeComponent {
   public isBusyIndicatorShown = false;
 
-  public constructor(private pwaInstallationService: PwaInstallationService, private prompt: InstallPwaPromptService) { }
+  public constructor(private pwaInstallationService: PwaInstallationService) { }
 
   public toggleBusyIndicator(): void {
     this.isBusyIndicatorShown = !this.isBusyIndicatorShown;
-  }
-
-  public get event(): any {
-    return this.prompt.event;
   }
 
   public get canInstallAsPwa(): boolean {
