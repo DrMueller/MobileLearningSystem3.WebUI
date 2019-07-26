@@ -26,7 +26,8 @@
             "assets": [
               "src/assets",
               "src/web.config",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/app-settings"
             ],
             "styles": [
               "src/styles.scss",
@@ -95,7 +96,8 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/assets",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/app-settings"
             ],
             "styles": [
               "src/styles.scss"
@@ -124,7 +126,8 @@
             "karmaConfig": "karma-ci-unit-tests.conf.js",
             "assets": [
               "src/assets",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/app-settings"
             ],
             "styles": [
               "src/styles.scss"
