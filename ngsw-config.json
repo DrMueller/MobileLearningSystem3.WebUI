@@ -34,7 +34,8 @@
     {
       "name": "api",
       "urls": [
-        "**/api/**"
+        "/api/**",
+        "https://mobilelearningsystem3-backend.azurewebsites.net/api/**"
       ],
       "cacheConfig": {
         "strategy": "freshness",
