@@ -12,7 +12,7 @@
     "ci-lint": "tslint --project tslint.json --format junit --out testresults/lint-tests.xml",
     "ci-git-commit": "git add -A && git commit -am \"Build\"",
     "ci-git-config": "git config --global user.email \"matthiasm@live.de\" && git config --global user.name \"Matthias Mueller\"",
-    "start-prod-local": "http-server -c-1 dist -p 8081",
+    "start-prod-local": "http-server --ssl --cert local-certificates/cert.pem --key local-certificates/key.pem -c-1 dist -p 8081",
     "build-and-start-local": "npm run ci-build-prod && npm run start-prod-local"
   },
   "private": true,
