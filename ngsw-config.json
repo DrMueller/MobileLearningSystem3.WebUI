@@ -34,7 +34,6 @@
       "urls": [
         "/index.html",
         "/api/**",
-        "**/api/**",
         "/app-settings/**"
       ],
       "cacheConfig": {
