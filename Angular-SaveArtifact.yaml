@@ -10,4 +10,4 @@ resources:
 
 
 jobs:
-- template: AzureDevOps/AzureDevOps/BuildTemplates/Angular/Jobs/Build_And_Save_Artifact.yaml@ALMStuff
+- template: AzureDevOps/BuildTemplates/Angular/Jobs/Build_And_Save_Artifact.yaml@ALMStuff
