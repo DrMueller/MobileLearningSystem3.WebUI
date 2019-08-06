@@ -1,0 +1,23 @@
+.main-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.welcome-container {
+  display: flex;
+}
+
+.welcome-container-item {
+  margin: auto;
+}
+
+.language-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.language-button {
+  padding: 16px;
+}

@@ -7,16 +7,11 @@ import { BusyIndicationModule } from '../../shared-features/busy-indication/busy
 import { RxFormsModule } from '../../shared-features/rx-forms';
 
 import { LogInComponent } from './components/log-in/log-in.component';
-import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { BearerAuthInterceptor } from './interceptors';
 
 @NgModule({
     declarations: [
-        UserMenuComponent,
         LogInComponent
-    ],
-    exports: [
-        UserMenuComponent
     ],
     imports: [
         BusyIndicationModule,

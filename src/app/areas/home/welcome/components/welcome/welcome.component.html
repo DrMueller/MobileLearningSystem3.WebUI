@@ -1,24 +1,29 @@
 <mat-card>
     <mat-card-title>Progressive Web App</mat-card-title>
     <mat-card-content>
-        <button mat-stroked-button color="primary" (click)="installAsPwa()" [disabled]="!canInstallAsPwa">Install as PWA</button>
+        <button mat-stroked-button color="primary" (click)="installAsPwa()" [disabled]="!canInstallAsPwa">Install as
+            PWA</button>
     </mat-card-content>
 </mat-card>
 
 <mat-card>
-    <mat-card-title>Fun with Buttons</mat-card-title>
+    <mat-card-title> {{ 'areas.home.welcome.buttonsHeading' | translate }}</mat-card-title>
     <mat-card-content>
         <p>
-            <button mat-stroked-button class="btn btn-primary">Primary</button>
-            <button mat-stroked-button class="btn btn-accent">Accent</button>
-            <button mat-stroked-button class="btn btn-warn">Warn</button>
-            <button mat-stroked-button class="btn btn-disabled">Disabled</button>
+            <button mat-stroked-button
+                class="btn btn-primary">{{ 'areas.home.welcome.primaryButton' | translate }}</button>
+            <button mat-stroked-button
+                class="btn btn-accent">{{ 'areas.home.welcome.accentButton' | translate }}</button>
+            <button mat-stroked-button class="btn btn-warn">{{ 'areas.home.welcome.warnButton' | translate }}</button>
+            <button mat-stroked-button
+                class="btn btn-disabled">{{ 'areas.home.welcome.disabledButton' | translate }}</button>
         </p>
 
         <p>
-            <button mat-stroked-button color="primary">Primary Native</button>
-            <button mat-stroked-button color="accent">Accent Native</button>
-            <button mat-stroked-button color="warn">Warn Native</button>
+            <button mat-stroked-button
+                color="primary">{{ 'areas.home.welcome.primaryNativeButton' | translate }}</button>
+            <button mat-stroked-button color="accent">{{ 'areas.home.welcome.accentNativeButton' | translate }}</button>
+            <button mat-stroked-button color="warn">{{ 'areas.home.welcome.warnNativeButton' | translate }}</button>
         </p>
 
         <p>

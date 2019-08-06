@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { AppAreaProviderToken } from 'src/app/infrastructure/app-shell/app-areas/constants';
 import { MatDependenciesModule } from 'src/app/infrastructure/mat-dependencies';
 import { BusyIndicationModule } from 'src/app/infrastructure/shared-features/busy-indication/busy-indication.module';
@@ -15,7 +16,8 @@ import { WelcomeComponent } from './welcome/components/welcome/welcome.component
     CommonModule,
     HomeRoutingModule,
     MatDependenciesModule,
-    BusyIndicationModule
+    BusyIndicationModule,
+    TranslateModule
   ]
 })
 export class HomeModule {

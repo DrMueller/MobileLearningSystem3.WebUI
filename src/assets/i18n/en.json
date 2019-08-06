@@ -1,0 +1,32 @@
+{
+    "areas": {
+        "home": {
+            "welcome": {
+                "buttonsHeading": "Fun with Buttons",
+                "primaryButton": "Primary",
+                "accentButton": "Accent",
+                "warnButton": "Warn",
+                "disabledbutton": "Disabled",
+                "primaryNativeButton": "Primary Native",
+                "accentNativeButton": "Accent Native",
+                "warnNativeButton": "Warn Native"
+            }
+        },
+        "facts": {
+            "overview": {
+                "deleteAllFactsHeading": "Deleting all Facts",
+                "deleteAllFactsQuestion": "Are you sure to delete all Facts?"
+            }
+        }
+    },
+    "infrastructure": {
+        "app-shell": {
+            "app-navigation": {
+                "welcome": "Welcome, {{userName}}"
+            },
+            "security": {
+                "guest": "guest"
+            }
+        }
+    }
+}

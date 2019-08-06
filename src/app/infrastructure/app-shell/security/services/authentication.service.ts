@@ -19,13 +19,14 @@ export class AuthenticationService {
 
     if (loginResult.loginSuccess) {
       const nameClaim = loginResult.claims.find(f => f.type.endsWith('name'));
-      this.securityUserSingleton.initialize(SecurityUser.createAuthenticated(nameClaim!.value, loginResult.token));
+      const securityUser = new SecurityUser(nameClaim!.value, true, loginResult.token);
+      this.securityUserSingleton.setUser(securityUser);
     } else {
-      this.securityUserSingleton.initialize(SecurityUser.createUnauthenticated());
+      this.securityUserSingleton.clearUser();
     }
   }
 
   public logOut(): void {
-    this.securityUserSingleton.initialize(SecurityUser.createUnauthenticated());
+    this.securityUserSingleton.clearUser();
   }
 }

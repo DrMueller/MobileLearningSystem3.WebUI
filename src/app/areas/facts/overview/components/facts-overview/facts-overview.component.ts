@@ -1,4 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
 import { LoadingIndicatorService } from 'src/app/infrastructure/core-services/loading-indication/services';
 import { Enquiry, QuestionResult } from 'src/app/infrastructure/shared-features/enquiry-dialog/model';
@@ -9,6 +10,7 @@ import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-featur
 import { FactOverviewEntry } from '../../../../shared-domain/models/fact-overview-entry.model';
 import { FactsNavigationService } from '../../../common/services';
 import { FactsOverviewColDefBuilderService } from '../../services';
+
 
 @Component({
   selector: 'app-facts-overview',
@@ -27,7 +29,8 @@ export class FactsOverviewComponent implements OnInit {
     private dataService: FactOverviewEntryDataService,
     private navigator: FactsNavigationService,
     private enquiryService: EnquiryService,
-    private loadingIndicator: LoadingIndicatorService) { }
+    private loadingIndicator: LoadingIndicatorService,
+    private translator: TranslateService) { }
 
   public async deleteAsync(factId: string): Promise<void> {
     const factIdParsed = parseInt(factId, 10);
@@ -49,7 +52,10 @@ export class FactsOverviewComponent implements OnInit {
   }
 
   public async deleteAllFactsAsync(): Promise<void> {
-    this.enquiryService.ask(new Enquiry('Deleting all Facts', 'Are you sure to delete all Facts?'))
+    const deleteHeading = await this.translator.get('areas.facts.overview.deleteAllFactsHeading').toPromise();
+    const deleteQuestion = await this.translator.get('areas.facts.overview.deleteAllFactsQuestion').toPromise();
+
+    this.enquiryService.ask(new Enquiry(deleteHeading, deleteQuestion))
       .subscribe(async qr => {
         if (qr === QuestionResult.Yes) {
           await this.dataService.deleteAllFactsAsync();

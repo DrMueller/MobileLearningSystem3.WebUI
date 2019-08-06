@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
-  MatButtonModule, MatCardModule,
-  MatCheckboxModule, MatDatepickerModule,
-  MatDialogModule, MatFormFieldModule,
-  MatIconModule, MatInputModule,
-  MatListModule, MatMenuModule,
-  MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule,
-  MatSidenavModule, MatSortModule, MatTableModule, MatToolbarModule
+  MatButtonModule, MatCardModule, MatCheckboxModule,
+  MatDatepickerModule, MatDialogModule,
+  MatFormFieldModule, MatIconModule,
+  MatInputModule, MatListModule,
+  MatMenuModule, MatPaginatorModule, MatProgressBarModule,
+  MatProgressSpinnerModule, MatRadioModule, MatSidenavModule, MatSortModule, MatTableModule, MatToolbarModule
 } from '@angular/material';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
 
@@ -32,6 +31,7 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/m
     MatSortModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatRadioModule,
     MatTableModule,
     MatToolbarModule,
     MatSidenavModule
