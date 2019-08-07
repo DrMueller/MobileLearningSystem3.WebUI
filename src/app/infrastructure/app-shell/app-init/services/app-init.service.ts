@@ -10,7 +10,6 @@ import { SecurityUserSingletonService } from '../../security/services';
   providedIn: 'root'
 })
 export class AppInitService {
-
   constructor(
     private appSettingsSingleton: AppSettingsSingletonService,
     private appConnectivity: AppConnectivityService,

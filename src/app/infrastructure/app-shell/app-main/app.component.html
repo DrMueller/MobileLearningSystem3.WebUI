@@ -1,8 +1,5 @@
 <app-app-navigation class="main-container">
-  <p *ngIf="!isAppInitialized">
-    Warming up...
-  </p>
-  <main *ngIf="isAppInitialized">
+  <main>
     <div *ngIf="showLoadingIndicator$ | async">
       <mat-progress-bar class="toolbar-loading" mode="indeterminate" color="warn">
       </mat-progress-bar>
