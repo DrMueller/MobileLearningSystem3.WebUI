@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ValidationErrorMappingResult } from '../../../models/validation-error-mapping-result.model';
 import { ValidationError } from '../../../models/validation-error.model';
@@ -10,14 +11,19 @@ import { IValidationErrorMapperService } from '../validation-error-mapper-servic
 export class MaxLengthErrorMapperService implements IValidationErrorMapperService {
   private readonly errorKey: string = 'maxlength';
 
+  public constructor(private translator: TranslateService) {
+  }
 
   public map(errorKey: string, error: any): ValidationErrorMappingResult {
     if (errorKey !== this.errorKey) {
       return ValidationErrorMappingResult.createNonSuccess();
     }
 
+    const message = this.translator.instant('infrastructure.shared-features.rx-forms.validation-error-maxlength', {
+      requiredLength: error.requiredLength,
+      actualLength: error.actualLength
+    });
 
-    const message = `Expected length is maximum of ${error.requiredLength}, actual length is ${error.actualLength}.`;
     return new ValidationErrorMappingResult(true, new ValidationError(this.errorKey, message));
   }
 }

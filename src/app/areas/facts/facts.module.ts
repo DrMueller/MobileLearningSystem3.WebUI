@@ -1,6 +1,7 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { EditorModule } from 'primeng/editor';
 import { AppAreaProviderToken } from 'src/app/infrastructure/app-shell/app-areas/constants';
 import { MatDependenciesModule } from 'src/app/infrastructure/mat-dependencies';
@@ -30,6 +31,7 @@ import { FactsOverviewComponent } from './overview/components/facts-overview';
     MatDependenciesModule,
     TablesModule,
     TextFieldModule,
+    TranslateModule,
     RxFormsModule
   ]
 })

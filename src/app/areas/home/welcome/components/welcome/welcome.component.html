@@ -1,13 +1,12 @@
 <mat-card>
     <mat-card-title>Progressive Web App</mat-card-title>
     <mat-card-content>
-        <button mat-stroked-button color="primary" (click)="installAsPwa()" [disabled]="!canInstallAsPwa">Install as
-            PWA</button>
+        <button mat-stroked-button color="primary" (click)="installAsPwa()" [disabled]="!canInstallAsPwa">{{ 'areas.home.welcome.saveAsPwa' | translate }}</button>
     </mat-card-content>
 </mat-card>
 
 <mat-card>
-    <mat-card-title> {{ 'areas.home.welcome.buttonsHeading' | translate }}</mat-card-title>
+    <mat-card-title>{{ 'areas.home.welcome.buttonsHeading' | translate }}</mat-card-title>
     <mat-card-content>
         <p>
             <button mat-stroked-button
@@ -29,7 +28,7 @@
         <p>
             <button mat-stroked-button color="primary" (click)="toggleBusyIndicator()">
                 <span *appBusyIndicator="isBusyIndicatorShown"></span>
-                <span>Busy!</span>
+                <span>{{ 'areas.home.welcome.busy' | translate }}</span>
             </button>
         </p>
     </mat-card-content>

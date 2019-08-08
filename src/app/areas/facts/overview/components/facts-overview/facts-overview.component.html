@@ -1,8 +1,8 @@
 <mat-card class="mat-card">
     <mat-card-title>Actions</mat-card-title>
     <mat-card-content>
-        <button mat-stroked-button color="primary" (click)="createFact()">Create</button>
-        <button mat-stroked-button color="warn" (click)="deleteAllFactsAsync()">Delete all</button>
+        <button mat-stroked-button color="primary" (click)="createFact()">{{ 'areas.facts.overview.create' | translate }}</button>
+        <button mat-stroked-button color="warn" (click)="deleteAllFactsAsync()">{{ 'areas.facts.overview.deleteAll' | translate }}</button>
     </mat-card-content>
 </mat-card>
 

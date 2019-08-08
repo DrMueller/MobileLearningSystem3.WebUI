@@ -1,31 +1,77 @@
 {
+    "common": {
+        "actions": "Actions",
+        "yes": "Yes",
+        "no": "No"
+    },
     "areas": {
-        "home": {
-            "welcome": {
-                "buttonsHeading": "Fun with Buttons",
-                "primaryButton": "Primary",
-                "accentButton": "Accent",
-                "warnButton": "Warn",
-                "disabledbutton": "Disabled",
-                "primaryNativeButton": "Primary Native",
-                "accentNativeButton": "Accent Native",
-                "warnNativeButton": "Warn Native"
-            }
-        },
         "facts": {
             "overview": {
+                "create": "Create",
+                "deleteAll": "Delete all",
                 "deleteAllFactsHeading": "Deleting all Facts",
                 "deleteAllFactsQuestion": "Are you sure to delete all Facts?"
+            }
+        },
+        "home": {
+            "welcome": {
+                "accentButton": "Accent",
+                "accentNativeButton": "Accent Native",
+                "busy": "Busy!",
+                "buttonsHeading": "Fun with Buttons",
+                "disabledButton": "Disabled",
+                "primaryButton": "Primary",
+                "primaryNativeButton": "Primary Native",
+                "saveAsPwa": "Save as PWA",
+                "warnNativeButton": "Warn Native",
+                "warnButton": "Warn"
+            }
+        },
+        "learning-sessions": {
+            "edit": {
+                "actionsheading": "Actions",
+                "enterSessionName": "Enter Session Name",
+                "factsSelectionHeading": "Facts",
+                "save": "Save",
+                "cancel": "cancel"
+            },
+            "overview": {
+                "cancel": "Cancel",
+                "create": "Create",
+                "deleteAll": "Delete all",
+                "run": "Run!"
+            },
+            "runs": {
+                "reshuffle": "Reshuffle"
             }
         }
     },
     "infrastructure": {
         "app-shell": {
             "app-navigation": {
-                "welcome": "Welcome, {{userName}}"
+                "logIn": "Log in",
+                "logOut": "Log out",
+                "switchLanguage": "Switch language",
+                "switchToGerman": "German",
+                "switchToEnglish": "English",
+                "welcomeHeading": "Welcome, {{userName}}"
+            },
+            "error-handling": {
+                "errorDialogTitle": "Error Ho!",
+                "errorName": "Error Name:",
+                "errorMessage": "Error Message:"
             },
             "security": {
-                "guest": "guest"
+                "actions": "Actions",
+                "guest": "guest",
+                "logIn": "Log in!"
+            }
+        },
+        "shared-features": {
+            "rx-forms": {
+                "validation-error-maxlength": "Expected length is maximum of {{requiredLength}}, actual length is {{actualLength}}.",
+                "validation-error-minlength": "Expected length is minimum of {{requiredLength}}, actual length is {{error.actualLength}}.",
+                "validation-error-required": "Field is required."
             }
         }
     }

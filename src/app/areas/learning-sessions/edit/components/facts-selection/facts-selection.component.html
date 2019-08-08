@@ -1,5 +1,6 @@
 <mat-card class="mat-card">
-    <mat-card-title>Facts</mat-card-title>
+    <mat-card-title>{{ 'areas.learning-sessions.edit.factsSelectionHeading' | translate }}
+    </mat-card-title>
     <mat-card-content>
         <app-mat-table (selectionChanged)="selectionChanged($event)" [rowSelectionType]="2" [columnDefinitions]="columnDefinitions" idSelector="id"
             [data]="overviewEntries">

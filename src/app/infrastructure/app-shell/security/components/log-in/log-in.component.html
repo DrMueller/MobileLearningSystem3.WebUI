@@ -1,11 +1,11 @@
 <div class="log-in-container">
     <div class="log-in-content">
         <mat-card>
-            <mat-card-title>Actions</mat-card-title>
+            <mat-card-title>{{ 'infrastructure.app-shell.security.actions' | translate }}</mat-card-title>
             <mat-card-content>
                 <button mat-stroked-button color="primary" (click)="logInAsync()" [disabled]="!canLogIn">
                     <span *appBusyIndicator="isLoggingIn"></span>
-                    Log In!
+                    {{ 'infrastructure.app-shell.security.logIn' | translate }}
                 </button>
             </mat-card-content>
         </mat-card>

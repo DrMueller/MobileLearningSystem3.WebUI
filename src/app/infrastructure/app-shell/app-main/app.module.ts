@@ -50,7 +50,7 @@ export function initializeApp(appInitService: AppInitService): Function {
         deps: [HttpClient]
       }
     }),
-
+    TranslateModule,
     // Areas
     HomeModule.forRoot(),
     FactsModule.forRoot(),

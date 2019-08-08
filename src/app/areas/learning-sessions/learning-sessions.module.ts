@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { EditorModule } from 'primeng/editor';
 import { AppAreaProviderToken } from 'src/app/infrastructure/app-shell/app-areas/constants';
 import { MatDependenciesModule } from 'src/app/infrastructure/mat-dependencies';
@@ -34,7 +35,8 @@ import { SessionRunComponent } from './runs/components/session-run';
     LearningSessionsServicesModule,
     MatDependenciesModule,
     RxFormsModule,
-    TablesModule
+    TablesModule,
+    TranslateModule
   ]
 })
 export class LearningSessionsModule {
