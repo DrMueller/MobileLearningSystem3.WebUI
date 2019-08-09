@@ -1,0 +1,81 @@
+{
+	"areas": {
+		"facts": {
+			"edit": {
+				"copySavedFact": ""
+			},
+			"overview": {
+				"deleteAllFactsHeading": "",
+				"deleteAllFactsQuestion": ""
+			}
+		},
+		"home": {
+			"welcome": {
+				"accentButton": "",
+				"accentNativeButton": "",
+				"busy": "",
+				"buttonsHeading": "",
+				"disabledButton": "",
+				"primaryButton": "",
+				"primaryNativeButton": "",
+				"progressiveWebApp": "",
+				"saveAsPwa": "",
+				"warnButton": "",
+				"warnNativeButton": ""
+			}
+		},
+		"learning-sessions": {
+			"edit": {
+				"enterSessionName": "",
+				"factsSelectionHeading": ""
+			},
+			"overview": {
+				"run": ""
+			},
+			"runs": {
+				"reshuffle": ""
+			}
+		}
+	},
+	"common": {
+		"actions": "",
+		"cancel": "",
+		"create": "",
+		"deleteAll": "",
+		"no": "",
+		"overview": "",
+		"save": "",
+		"yes": ""
+	},
+	"infrastructure": {
+		"app-shell": {
+			"app-navigation": {
+				"logIn": "Hello",
+				"logOut": "",
+				"switchLanguage": "",
+				"switchToEnglish": "",
+				"switchToGerman": "",
+				"welcomeHeading": ""
+			},
+			"error-handling": {
+				"errorDialogHeading": "",
+				"errorMessage": "",
+				"errorName": ""
+			},
+			"security": {
+				"guest": "",
+				"logIn": ""
+			}
+		},
+		"shared-features": {
+			"rx-forms": {
+				"validation-error-maxlength": "",
+				"validation-error-minlength": "",
+				"validation-error-required": ""
+			},
+			"tables": {
+				"enterSearchText": ""
+			}
+		}
+	}
+}

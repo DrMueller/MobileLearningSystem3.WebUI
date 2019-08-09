@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { MatDependenciesModule } from '../../mat-dependencies';
 
@@ -19,7 +20,8 @@ import { MatTableComponent } from './components/mat-table';
   imports: [
     CommonModule,
     FormsModule,
-    MatDependenciesModule
+    MatDependenciesModule,
+    TranslateModule
   ],
 })
 export class TablesModule { }

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { MatDependenciesModule } from '../../mat-dependencies';
 
@@ -18,7 +19,8 @@ import { EnquiryService } from './services';
   ],
   imports: [
     CommonModule,
-    MatDependenciesModule
+    MatDependenciesModule,
+    TranslateModule
   ]
 })
 export class EnquiryDialogModule { }

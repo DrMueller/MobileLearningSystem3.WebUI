@@ -1,78 +1,81 @@
 {
-    "common": {
-        "actions": "Actions",
-        "yes": "Yes",
-        "no": "No"
+  "common": {
+    "actions": "Actions",
+    "cancel": "Cancel",
+    "create": "Create",
+    "deleteAll": "Delete all",
+    "no": "No",
+    "overview": "Overview",
+    "save": "Save",
+    "yes": "Yes"
+  },
+  "areas": {
+    "facts": {
+      "overview": {
+        "deleteAllFactsHeading": "Deleting all Facts",
+        "deleteAllFactsQuestion": "Are you sure to delete all Facts?"
+      },
+      "edit": {
+        "copySavedFact":"Copy saved Fact"
+      }
     },
-    "areas": {
-        "facts": {
-            "overview": {
-                "create": "Create",
-                "deleteAll": "Delete all",
-                "deleteAllFactsHeading": "Deleting all Facts",
-                "deleteAllFactsQuestion": "Are you sure to delete all Facts?"
-            }
-        },
-        "home": {
-            "welcome": {
-                "accentButton": "Accent",
-                "accentNativeButton": "Accent Native",
-                "busy": "Busy!",
-                "buttonsHeading": "Fun with Buttons",
-                "disabledButton": "Disabled",
-                "primaryButton": "Primary",
-                "primaryNativeButton": "Primary Native",
-                "saveAsPwa": "Save as PWA",
-                "warnNativeButton": "Warn Native",
-                "warnButton": "Warn"
-            }
-        },
-        "learning-sessions": {
-            "edit": {
-                "actionsheading": "Actions",
-                "enterSessionName": "Enter Session Name",
-                "factsSelectionHeading": "Facts",
-                "save": "Save",
-                "cancel": "cancel"
-            },
-            "overview": {
-                "cancel": "Cancel",
-                "create": "Create",
-                "deleteAll": "Delete all",
-                "run": "Run!"
-            },
-            "runs": {
-                "reshuffle": "Reshuffle"
-            }
-        }
+    "home": {
+      "welcome": {
+        "accentButton": "Accent",
+        "accentNativeButton": "Accent Native",
+        "busy": "Busy!",
+        "buttonsHeading": "Fun with Buttons",
+        "disabledButton": "Disabled",
+        "primaryButton": "Primary",
+        "primaryNativeButton": "Primary Native",
+        "progressiveWebApp": "Progressive Web App",
+        "saveAsPwa": "Save as PWA",
+        "warnNativeButton": "Warn Native",
+        "warnButton": "Warn"
+      }
     },
-    "infrastructure": {
-        "app-shell": {
-            "app-navigation": {
-                "logIn": "Log in",
-                "logOut": "Log out",
-                "switchLanguage": "Switch language",
-                "switchToGerman": "German",
-                "switchToEnglish": "English",
-                "welcomeHeading": "Welcome, {{userName}}"
-            },
-            "error-handling": {
-                "errorDialogTitle": "Error Ho!",
-                "errorName": "Error Name:",
-                "errorMessage": "Error Message:"
-            },
-            "security": {
-                "actions": "Actions",
-                "guest": "guest",
-                "logIn": "Log in!"
-            }
-        },
-        "shared-features": {
-            "rx-forms": {
-                "validation-error-maxlength": "Expected length is maximum of {{requiredLength}}, actual length is {{actualLength}}.",
-                "validation-error-minlength": "Expected length is minimum of {{requiredLength}}, actual length is {{error.actualLength}}.",
-                "validation-error-required": "Field is required."
-            }
-        }
+    "learning-sessions": {
+      "edit": {
+        "enterSessionName": "Enter Session Name",
+        "factsSelectionHeading": "Facts"
+      },
+      "overview": {
+        "run": "Run!"
+      },
+      "runs": {
+        "reshuffle": "Reshuffle"
+      }
     }
+  },
+  "infrastructure": {
+    "app-shell": {
+      "app-navigation": {
+        "logIn": "Log in",
+        "logOut": "Log out",
+        "switchLanguage": "Switch language",
+        "switchToGerman": "German",
+        "switchToEnglish": "English",
+        "welcomeHeading": "Welcome, {{userName}}"
+      },
+      "error-handling": {
+        "errorDialogHeading": "Error Ho!",
+        "errorName": "Error Name:",
+        "errorMessage": "Error Message:"
+      },
+      "security": {
+        "guest": "guest",
+        "logIn": "Log in!"
+      }
+    },
+    "shared-features": {
+      "rx-forms": {
+        "validation-error-maxlength": "Expected length is maximum of {{requiredLength}}, actual length is {{actualLength}}.",
+        "validation-error-minlength": "Expected length is minimum of {{requiredLength}}, actual length is {{error.actualLength}}.",
+        "validation-error-required": "Field is required."
+      },
+      "tables": {
+        "enterSearchText": "Enter search text"
+      }
+    }
+  }
 }
