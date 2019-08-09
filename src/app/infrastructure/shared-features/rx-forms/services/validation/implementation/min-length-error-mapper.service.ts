@@ -19,10 +19,11 @@ export class MinLengthErrorMapperService implements IValidationErrorMapperServic
       return ValidationErrorMappingResult.createNonSuccess();
     }
 
-    const message = this.translator.instant('infrastructure.shared-features.rx-forms.validation-error-minlength', {
-      requiredLength: error.requiredLength,
-      actualLength: error.actualLength
-    });
+    const message = this
+      .translator.instant('infrastructure.shared-features.rx-forms.services.validation.implementation.validation-error-minlength', {
+        requiredLength: error.requiredLength,
+        actualLength: error.actualLength
+      });
 
     return new ValidationErrorMappingResult(true, new ValidationError(this.errorKey, message));
   }

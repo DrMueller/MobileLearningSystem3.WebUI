@@ -52,8 +52,8 @@ export class FactsOverviewComponent implements OnInit {
   }
 
   public async deleteAllFactsAsync(): Promise<void> {
-    const deleteHeading = await this.translator.get('areas.facts.overview.deleteAllFactsHeading').toPromise();
-    const deleteQuestion = await this.translator.get('areas.facts.overview.deleteAllFactsQuestion').toPromise();
+    const deleteHeading = await this.translator.get('areas.facts.overview.components.facts-overview.deleteAllFactsHeading').toPromise();
+    const deleteQuestion = await this.translator.get('areas.facts.overview.components.facts-overview.deleteAllFactsQuestion').toPromise();
 
     this.enquiryService.ask(new Enquiry(deleteHeading, deleteQuestion))
       .subscribe(async qr => {

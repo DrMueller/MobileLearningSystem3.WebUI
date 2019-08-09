@@ -2,7 +2,7 @@
   <div class="welcome-container">
     <div class="welcome-container-item">
       <span>
-        {{ 'infrastructure.app-shell.app-navigation.welcomeHeading' | translate:{userName: userName} }}
+        {{ 'infrastructure.app-shell.app-navigation.components.user-menu.welcomeHeading' | translate:{userName: userName} }}
       </span>
     </div>
   </div>
@@ -15,24 +15,24 @@
 
   <div>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item [matMenuTriggerFor]="subMenu">{{ 'infrastructure.app-shell.app-navigation.switchLanguage' | translate }}</button>
+      <button mat-menu-item [matMenuTriggerFor]="subMenu">{{ 'infrastructure.app-shell.app-navigation.components.user-menu.switchLanguage' | translate }}</button>
       <mat-divider></mat-divider>
 
       <ng-container *ngIf=" !isUserAuthenticated">
-        <button mat-menu-item (click)="logIn()">{{ 'infrastructure.app-shell.app-navigation.logIn' | translate }}</button>
+        <button mat-menu-item (click)="logIn()">{{ 'infrastructure.app-shell.app-navigation.components.user-menu.logIn' | translate }}</button>
       </ng-container>
 
       <ng-container *ngIf="isUserAuthenticated">
-        <button mat-menu-item (click)="logOut()">{{ 'infrastructure.app-shell.app-navigation.logOut' | translate }}</button>
+        <button mat-menu-item (click)="logOut()">{{ 'infrastructure.app-shell.app-navigation.components.user-menu.logOut' | translate }}</button>
       </ng-container>
     </mat-menu>
 
     <mat-menu #subMenu="matMenu">
       <mat-radio-group [value]="currentLanguage">
         <div class="language-container">
-          <mat-radio-button class="language-button" value="en" (click)="switchLanguageToEnglish()">{{ 'infrastructure.app-shell.app-navigation.switchToEnglish' | translate }}
+          <mat-radio-button class="language-button" value="en" (click)="switchLanguageToEnglish()">{{ 'infrastructure.app-shell.app-navigation.components.user-menu.switchToEnglish' | translate }}
           </mat-radio-button>
-          <mat-radio-button class="language-button" value="de" (click)="switchLanguageToGerman()">{{ 'infrastructure.app-shell.app-navigation.switchToGerman' | translate }}
+          <mat-radio-button class="language-button" value="de" (click)="switchLanguageToGerman()">{{ 'infrastructure.app-shell.app-navigation.components.user-menu.switchToGerman' | translate }}
           </mat-radio-button>
         </div>
       </mat-radio-group>

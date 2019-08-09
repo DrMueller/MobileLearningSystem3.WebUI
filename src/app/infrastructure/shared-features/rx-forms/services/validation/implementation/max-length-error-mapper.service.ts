@@ -19,10 +19,11 @@ export class MaxLengthErrorMapperService implements IValidationErrorMapperServic
       return ValidationErrorMappingResult.createNonSuccess();
     }
 
-    const message = this.translator.instant('infrastructure.shared-features.rx-forms.validation-error-maxlength', {
-      requiredLength: error.requiredLength,
-      actualLength: error.actualLength
-    });
+    const message = this
+      .translator.instant('infrastructure.shared-features.rx-forms.services.validation.implementation.validation-error-maxlength', {
+        requiredLength: error.requiredLength,
+        actualLength: error.actualLength
+      });
 
     return new ValidationErrorMappingResult(true, new ValidationError(this.errorKey, message));
   }

@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "extract-i18n": "ngx-translate-extract --input ./src --output ./src/assets/i18n/ --clean --sort --format namespaced-json",
+    "extract-i18n": "ngx-translate-extract --input ./src --output ./src/assets/i18n/en.json --clean --sort --format namespaced-json",
     "ci-build-prod": "ng build --prod",
     "ci-unit-test": "ng run mls3-webui:ci-unit-test",
     "ci-lint": "tslint --project tslint.json --format junit --out testresults/lint-tests.xml",

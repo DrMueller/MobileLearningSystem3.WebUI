@@ -1,4 +1,69 @@
 {
+  "areas": {
+    "facts": {
+      "edit": {
+        "components": {
+          "fact-edit": {
+            "copySavedFact": "Copy saved Fact",
+            "enterQuestion": "Enter Question"
+          }
+        }
+      },
+      "overview": {
+        "components": {
+          "facts-overview": {
+            "deleteAllFactsHeading": "Deleting all Facts",
+            "deleteAllFactsQuestion": "Are you sure to delete all Facts?"
+          }
+        }
+      }
+    },
+    "home": {
+      "welcome": {
+        "components": {
+          "welcome": {
+            "accentButton": "Accent",
+            "accentNativeButton": "Accent Native",
+            "busy": "Busy!",
+            "buttonsHeading": "Fun with Buttons",
+            "disabledButton": "Disabled",
+            "primaryButton": "Primary",
+            "primaryNativeButton": "Primary Native",
+            "progressiveWebApp": "Progressive Web App",
+            "saveAsPwa": "Save as PWA",
+            "warnButton": "Warn",
+            "warnNativeButton": "Warn Native"
+          }
+        }
+      }
+    },
+    "learning-sessions": {
+      "edit": {
+        "components": {
+          "facts-selection": {
+            "factsSelectionHeading": "Facts"
+          },
+          "learning-session-edit": {
+            "enterSessionName": "Enter Session Name"
+          }
+        }
+      },
+      "overview": {
+        "components": {
+          "learning-sessions-overview": {
+            "run": "Run!"
+          }
+        }
+      },
+      "runs": {
+        "components": {
+          "session-run": {
+            "reshuffle": "Reshuffle"
+          }
+        }
+      }
+    }
+  },
   "common": {
     "actions": "Actions",
     "cancel": "Cancel",
@@ -9,58 +74,28 @@
     "save": "Save",
     "yes": "Yes"
   },
-  "areas": {
-    "facts": {
-      "overview": {
-        "deleteAllFactsHeading": "Deleting all Facts",
-        "deleteAllFactsQuestion": "Are you sure to delete all Facts?"
-      },
-      "edit": {
-        "copySavedFact":"Copy saved Fact"
-      }
-    },
-    "home": {
-      "welcome": {
-        "accentButton": "Accent",
-        "accentNativeButton": "Accent Native",
-        "busy": "Busy!",
-        "buttonsHeading": "Fun with Buttons",
-        "disabledButton": "Disabled",
-        "primaryButton": "Primary",
-        "primaryNativeButton": "Primary Native",
-        "progressiveWebApp": "Progressive Web App",
-        "saveAsPwa": "Save as PWA",
-        "warnNativeButton": "Warn Native",
-        "warnButton": "Warn"
-      }
-    },
-    "learning-sessions": {
-      "edit": {
-        "enterSessionName": "Enter Session Name",
-        "factsSelectionHeading": "Facts"
-      },
-      "overview": {
-        "run": "Run!"
-      },
-      "runs": {
-        "reshuffle": "Reshuffle"
-      }
-    }
-  },
   "infrastructure": {
     "app-shell": {
       "app-navigation": {
-        "logIn": "Log in",
-        "logOut": "Log out",
-        "switchLanguage": "Switch language",
-        "switchToGerman": "German",
-        "switchToEnglish": "English",
-        "welcomeHeading": "Welcome, {{userName}}"
+        "components": {
+          "user-menu": {
+            "logIn": "Log in",
+            "logOut": "Log out",
+            "switchLanguage": "Switch language",
+            "switchToEnglish": "English",
+            "switchToGerman": "German",
+            "welcomeHeading": "Welcome, {{userName}}"
+          }
+        }
       },
       "error-handling": {
-        "errorDialogHeading": "Error Ho!",
-        "errorName": "Error Name:",
-        "errorMessage": "Error Message:"
+        "components": {
+          "error-display": {
+            "errorDialogHeading": "Error Ho!",
+            "errorMessage": "Error Message:",
+            "errorName": "Error Name:"
+          }
+        }
       },
       "security": {
         "guest": "guest",
@@ -69,12 +104,22 @@
     },
     "shared-features": {
       "rx-forms": {
-        "validation-error-maxlength": "Expected length is maximum of {{requiredLength}}, actual length is {{actualLength}}.",
-        "validation-error-minlength": "Expected length is minimum of {{requiredLength}}, actual length is {{error.actualLength}}.",
-        "validation-error-required": "Field is required."
+        "services": {
+          "validation": {
+            "implementation": {
+              "validation-error-maxlength": "Expected length is maximum of {{requiredLength}}, actual length is {{actualLength}}.",
+              "validation-error-minlength": "Expected length is minimum of {{requiredLength}}, actual length is {{actualLength}}.",
+              "validation-error-required": "Field is required."
+            }
+          }
+        }
       },
       "tables": {
-        "enterSearchText": "Enter search text"
+        "components": {
+          "mat-table": {
+            "enterSearchText": "Enter search text"
+          }
+        }
       }
     }
   }

@@ -3,7 +3,7 @@
     <mat-card-content>
         <button mat-stroked-button color="primary" (click)="saveAsync()" [disabled]="!canSave">{{ 'common.save' | translate }}
         </button>
-        <button mat-stroked-button color="accent" (click)="copySavedFact()" [disabled]="!canCopySavedFact">{{ 'areas.facts.edit.copySavedFact' | translate }}</button>
+        <button mat-stroked-button color="accent" (click)="copySavedFact()" [disabled]="!canCopySavedFact">{{ 'areas.facts.edit.components.fact-edit.copySavedFact' | translate }}</button>
         <button mat-stroked-button color="warn" (click)="cancel()">{{ 'common.cancel' | translate }}</button>
     </mat-card-content>
 </mat-card>
@@ -14,7 +14,7 @@
         <form class="example-form" [formGroup]="formGroup">
             <div class="form-fields-container">
                 <mat-form-field>
-                    <input matInput type="text" placeholder="Enter question" formControlName="questionText">
+                    <input matInput type="text" placeholder="{{ 'areas.facts.edit.components.fact-edit.enterQuestion' | translate }}" formControlName="questionText">
                     <mat-error [appValidationErrors]="formGroup.controls['questionText']"></mat-error>
                 </mat-form-field>
 

@@ -2,7 +2,7 @@
     <mat-card-title>{{ 'common.actions' | translate }}</mat-card-title>
     <mat-card-content>
         <button mat-stroked-button color="primary" (click)="createSession()">{{ 'common.create' | translate }}</button>
-        <button mat-stroked-button color="accent" (click)="runSession()" [disabled]="!canRunSession">{{ 'areas.learning-sessions.overview.run' | translate }}</button>
+        <button mat-stroked-button color="accent" (click)="runSession()" [disabled]="!canRunSession">{{ 'areas.learning-sessions.overview.components.learning-sessions-overview.run' | translate }}</button>
         <button mat-stroked-button color="warn" (click)="deleteAllSessionsAsync()">{{ 'common.deleteAll' | translate }}</button>
     </mat-card-content>
 </mat-card>

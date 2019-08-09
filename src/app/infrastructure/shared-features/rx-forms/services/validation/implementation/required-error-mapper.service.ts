@@ -19,7 +19,8 @@ export class RequiredErrorMapperService implements IValidationErrorMapperService
       return ValidationErrorMappingResult.createNonSuccess();
     }
 
-    const message = this.translator.instant('infrastructure.shared-features.rx-forms.validation-error-required');
+    const message = this.translator
+      .instant('infrastructure.shared-features.rx-forms.services.validation.implementation.validation-error-required');
     return new ValidationErrorMappingResult(true, new ValidationError(this.errorKey, message));
   }
 }
