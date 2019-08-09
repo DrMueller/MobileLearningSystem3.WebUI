@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
 import { LoadingIndicatorService } from 'src/app/infrastructure/core-services/loading-indication/services';
+import { SnackBarService } from 'src/app/infrastructure/core-services/snack-bar/services';
 import { Enquiry, QuestionResult } from 'src/app/infrastructure/shared-features/enquiry-dialog/model';
 import { EnquiryService } from 'src/app/infrastructure/shared-features/enquiry-dialog/services';
 import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
@@ -30,7 +31,8 @@ export class FactsOverviewComponent implements OnInit {
     private navigator: FactsNavigationService,
     private enquiryService: EnquiryService,
     private loadingIndicator: LoadingIndicatorService,
-    private translator: TranslateService) { }
+    private translator: TranslateService,
+    private snackBarService: SnackBarService) { }
 
   public async deleteAsync(factId: string): Promise<void> {
     const factIdParsed = parseInt(factId, 10);
@@ -61,6 +63,11 @@ export class FactsOverviewComponent implements OnInit {
           await this.dataService.deleteAllFactsAsync();
           const clonsedArray = Object.assign([], this.overviewEntries);
           this.table.deleteEntries(clonsedArray);
+
+          const allFactsDeletedInfo = await this.translator
+            .get('areas.facts.overview.components.facts-overview.allFactsDeleted')
+            .toPromise();
+          this.snackBarService.showSnackBar(allFactsDeletedInfo);
         }
       });
   }

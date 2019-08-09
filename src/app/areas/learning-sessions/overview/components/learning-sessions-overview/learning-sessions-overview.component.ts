@@ -1,5 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { LoadingIndicatorService } from 'src/app/infrastructure/core-services/loading-indication/services';
+import { SnackBarService } from 'src/app/infrastructure/core-services/snack-bar/services';
 import { Enquiry, QuestionResult } from 'src/app/infrastructure/shared-features/enquiry-dialog/model';
 import { EnquiryService } from 'src/app/infrastructure/shared-features/enquiry-dialog/services';
 import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
@@ -29,7 +31,9 @@ export class LearningSessionsOverviewComponent implements OnInit {
     private dataService: LearningSessionsOverviewEntryDataService,
     private navigator: LearningSessionsNavigationService,
     private enquiryService: EnquiryService,
-    private loadingIndicator: LoadingIndicatorService) { }
+    private loadingIndicator: LoadingIndicatorService,
+    private translator: TranslateService,
+    private snackBarService: SnackBarService) { }
 
   public async deleteAsync(sessionId: string): Promise<void> {
     const factIdParsed = parseInt(sessionId, 10);
@@ -51,12 +55,24 @@ export class LearningSessionsOverviewComponent implements OnInit {
   }
 
   public async deleteAllSessionsAsync(): Promise<void> {
-    this.enquiryService.ask(new Enquiry('Deleting all Sessions', 'Are you sure to delete all Sessions?'))
+    const deleteHeading = await this
+      .translator
+      .get('areas.learning-sessions.overview.components.learning-sessions-overview.deleteAllSessionsHeading').toPromise();
+    const deleteQuestion = await this
+      .translator
+      .get('areas.learning-sessions.overview.components.learning-sessions-overview.deleteAllSessionsQuestion').toPromise();
+
+    this.enquiryService.ask(new Enquiry(deleteHeading, deleteQuestion))
       .subscribe(async qr => {
         if (qr === QuestionResult.Yes) {
           await this.dataService.deleteAllSessionsAsync();
           const clonsedArray = Object.assign([], this.overviewEntries);
           this.table.deleteEntries(clonsedArray);
+
+          const allSessionsDeleted = await this
+            .translator
+            .get('areas.learning-sessions.overview.components.learning-sessions-overview.allSessionsDeleted').toPromise();
+          this.snackBarService.showSnackBar(allSessionsDeleted);
         }
       });
   }

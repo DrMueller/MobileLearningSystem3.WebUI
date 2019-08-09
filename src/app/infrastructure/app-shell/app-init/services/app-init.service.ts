@@ -19,11 +19,12 @@ export class AppInitService {
   ) { }
 
   public async initializeAppAsync(): Promise<void> {
+    await this.appSettingsSingleton.initializeAsync();
+    await this.securityUserSingleton.initializeAsync();
     this.appConnectivity.initialize();
     this.installPwaPrompt.registerUpdateAvaliableCallback();
     this.initializeTranslations();
-    await this.appSettingsSingleton.initializeAsync();
-    await this.securityUserSingleton.initializeAsync();
+
   }
 
   private initializeTranslations(): void {

@@ -10,16 +10,23 @@
   <mat-card-title>{{ 'areas.home.welcome.components.welcome.buttonsHeading' | translate }}</mat-card-title>
   <mat-card-content>
     <p>
-      <button mat-stroked-button class="btn btn-primary">{{ 'areas.home.welcome.components.welcome.primaryButton' | translate }}</button>
-      <button mat-stroked-button class="btn btn-accent">{{ 'areas.home.welcome.components.welcome.accentButton' | translate }}</button>
-      <button mat-stroked-button class="btn btn-warn">{{ 'areas.home.welcome.components.welcome.warnButton' | translate }}</button>
-      <button mat-stroked-button class="btn btn-disabled">{{ 'areas.home.welcome.components.welcome.disabledButton' | translate }}</button>
+      <button mat-stroked-button
+        class="btn btn-primary">{{ 'areas.home.welcome.components.welcome.primaryButton' | translate }}</button>
+      <button mat-stroked-button
+        class="btn btn-accent">{{ 'areas.home.welcome.components.welcome.accentButton' | translate }}</button>
+      <button mat-stroked-button
+        class="btn btn-warn">{{ 'areas.home.welcome.components.welcome.warnButton' | translate }}</button>
+      <button mat-stroked-button
+        class="btn btn-disabled">{{ 'areas.home.welcome.components.welcome.disabledButton' | translate }}</button>
     </p>
 
     <p>
-      <button mat-stroked-button color="primary">{{ 'areas.home.welcome.components.welcome.primaryNativeButton' | translate }}</button>
-      <button mat-stroked-button color="accent">{{ 'areas.home.welcome.components.welcome.accentNativeButton' | translate }}</button>
-      <button mat-stroked-button color="warn">{{ 'areas.home.welcome.components.welcome.warnNativeButton' | translate }}</button>
+      <button mat-stroked-button
+        color="primary">{{ 'areas.home.welcome.components.welcome.primaryNativeButton' | translate }}</button>
+      <button mat-stroked-button
+        color="accent">{{ 'areas.home.welcome.components.welcome.accentNativeButton' | translate }}</button>
+      <button mat-stroked-button
+        color="warn">{{ 'areas.home.welcome.components.welcome.warnNativeButton' | translate }}</button>
     </p>
 
     <p>
@@ -27,6 +34,16 @@
         <span *appBusyIndicator="isBusyIndicatorShown"></span>
         <span>{{ 'areas.home.welcome.components.welcome.busy' | translate }}</span>
       </button>
+    </p>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-title>{{ 'areas.home.welcome.components.welcome.otherFunctionsHeading' | translate }}</mat-card-title>
+  <mat-card-content>
+    <p>
+      <button mat-stroked-button
+        class="btn btn-primary" (click)="showSnackBarAsync()">{{ 'areas.home.welcome.components.welcome.showSnackBar' | translate }}</button>
     </p>
   </mat-card-content>
 </mat-card>
