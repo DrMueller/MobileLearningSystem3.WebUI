@@ -10,12 +10,8 @@
 				}
 			},
 			"overview": {
-				"components": {
-					"facts-overview": {
-						"allFactsDeleted": "All Facts deleted",
-						"deleteAllFactsHeading": "Deleting all Facts",
-						"deleteAllFactsQuestion": "Are you sure to delete all Facts?"
-					}
+				"services": {
+					"questionHeading": "Question"
 				}
 			}
 		},
@@ -55,11 +51,11 @@
 			"overview": {
 				"components": {
 					"learning-sessions-overview": {
-						"allSessionsDeleted": "All Sessions deleted",
-						"deleteAllSessionsHeading": "Deleting all Sessions",
-						"deleteAllSessionsQuestion": "Are you sure to delete all Sessions?",
 						"run": "Run!"
 					}
+				},
+				"services": {
+					"amountOfFacts": "Facts"
 				}
 			},
 			"runs": {
@@ -75,7 +71,9 @@
 		"actions": "Actions",
 		"cancel": "Cancel",
 		"create": "Create",
+		"created": "Created",
 		"deleteAll": "Delete all",
+		"name": "Name",
 		"no": "No",
 		"overview": "Overview",
 		"save": "Save",

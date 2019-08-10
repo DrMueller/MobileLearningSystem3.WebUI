@@ -1,4 +1,5 @@
 import { Injectable, TemplateRef } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
 import { ColDefBuilderFactoryService } from 'src/app/infrastructure/shared-features/tables/services';
 
@@ -9,16 +10,22 @@ import { LearningSessionOverviewEntry } from '../models';
   providedIn: LearningSessionsServicesModule
 })
 export class LearningSessionsOverviewColDefBuilderService {
-  public constructor(private builderFactory: ColDefBuilderFactoryService) { }
+  public constructor(
+    private builderFactory: ColDefBuilderFactoryService,
+    private translator: TranslateService) { }
 
-  public buildDefinitions(
+  public async buildDefinitionsAsync(
     editTemplate: TemplateRef<any>,
-    deleteTemplate: TemplateRef<any>): ColumnDefinitionsContainer {
+    deleteTemplate: TemplateRef<any>): Promise<ColumnDefinitionsContainer> {
+
+    const amountHeading = await this.translator.get('areas.learning-sessions.overview.services.amountOfFacts').toPromise();
+    const sessionNameHeading = await this.translator.get('common.name').toPromise();
+
     return this.builderFactory
       .startBuilding()
       .withColumn('id', 'ID', 'id-cell').bindingTo<LearningSessionOverviewEntry>('id')
-      .withColumn('questionText', 'Facts', 'facts-cell').bindingTo<LearningSessionOverviewEntry>('amountOfFacts')
-      .withColumn('creationDate', 'Name').bindingTo<LearningSessionOverviewEntry>('sessionName')
+      .withColumn('questionText', amountHeading, 'facts-cell').bindingTo<LearningSessionOverviewEntry>('amountOfFacts')
+      .withColumn('name', sessionNameHeading).bindingTo<LearningSessionOverviewEntry>('sessionName')
       .withColumn('editTemplate', '', 'button-cell').withTemplate(editTemplate)
       .withColumn('deleteTemplate', '', 'button-cell').withTemplate(deleteTemplate)
       .build();

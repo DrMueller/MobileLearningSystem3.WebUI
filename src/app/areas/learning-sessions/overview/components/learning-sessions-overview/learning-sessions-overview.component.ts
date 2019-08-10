@@ -25,6 +25,7 @@ export class LearningSessionsOverviewComponent implements OnInit {
   public overviewEntries: LearningSessionOverviewEntry[] = [];
 
   private _selectedEntry: LearningSessionOverviewEntry | undefined;
+  private _nameSpace = 'areas.learning-sessions.overview.components.learning-sessions-overview.';
 
   public constructor(
     private colDefBuilder: LearningSessionsOverviewColDefBuilderService,
@@ -45,7 +46,7 @@ export class LearningSessionsOverviewComponent implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     this.loadingIndicator.withLoadingIndicator(async () => {
-      this.columnDefinitions = this.colDefBuilder.buildDefinitions(this.editTemplate, this.deleteTemplate);
+      this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.editTemplate, this.deleteTemplate);
       this.overviewEntries = await this.dataService.loadOverviewAsync();
     });
   }
@@ -55,12 +56,8 @@ export class LearningSessionsOverviewComponent implements OnInit {
   }
 
   public async deleteAllSessionsAsync(): Promise<void> {
-    const deleteHeading = await this
-      .translator
-      .get('areas.learning-sessions.overview.components.learning-sessions-overview.deleteAllSessionsHeading').toPromise();
-    const deleteQuestion = await this
-      .translator
-      .get('areas.learning-sessions.overview.components.learning-sessions-overview.deleteAllSessionsQuestion').toPromise();
+    const deleteHeading = await this.translator.get(`${this._nameSpace}deleteAllSessionsHeading`).toPromise();
+    const deleteQuestion = await this.translator.get(`${this._nameSpace}deleteAllSessionsQuestion`).toPromise();
 
     this.enquiryService.ask(new Enquiry(deleteHeading, deleteQuestion))
       .subscribe(async qr => {
@@ -69,9 +66,7 @@ export class LearningSessionsOverviewComponent implements OnInit {
           const clonsedArray = Object.assign([], this.overviewEntries);
           this.table.deleteEntries(clonsedArray);
 
-          const allSessionsDeleted = await this
-            .translator
-            .get('areas.learning-sessions.overview.components.learning-sessions-overview.allSessionsDeleted').toPromise();
+          const allSessionsDeleted = await this.translator.get(`${this._nameSpace}allSessionsDeleted`).toPromise();
           this.snackBarService.showSnackBar(allSessionsDeleted);
         }
       });

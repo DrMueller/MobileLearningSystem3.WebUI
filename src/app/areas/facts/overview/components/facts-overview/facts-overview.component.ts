@@ -19,11 +19,13 @@ import { FactsOverviewColDefBuilderService } from '../../services';
   styleUrls: ['./facts-overview.component.scss']
 })
 export class FactsOverviewComponent implements OnInit {
+
   public columnDefinitions: ColumnDefinitionsContainer;
   @ViewChild('deleteTemplate', { static: true }) public deleteTemplate: TemplateRef<any>;
   @ViewChild('editTemplate', { static: true }) public editTemplate: TemplateRef<any>;
   @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<FactOverviewEntry>;
   public overviewEntries: FactOverviewEntry[] = [];
+  private readonly _nameSpace = 'areas.facts.overview.components.facts-overview.';
 
   public constructor(
     private colDefBuilder: FactsOverviewColDefBuilderService,
@@ -44,7 +46,7 @@ export class FactsOverviewComponent implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     this.loadingIndicator.withLoadingIndicator(async () => {
-      this.columnDefinitions = this.colDefBuilder.buildDefinitions(this.editTemplate, this.deleteTemplate);
+      this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.editTemplate, this.deleteTemplate);
       this.overviewEntries = await this.dataService.loadOverviewAsync();
     });
   }
@@ -54,8 +56,8 @@ export class FactsOverviewComponent implements OnInit {
   }
 
   public async deleteAllFactsAsync(): Promise<void> {
-    const deleteHeading = await this.translator.get('areas.facts.overview.components.facts-overview.deleteAllFactsHeading').toPromise();
-    const deleteQuestion = await this.translator.get('areas.facts.overview.components.facts-overview.deleteAllFactsQuestion').toPromise();
+    const deleteHeading = await this.translator.get(`${this._nameSpace}deleteAllFactsHeading`).toPromise();
+    const deleteQuestion = await this.translator.get(`${this._nameSpace}deleteAllFactsQuestion`).toPromise();
 
     this.enquiryService.ask(new Enquiry(deleteHeading, deleteQuestion))
       .subscribe(async qr => {
@@ -65,7 +67,7 @@ export class FactsOverviewComponent implements OnInit {
           this.table.deleteEntries(clonsedArray);
 
           const allFactsDeletedInfo = await this.translator
-            .get('areas.facts.overview.components.facts-overview.allFactsDeleted')
+            .get(`${this._nameSpace}allFactsDeleted`)
             .toPromise();
           this.snackBarService.showSnackBar(allFactsDeletedInfo);
         }

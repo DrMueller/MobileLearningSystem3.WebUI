@@ -5,8 +5,9 @@
       <div class="top-area-container">
         <div class="top-area-item">
           <mat-form-field appearance="fill">
-            
-            <mat-label>{{ 'infrastructure.shared-features.tables.components.mat-table.enterSearchText' | translate }}</mat-label>
+
+            <mat-label>{{ 'infrastructure.shared-features.tables.components.mat-table.enterSearchText' | translate }}
+            </mat-label>
             <input matInput [ngModel]="searchText" (ngModelChange)="searchTextChanged($event)">
             <mat-icon matSuffix>search</mat-icon>
           </mat-form-field>
@@ -24,9 +25,9 @@
         <table mat-table [dataSource]="dataSource" matSort aria-label="Elements">
           <ng-container *ngIf="isSelectionAllowed">
             <ng-container matColumnDef="Select">
-              <th mat-header-cell *matHeaderCellDef [class.header-multi-selection]="canToggleAllSelections"
-                (click)="toggleAllSelections()">Selected</th>
-              <td mat-cell *matCellDef="let row">
+              <th mat-header-cell *matHeaderCellDef class="selected-row"
+                [class.header-multi-selection]="canToggleAllSelections" (click)="toggleAllSelections()">Selected</th>
+              <td mat-cell class="selected-row" *matCellDef="let row">
                 <mat-checkbox (click)="toggleRowSelection(row)" [checked]="isRowSelected(row)">
                 </mat-checkbox>
               </td>
