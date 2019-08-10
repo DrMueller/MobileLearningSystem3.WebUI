@@ -15,16 +15,21 @@ import { LearningSessionEditComponent } from './edit/components/learning-session
 import { LearningSessionsComponent } from './entry-point/components/learning-sessions/learning-sessions.component';
 import { LearningSessionsRoutingModule } from './learning-sessions-routing.module';
 import { LearningSessionsServicesModule } from './learning-sessions-services.module';
+import { ChunkEditDialogComponent } from './overview/components/chunk-edit-dialog/chunk-edit-dialog.component';
 import { LearningSessionsOverviewComponent } from './overview/components/learning-sessions-overview/learning-sessions-overview.component';
 import { SessionRunComponent } from './runs/components/session-run';
 
 @NgModule({
   declarations: [
+    ChunkEditDialogComponent,
     LearningSessionsComponent,
     LearningSessionsOverviewComponent,
     LearningSessionEditComponent,
     FactsSelectionComponent,
     SessionRunComponent
+  ],
+  entryComponents: [
+    ChunkEditDialogComponent
   ],
   imports: [
     CommonModule,

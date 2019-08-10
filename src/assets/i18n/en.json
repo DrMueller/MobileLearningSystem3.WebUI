@@ -50,7 +50,17 @@
 			},
 			"overview": {
 				"components": {
+					"chunk-edit-dialog": {
+						"chunkEditDialog": "Chunk definition",
+						"chunkNamePlaceholder": "Chunk name",
+						"chunkSizePlaceholder": "Chunk size"
+					},
 					"learning-sessions-overview": {
+						"allSessionsDeleted": "All Sessions delete",
+						"chunksCreated": "Chunks created",
+						"createChunks": "Create chunks",
+						"deleteAllSessionsHeading": "Delete all Sessions",
+						"deleteAllSessionsQuestion": "Are you sure to delete all Sessions?",
 						"run": "Run!"
 					}
 				},

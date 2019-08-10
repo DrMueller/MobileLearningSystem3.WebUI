@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { LoadingIndicatorService } from '../../core-services/loading-indication/services';
+import { BusyIndicatorService } from '../../core-services/loading-indication/services';
+
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,10 @@ import { LoadingIndicatorService } from '../../core-services/loading-indication/
 export class AppComponent {
 
   public constructor(
-    private loadingIndicator: LoadingIndicatorService) {
+    private busyIndicator: BusyIndicatorService) {
   }
 
   public get showLoadingIndicator$(): Observable<boolean> {
-    return this.loadingIndicator.showLoadingIndicator$;
+    return this.busyIndicator.showBusyIndicator$;
   }
 }

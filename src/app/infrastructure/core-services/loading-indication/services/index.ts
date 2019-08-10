@@ -1,1 +1,1 @@
-export * from './loading-indicator.service';
+export * from './busy-indicator.service';

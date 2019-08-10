@@ -1,28 +1,32 @@
 <mat-card class="mat-card">
-    <mat-card-title>{{ 'common.actions' | translate }}</mat-card-title>
-    <mat-card-content>
-        <button mat-stroked-button color="primary" (click)="createSession()">{{ 'common.create' | translate }}</button>
-        <button mat-stroked-button color="accent" (click)="runSession()" [disabled]="!canRunSession">{{ 'areas.learning-sessions.overview.components.learning-sessions-overview.run' | translate }}</button>
-        <button mat-stroked-button color="warn" (click)="deleteAllSessionsAsync()">{{ 'common.deleteAll' | translate }}</button>
-    </mat-card-content>
+  <mat-card-title>{{ 'common.actions' | translate }}</mat-card-title>
+  <mat-card-content>
+    <button mat-stroked-button color="primary" (click)="createSession()">{{ 'common.create' | translate }}</button>
+    <button mat-stroked-button color="primary"
+      (click)="createSessionChunks()">{{ 'areas.learning-sessions.overview.components.learning-sessions-overview.createChunks' | translate }}</button>
+    <button mat-stroked-button color="accent" (click)="runSession()"
+      [disabled]="!canRunSession">{{ 'areas.learning-sessions.overview.components.learning-sessions-overview.run' | translate }}</button>
+    <button mat-stroked-button color="warn"
+      (click)="deleteAllSessionsAsync()">{{ 'common.deleteAll' | translate }}</button>
+  </mat-card-content>
 </mat-card>
 
 <mat-card class="mat-card">
-    <mat-card-title>Overview</mat-card-title>
-    <mat-card-content>
-        <app-mat-table (selectionChanged)="selectionChanged($event)" [rowSelectionType]="1"
-            [columnDefinitions]="columnDefinitions" idSelector="id" [data]="overviewEntries">
-        </app-mat-table>
+  <mat-card-title>{{ 'common.overview' | translate }}</mat-card-title>
+  <mat-card-content>
+    <app-mat-table (selectionChanged)="selectionChanged($event)" [rowSelectionType]="1"
+      [columnDefinitions]="columnDefinitions" idSelector="id" [data]="overviewEntries">
+    </app-mat-table>
 
-        <ng-template #deleteTemplate>
-            <app-button-template #deleteTemplate materialIcon="delete_outline" materialColor="warn"
-                (buttonClick)=deleteAsync($event)></app-button-template>
-        </ng-template>
+    <ng-template #deleteTemplate>
+      <app-button-template #deleteTemplate materialIcon="delete_outline" materialColor="warn"
+        (buttonClick)=deleteAsync($event)></app-button-template>
+    </ng-template>
 
-        <ng-template #editTemplate>
-            <app-button-template #editTemplate materialIcon="edit" materialColor="primary" (buttonClick)=edit($event)>
-            </app-button-template>
-        </ng-template>
+    <ng-template #editTemplate>
+      <app-button-template #editTemplate materialIcon="edit" materialColor="primary" (buttonClick)=edit($event)>
+      </app-button-template>
+    </ng-template>
 
-    </mat-card-content>
+  </mat-card-content>
 </mat-card>

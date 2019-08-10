@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
-import { LoadingIndicatorService } from 'src/app/infrastructure/core-services/loading-indication/services';
+import { BusyIndicatorService } from 'src/app/infrastructure/core-services/loading-indication/services';
 import { SnackBarService } from 'src/app/infrastructure/core-services/snack-bar/services';
 import { Enquiry, QuestionResult } from 'src/app/infrastructure/shared-features/enquiry-dialog/model';
 import { EnquiryService } from 'src/app/infrastructure/shared-features/enquiry-dialog/services';
@@ -32,7 +32,7 @@ export class FactsOverviewComponent implements OnInit {
     private dataService: FactOverviewEntryDataService,
     private navigator: FactsNavigationService,
     private enquiryService: EnquiryService,
-    private loadingIndicator: LoadingIndicatorService,
+    private busyIndicator: BusyIndicatorService,
     private translator: TranslateService,
     private snackBarService: SnackBarService) { }
 
@@ -45,7 +45,7 @@ export class FactsOverviewComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    this.loadingIndicator.withLoadingIndicator(async () => {
+    this.busyIndicator.withBusyIndicator(async () => {
       this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.editTemplate, this.deleteTemplate);
       this.overviewEntries = await this.dataService.loadOverviewAsync();
     });

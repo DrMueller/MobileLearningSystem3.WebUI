@@ -8,7 +8,7 @@ import { Enquiry, QuestionResult } from '../model';
 
 @Injectable()
 export class EnquiryService {
-  constructor(private dialog: MatDialog) { }
+  public constructor(private dialog: MatDialog) { }
 
   public ask(enquiry: Enquiry): Observable<QuestionResult> {
     const config = new MatDialogConfig();
