@@ -42,8 +42,11 @@
   <mat-card-title>{{ 'areas.home.welcome.components.welcome.otherFunctionsHeading' | translate }}</mat-card-title>
   <mat-card-content>
     <p>
-      <button mat-stroked-button
-        class="btn btn-primary" (click)="showSnackBarAsync()">{{ 'areas.home.welcome.components.welcome.showSnackBar' | translate }}</button>
+      <button mat-stroked-button class="btn btn-primary"
+        (click)="showSnackBarAsync()">{{ 'areas.home.welcome.components.welcome.showSnackBar' | translate }}</button>
+
+      <button mat-stroked-button class="btn btn-primary"
+        (click)="sayHelloFromServerAsync()">{{ 'areas.home.welcome.components.welcome.sayHelloFromServer' | translate }}</button>
     </p>
   </mat-card-content>
 </mat-card>

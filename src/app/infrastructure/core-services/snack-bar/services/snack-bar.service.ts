@@ -17,7 +17,7 @@ export class SnackBarService {
 
     setTimeout(() => {
       this.snackBar.open(text, undefined, <MatSnackBarConfig<any>>{
-        duration: checkedConfig.displayDuration,
+        duration: checkedConfig.displayDurationInSeconds * 1000,
       });
     });
   }

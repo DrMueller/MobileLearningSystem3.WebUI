@@ -30,6 +30,8 @@
 						"primaryNativeButton": "Primary Native",
 						"progressiveWebApp": "Progressive Web App",
 						"saveAsPwa": "Save as PWA",
+						"sayHelloFromServer": "Say Hello from Server!",
+						"serverResponseInfo": "The Server said: ",
 						"showSnackBar": "Show SnackBar!",
 						"warnButton": "Warn",
 						"warnNativeButton": "Warn Native"

@@ -16,6 +16,7 @@ import { RxFormsModule } from '../../shared-features/rx-forms';
 import { AppInitService } from '../app-init/services';
 import { AppNavigationModule } from '../app-navigation/app-navigation.module';
 import { ErrorHandlingModule } from '../error-handling';
+import { LocalizationModule } from '../localization/localization.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,6 +41,7 @@ export function initializeApp(appInitService: AppInitService): Function {
     BusyIndicationModule,
     ErrorHandlingModule.forRoot(),
     HttpClientModule,
+    LocalizationModule,
     MatDependenciesModule.forRoot(),
     RxFormsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
