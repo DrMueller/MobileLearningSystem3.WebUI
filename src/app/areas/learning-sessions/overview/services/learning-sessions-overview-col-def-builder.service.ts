@@ -1,7 +1,7 @@
 import { Injectable, TemplateRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
-import { ColDefBuilderFactoryService } from 'src/app/infrastructure/shared-features/tables/services';
+import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
+import { ColDefBuilderFactoryService } from 'src/app/shared/tables/services';
 
 import { LearningSessionsServicesModule } from '../../learning-sessions-services.module';
 import { LearningSessionOverviewEntry } from '../models';

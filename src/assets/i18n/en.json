@@ -10,6 +10,13 @@
 				}
 			},
 			"overview": {
+				"components": {
+					"facts-overview": {
+						"allFactsDeleted": "All Facts deleted",
+						"deleteAllFactsHeading": "Deleting all Facts",
+						"deleteAllFactsQuestion": "Are you sure to delete all Facts?"
+					}
+				},
 				"services": {
 					"questionHeading": "Question"
 				}
@@ -91,52 +98,58 @@
 		"save": "Save",
 		"yes": "Yes"
 	},
-	"infrastructure": {
-		"app-shell": {
-			"app-navigation": {
-				"components": {
-					"user-menu": {
-						"logIn": "Log in",
-						"logOut": "Log out",
-						"switchLanguage": "Switch language",
-						"switchToEnglish": "English",
-						"switchToGerman": "German",
-						"welcomeHeading": "Welcome, {{userName}}"
+	"shared": {
+		"rx-forms": {
+			"services": {
+				"validation": {
+					"implementation": {
+						"validation-error-maxlength": "Expected length is maximum of {{requiredLength}}, actual length is {{actualLength}}.",
+						"validation-error-minlength": "Expected length is minimum of {{requiredLength}}, actual length is {{actualLength}}.",
+						"validation-error-required": "Field is required."
 					}
 				}
-			},
-			"error-handling": {
-				"components": {
-					"error-display": {
-						"errorDialogHeading": "Error Ho!",
-						"errorMessage": "Error Message:",
-						"errorName": "Error Name:"
-					}
-				}
-			},
-			"security": {
-				"guest": "guest",
-				"logIn": "Log in!"
 			}
 		},
-		"shared-features": {
-			"rx-forms": {
-				"services": {
-					"validation": {
-						"implementation": {
-							"validation-error-maxlength": "Expected length is maximum of {{requiredLength}}, actual length is {{actualLength}}.",
-							"validation-error-minlength": "Expected length is minimum of {{requiredLength}}, actual length is {{actualLength}}.",
-							"validation-error-required": "Field is required."
-						}
+		"tables": {
+			"components": {
+				"mat-table": {
+					"enterSearchText": "Enter search text"
+				}
+			}
+		}
+	},
+	"shell": {
+		"app-navigation": {
+			"components": {
+				"user-menu": {
+					"logIn": "Log in",
+					"logOut": "Log out",
+					"switchLanguage": "Switch language",
+					"switchToEnglish": "English",
+					"switchToGerman": "German",
+					"welcomeHeading": "Welcome, {{userName}}"
+				}
+			}
+		},
+		"error-handling": {
+			"components": {
+				"error-display": {
+					"errorDialogHeading": "Error Ho!",
+					"errorMessage": "Error Message:",
+					"errorName": "Error Name:"
+				}
+			}
+		},
+		"security": {
+			"components": {
+				"log-in": {
+					"security": {
+						"logIn": "Log in!"
 					}
 				}
 			},
-			"tables": {
-				"components": {
-					"mat-table": {
-						"enterSearchText": "Enter search text"
-					}
-				}
+			"services": {
+				"guest": "guest"
 			}
 		}
 	}

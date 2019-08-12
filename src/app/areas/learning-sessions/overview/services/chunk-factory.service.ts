@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
-import { ArrayExtensions } from 'src/app/infrastructure/type-extensions';
+import { ArrayExtensions } from 'src/app/utils';
 
 import { LearningSessionEditEntry } from '../../edit/models';
 import { LearningSessionEditDataService } from '../../edit/services';

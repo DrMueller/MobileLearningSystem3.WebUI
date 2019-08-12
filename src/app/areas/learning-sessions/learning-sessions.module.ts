@@ -3,11 +3,11 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { EditorModule } from 'primeng/editor';
-import { AppAreaProviderToken } from 'src/app/infrastructure/app-shell/app-areas/constants';
-import { MatDependenciesModule } from 'src/app/infrastructure/mat-dependencies';
-import { EnquiryDialogModule } from 'src/app/infrastructure/shared-features/enquiry-dialog';
-import { RxFormsModule } from 'src/app/infrastructure/shared-features/rx-forms';
-import { TablesModule } from 'src/app/infrastructure/shared-features/tables';
+import { MatDependenciesModule } from 'src/app/mat-deps';
+import { EnquiryDialogModule } from 'src/app/shared/enquiry-dialog';
+import { RxFormsModule } from 'src/app/shared/rx-forms';
+import { TablesModule } from 'src/app/shared/tables';
+import { AppAreaProviderToken } from 'src/app/shell/app-areas/constants';
 
 import { LearningSessionsAreaProviderService } from './common/services';
 import { FactsSelectionComponent } from './edit/components/facts-selection';

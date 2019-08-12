@@ -1,12 +1,12 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
-import { BusyIndicatorService } from 'src/app/infrastructure/core-services/loading-indication/services';
-import { SnackBarService } from 'src/app/infrastructure/core-services/snack-bar/services';
-import { Enquiry, QuestionResult } from 'src/app/infrastructure/shared-features/enquiry-dialog/model';
-import { EnquiryService } from 'src/app/infrastructure/shared-features/enquiry-dialog/services';
-import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
-import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
+import { BusyIndicatorService } from 'src/app/core/loading-indication/services';
+import { SnackBarService } from 'src/app/core/snack-bar/services';
+import { Enquiry, QuestionResult } from 'src/app/shared/enquiry-dialog/model';
+import { EnquiryService } from 'src/app/shared/enquiry-dialog/services';
+import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
+import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
 import { FactOverviewEntry } from '../../../../shared-domain/models/fact-overview-entry.model';
 import { FactsNavigationService } from '../../../common/services';
@@ -25,7 +25,6 @@ export class FactsOverviewComponent implements OnInit {
   @ViewChild('editTemplate', { static: true }) public editTemplate: TemplateRef<any>;
   @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<FactOverviewEntry>;
   public overviewEntries: FactOverviewEntry[] = [];
-  private readonly _nameSpace = 'areas.facts.overview.components.facts-overview.';
 
   public constructor(
     private colDefBuilder: FactsOverviewColDefBuilderService,
@@ -56,8 +55,8 @@ export class FactsOverviewComponent implements OnInit {
   }
 
   public async deleteAllFactsAsync(): Promise<void> {
-    const deleteHeading = await this.translator.get(`${this._nameSpace}deleteAllFactsHeading`).toPromise();
-    const deleteQuestion = await this.translator.get(`${this._nameSpace}deleteAllFactsQuestion`).toPromise();
+    const deleteHeading = await this.translator.get('areas.facts.overview.components.facts-overview.deleteAllFactsHeading').toPromise();
+    const deleteQuestion = await this.translator.get('areas.facts.overview.components.facts-overview.deleteAllFactsQuestion').toPromise();
 
     this.enquiryService.ask(new Enquiry(deleteHeading, deleteQuestion))
       .subscribe(async qr => {
@@ -67,7 +66,7 @@ export class FactsOverviewComponent implements OnInit {
           this.table.deleteEntries(clonsedArray);
 
           const allFactsDeletedInfo = await this.translator
-            .get(`${this._nameSpace}allFactsDeleted`)
+            .get('areas.facts.overview.components.facts-overview.allFactsDeleted')
             .toPromise();
           this.snackBarService.showSnackBar(allFactsDeletedInfo);
         }

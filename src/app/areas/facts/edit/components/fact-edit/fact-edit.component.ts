@@ -2,7 +2,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { RxFormGroupBindingService } from 'src/app/infrastructure/shared-features/rx-forms/services';
+import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
 
 import { FactsNavigationService } from '../../../common/services';
 import { FactEditEntry } from '../../models';

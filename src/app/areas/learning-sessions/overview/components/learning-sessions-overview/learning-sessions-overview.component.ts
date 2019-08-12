@@ -1,12 +1,12 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { BusyIndicatorService } from 'src/app/infrastructure/core-services/loading-indication/services';
-import { SnackBarService } from 'src/app/infrastructure/core-services/snack-bar/services';
-import { Enquiry, QuestionResult } from 'src/app/infrastructure/shared-features/enquiry-dialog/model';
-import { EnquiryService } from 'src/app/infrastructure/shared-features/enquiry-dialog/services';
-import { MatTableComponent } from 'src/app/infrastructure/shared-features/tables/components/mat-table';
-import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
+import { BusyIndicatorService } from 'src/app/core/loading-indication/services';
+import { SnackBarService } from 'src/app/core/snack-bar/services';
+import { Enquiry, QuestionResult } from 'src/app/shared/enquiry-dialog/model';
+import { EnquiryService } from 'src/app/shared/enquiry-dialog/services';
+import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
+import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
 import { LearningSessionOverviewEntry } from '../../models';

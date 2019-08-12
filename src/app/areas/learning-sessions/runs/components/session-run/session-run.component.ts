@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ArrayExtensions } from 'src/app/infrastructure/type-extensions';
+import { ArrayExtensions } from 'src/app/utils';
 
 import { RunFact } from '../../models';
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FactOverviewEntry } from 'src/app/areas/shared-domain/models';
-import { ColumnDefinitionsContainer } from 'src/app/infrastructure/shared-features/tables/models';
-import { ColDefBuilderFactoryService } from 'src/app/infrastructure/shared-features/tables/services';
+import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
+import { ColDefBuilderFactoryService } from 'src/app/shared/tables/services';
 
 import { LearningSessionsServicesModule } from '../../learning-sessions-services.module';
 

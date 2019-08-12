@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IAppAreaProviderService } from 'src/app/infrastructure/app-shell/app-areas/interfaces';
-import { AppArea } from 'src/app/infrastructure/app-shell/app-areas/models';
+import { IAppAreaProviderService } from 'src/app/shell/app-areas/interfaces';
+import { AppArea } from 'src/app/shell/app-areas/models';
 
 @Injectable()
 export class HomeAreaProviderService implements IAppAreaProviderService {

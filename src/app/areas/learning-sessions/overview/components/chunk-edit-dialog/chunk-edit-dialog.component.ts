@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-import { RxFormGroupBindingService } from 'src/app/infrastructure/shared-features/rx-forms/services';
+import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
 
 import { ChunkDefinition } from '../../models/chunk-definition.model';
 import { ChunkNameFormBuilderService } from '../../services/chunk-name-form-builder.service';

@@ -1,0 +1,46 @@
+<div class="main-container">
+  <div class="welcome-container">
+    <div class="welcome-container-item">
+      <span>
+        {{ 'shell.app-navigation.components.user-menu.welcomeHeading' | translate:{userName: userName} }}
+      </span>
+    </div>
+  </div>
+
+  <div>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
+
+  <div>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item
+        [matMenuTriggerFor]="subMenu">{{ 'shell.app-navigation.components.user-menu.switchLanguage' | translate }}</button>
+      <mat-divider></mat-divider>
+
+      <ng-container *ngIf=" !isUserAuthenticated">
+        <button mat-menu-item
+          (click)="logIn()">{{ 'shell.app-navigation.components.user-menu.logIn' | translate }}</button>
+      </ng-container>
+
+      <ng-container *ngIf="isUserAuthenticated">
+        <button mat-menu-item
+          (click)="logOut()">{{ 'shell.app-navigation.components.user-menu.logOut' | translate }}</button>
+      </ng-container>
+    </mat-menu>
+
+    <mat-menu #subMenu="matMenu">
+      <mat-radio-group [value]="currentLanguage">
+        <div class="language-container">
+          <mat-radio-button class="language-button" value="en" (click)="switchLanguageToEnglish()">
+            {{ 'shell.app-navigation.components.user-menu.switchToEnglish' | translate }}
+          </mat-radio-button>
+          <mat-radio-button class="language-button" value="de" (click)="switchLanguageToGerman()">
+            {{ 'shell.app-navigation.components.user-menu.switchToGerman' | translate }}
+          </mat-radio-button>
+        </div>
+      </mat-radio-group>
+    </mat-menu>
+  </div>
+</div>

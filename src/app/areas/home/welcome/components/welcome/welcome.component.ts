@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HelloHttpService } from 'src/app/areas/hello/common/services';
-import { SecurityUserSingletonService } from 'src/app/infrastructure/app-shell/security/services';
-import { SnackBarConfiguration } from 'src/app/infrastructure/core-services/snack-bar/models';
-import { SnackBarService } from 'src/app/infrastructure/core-services/snack-bar/services';
-import { PwaInstallationService } from 'src/app/infrastructure/shared-features/pwa/pwa-installation/services';
+import { SnackBarConfiguration } from 'src/app/core/snack-bar/models';
+import { SnackBarService } from 'src/app/core/snack-bar/services';
+import { PwaInstallationService } from 'src/app/shared/pwa/pwa-installation/services';
+import { SecurityUserSingletonService } from 'src/app/shell/security/services';
 
 @Component({
   selector: 'app-welcome',
