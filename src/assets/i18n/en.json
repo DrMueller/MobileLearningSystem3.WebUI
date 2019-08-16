@@ -113,8 +113,16 @@
 		"tables": {
 			"components": {
 				"mat-table": {
-					"enterSearchText": "Enter search text"
+					"enterSearchText": "Enter search text",
+					"selected": "Selected"
 				}
+			},
+			"services": {
+				"firstPage": "First page",
+				"itemsPerPage": "Items per page:",
+				"lastPage": "Last page",
+				"nextPage": "Next page",
+				"previousPage": "Previous page"
 			}
 		}
 	},

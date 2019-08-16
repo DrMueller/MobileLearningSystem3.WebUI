@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatPaginatorIntl } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MatDependenciesModule } from '../../mat-deps';
 
 import { ButtonTemplateComponent } from './components/button-template';
 import { MatTableComponent } from './components/mat-table';
+import { CustomMatPaginatorIntl } from './services';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,18 @@ import { MatTableComponent } from './components/mat-table';
     FormsModule,
     MatDependenciesModule,
     TranslateModule
-  ],
+  ]
 })
-export class TablesModule { }
+export class TablesModule {
+  public static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: TablesModule,
+      providers: [
+        {
+          provide: MatPaginatorIntl,
+          useClass: CustomMatPaginatorIntl
+        }
+      ]
+    };
+  }
+}

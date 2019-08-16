@@ -11,14 +11,14 @@ export class ColDefBuilderService implements IColDefBuilderService {
   public constructor(
     private orchestrator: IColDefBuilderOrchestratorService,
     private columnKey: string,
-    private headerDescription: string,
+    private headerTranslationKey: string,
     private className?: string) {
   }
 
   public bindingTo<T>(propertyName: keyof T): IColDefBuilderOrchestratorService {
     this._valueBuilder = new BindingColDefValueBuilderService(
       this.columnKey,
-      this.headerDescription,
+      this.headerTranslationKey,
       propertyName,
       this.className);
 
@@ -28,7 +28,7 @@ export class ColDefBuilderService implements IColDefBuilderService {
   public withTemplate(template: TemplateRef<any>): IColDefBuilderOrchestratorService {
     this._valueBuilder = new TemplateColDefValueBuilderService(
       this.columnKey,
-      this.headerDescription,
+      this.headerTranslationKey,
       template,
       this.className);
 

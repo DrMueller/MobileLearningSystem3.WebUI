@@ -11,6 +11,7 @@ import { LearningSessionsModule } from 'src/app/areas/learning-sessions/learning
 import { MatDependenciesModule } from 'src/app/mat-deps';
 import { BusyIndicationModule } from 'src/app/shared/busy-indication/busy-indication.module';
 import { RxFormsModule } from 'src/app/shared/rx-forms';
+import { TablesModule } from 'src/app/shared/tables';
 import { environment } from 'src/environments/environment';
 
 import { LocalizationModule } from '../../core/localization/localization.module';
@@ -45,6 +46,7 @@ export function initializeApp(appInitService: AppInitService): Function {
     MatDependenciesModule.forRoot(),
     RxFormsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    TablesModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
