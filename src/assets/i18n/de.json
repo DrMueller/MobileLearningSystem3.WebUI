@@ -4,14 +4,21 @@
       "edit": {
         "components": {
           "fact-edit": {
-            "copySavedFact": "Copy saved Fact",
-            "enterQuestion": "Enter Question"
+            "copySavedFact": "Kopieren gespeicherter Fakt",
+            "enterQuestion": "Frage eingeben"
           }
         }
       },
       "overview": {
+        "components": {
+          "facts-overview": {
+            "allFactsDeleted": "Alle Fakten gelöscht",
+            "deleteAllFactsHeading": "Alle Fakten löschen",
+            "deleteAllFactsQuestion": "Sind Sie sicher, dass Sie alle Fakten löschen wollen?"
+          }
+        },
         "services": {
-          "questionHeading": "Question"
+          "questionHeading": "Frage"
         }
       }
     },
@@ -19,20 +26,22 @@
       "welcome": {
         "components": {
           "welcome": {
-            "accentButton": "Accent",
-            "accentNativeButton": "Accent Native",
-            "busy": "Busy!",
-            "buttonsHeading": "Fun with Buttons",
-            "disabledButton": "Disabled",
-            "helloWorld": "Hello World",
-            "otherFunctionsHeading": "Other functions",
-            "primaryButton": "Primary",
-            "primaryNativeButton": "Primary Native",
-            "progressiveWebApp": "Progressive Web App",
-            "saveAsPwa": "Save as PWA",
-            "showSnackBar": "Show SnackBar!",
-            "warnButton": "Warn",
-            "warnNativeButton": "Warn Native"
+            "accentButton": "Akzent",
+            "accentNativeButton": "Akzent Nativ",
+            "busy": "Viel zu tun!",
+            "buttonsHeading": "Spaß mit Tasten",
+            "disabledButton": "Deaktiviert",
+            "helloWorld": "Hallo Welt",
+            "otherFunctionsHeading": "Weitere Funktionen",
+            "primaryButton": "Primär",
+            "primaryNativeButton": "Primärer Nativer",
+            "progressiveWebApp": "Progressive Web-Applikation",
+            "saveAsPwa": "Speichern als PWA",
+            "sayHelloFromServer": "Sag Hallo vom Server!",
+            "serverResponseInfo": "Der Server sagte:",
+            "showSnackBar": "Zeige SnackBar!",
+            "warnButton": "Warnung",
+            "warnNativeButton": "Warnung Native"
           }
         }
       }
@@ -41,90 +50,106 @@
       "edit": {
         "components": {
           "facts-selection": {
-            "factsSelectionHeading": "Facts"
+            "factsSelectionHeading": "Fakten"
           },
           "learning-session-edit": {
-            "enterSessionName": "Enter Session Name"
+            "enterSessionName": "Sitzungsname eingeben"
           }
         }
       },
       "overview": {
         "components": {
+          "chunk-edit-dialog": {
+            "chunkEditDialog": "Chunk-Definition",
+            "chunkNamePlaceholder": "Chunk-Name",
+            "chunkSizePlaceholder": "Chunk-Größe"
+          },
           "learning-sessions-overview": {
-            "run": "Run!"
+            "allSessionsDeleted": "Alle Sitzungen löschen",
+            "chunksCreated": "Erstellte Chunks",
+            "createChunks": "Erstellen von Chunks",
+            "deleteAllSessionsHeading": "Alle Sitzungen löschen",
+            "deleteAllSessionsQuestion": "Sind Sie sicher, dass Sie alle Sitzungen löschen möchten?",
+            "run": "Lauft!"
           }
         },
         "services": {
-          "amountOfFacts": "Facts"
+          "amountOfFacts": "Fakten"
         }
       },
       "runs": {
         "components": {
           "session-run": {
-            "reshuffle": "Reshuffle"
+            "reshuffle": "Umbildung"
           }
         }
       }
     }
   },
   "common": {
-    "actions": "Actions",
-    "cancel": "Cancel",
-    "create": "Create",
-    "created": "Created",
-    "deleteAll": "Delete all",
+    "actions": "Aktionen",
+    "cancel": "Abbrechen",
+    "create": "Erstellen",
+    "created": "Erstellt",
+    "deleteAll": "Alle löschen",
     "name": "Name",
-    "no": "No",
-    "overview": "Overview",
-    "save": "Save",
-    "yes": "Yes"
+    "no": "Nein",
+    "overview": "Übersicht",
+    "save": "Speichern",
+    "yes": "Ja"
   },
-  "infrastructure": {
-    "app-shell": {
-      "app-navigation": {
-        "components": {
-          "user-menu": {
-            "logIn": "Log in",
-            "logOut": "Log out",
-            "switchLanguage": "Switch language",
-            "switchToEnglish": "English",
-            "switchToGerman": "German",
-            "welcomeHeading": "Welcome, {{userName}}"
+  "shared": {
+    "rx-forms": {
+      "services": {
+        "validation": {
+          "implementation": {
+            "validation-error-maxlength": "Die erwartete Länge ist maximal {{requiredLength}}, die tatsächliche Länge ist {{requiredLength}}.",
+            "validation-error-minlength": "Die erwartete Länge ist minimal {{requiredLength}}, die tatsächliche Länge ist {{requiredLength}}.",
+            "validation-error-required": "Das Feld muss ausgefüllt werden."
           }
         }
-      },
-      "error-handling": {
-        "components": {
-          "error-display": {
-            "errorDialogHeading": "Error Ho!",
-            "errorMessage": "Error Message:",
-            "errorName": "Error Name:"
-          }
-        }
-      },
-      "security": {
-        "guest": "guest",
-        "logIn": "Log in!"
       }
     },
-    "shared-features": {
-      "rx-forms": {
-        "services": {
-          "validation": {
-            "implementation": {
-              "validation-error-maxlength": "Expected length is maximum of {{requiredLength}}, actual length is {{actualLength}}.",
-              "validation-error-minlength": "Expected length is minimum of {{requiredLength}}, actual length is {{actualLength}}.",
-              "validation-error-required": "Field is required."
-            }
+    "tables": {
+      "components": {
+        "mat-table": {
+          "enterSearchText": "Suchtext eingeben"
+        }
+      }
+    }
+  },
+  "shell": {
+    "app-navigation": {
+      "components": {
+        "user-menu": {
+          "logIn": "Einloggen",
+          "logOut": "Abmelden",
+          "switchLanguage": "Sprache wechseln",
+          "switchToEnglish": "Englisch",
+          "switchToGerman": "Deutsch",
+          "welcomeHeading": "Willkommen, {{userName}}"
+        }
+      }
+    },
+    "error-handling": {
+      "components": {
+        "error-display": {
+          "errorDialogHeading": "Fehler Ho!",
+          "errorMessage": "Fehlermeldung:",
+          "errorName": "Fehlername:"
+        }
+      }
+    },
+    "security": {
+      "components": {
+        "log-in": {
+          "security": {
+            "logIn": "Einloggen!"
           }
         }
       },
-      "tables": {
-        "components": {
-          "mat-table": {
-            "enterSearchText": "Enter search text"
-          }
-        }
+      "services": {
+        "guest": "Gast"
       }
     }
   }
