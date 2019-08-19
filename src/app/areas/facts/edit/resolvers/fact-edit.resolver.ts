@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { FactEditEntry } from 'src/app/areas/shared-domain/models/fact-edit-entry.model';
+import { FactRepositoryService } from 'src/app/areas/shared-domain/repos';
 
 import { FactServicesModule } from '../../fact-services.module';
-import { FactEditEntry } from '../models';
-import { FactEditDataService } from '../services';
 
 @Injectable({
     providedIn: FactServicesModule
 })
 export class FactEditResolver implements Resolve<Promise<FactEditEntry>>  {
     public constructor(
-        private dataService: FactEditDataService) {
+        private factRepo: FactRepositoryService) {
     }
 
     public async resolve(route: ActivatedRouteSnapshot): Promise<FactEditEntry> {
@@ -20,7 +20,7 @@ export class FactEditResolver implements Resolve<Promise<FactEditEntry>>  {
             return new FactEditEntry();
         }
 
-        const editEntry = await this.dataService.loadEntryEditAsync(factId);
+        const editEntry = await this.factRepo.loadEditEntryAsync(factId);
         if (createCopy) {
             editEntry.id = undefined;
         }

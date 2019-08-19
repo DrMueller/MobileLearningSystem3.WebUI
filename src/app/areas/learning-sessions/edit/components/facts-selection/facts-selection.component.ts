@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FactOverviewEntry } from 'src/app/areas/shared-domain/models';
-import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
+import { FactRepositoryService } from 'src/app/areas/shared-domain/repos';
 import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
@@ -20,12 +20,12 @@ export class FactsSelectionComponent implements OnInit {
   private _selectedFactIds: number[];
 
   public constructor(
-    private dataService: FactOverviewEntryDataService,
+    private factRepo: FactRepositoryService,
     private colDefBuilder: FactsSelectionColDefBuilderService) { }
 
   public async ngOnInit(): Promise<void> {
     this.columnDefinitions = this.colDefBuilder.buildDefinitions();
-    this.overviewEntries = await this.dataService.loadOverviewAsync();
+    this.overviewEntries = await this.factRepo.loadOverviewAsync();
     this.toggleSelectionIfReady();
   }
 

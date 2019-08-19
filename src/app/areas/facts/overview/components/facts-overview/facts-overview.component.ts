@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
+import { FactRepositoryService } from 'src/app/areas/shared-domain/repos';
 import { BusyIndicatorService } from 'src/app/core/loading-indication/services';
 import { SnackBarService } from 'src/app/core/snack-bar/services';
 import { Enquiry, QuestionResult } from 'src/app/shared/enquiry-dialog/model';
@@ -28,7 +28,7 @@ export class FactsOverviewComponent implements OnInit {
 
   public constructor(
     private colDefBuilder: FactsOverviewColDefBuilderService,
-    private dataService: FactOverviewEntryDataService,
+    private factRepo: FactRepositoryService,
     private navigator: FactsNavigationService,
     private enquiryService: EnquiryService,
     private busyIndicator: BusyIndicatorService,
@@ -37,7 +37,7 @@ export class FactsOverviewComponent implements OnInit {
 
   public async deleteAsync(factId: string): Promise<void> {
     const factIdParsed = parseInt(factId, 10);
-    await this.dataService.deleteFactAsync(factIdParsed);
+    await this.factRepo.deleteFactAsync(factIdParsed);
 
     const entry = this.overviewEntries.find(f => f.id === factIdParsed)!;
     this.table.deleteEntries([entry]);
@@ -46,7 +46,7 @@ export class FactsOverviewComponent implements OnInit {
   public async ngOnInit(): Promise<void> {
     this.busyIndicator.withBusyIndicator(async () => {
       this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.editTemplate, this.deleteTemplate);
-      this.overviewEntries = await this.dataService.loadOverviewAsync();
+      this.overviewEntries = await this.factRepo.loadOverviewAsync();
     });
   }
 
@@ -61,7 +61,7 @@ export class FactsOverviewComponent implements OnInit {
     this.enquiryService.ask(new Enquiry(deleteHeading, deleteQuestion))
       .subscribe(async qr => {
         if (qr === QuestionResult.Yes) {
-          await this.dataService.deleteAllFactsAsync();
+          await this.factRepo.deleteAllFactsAsync();
           const clonsedArray = Object.assign([], this.overviewEntries);
           this.table.deleteEntries(clonsedArray);
 

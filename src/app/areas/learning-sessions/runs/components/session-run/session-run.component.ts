@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RunFact } from 'src/app/areas/shared-domain/models';
 import { ArrayExtensions } from 'src/app/utils';
-
-import { RunFact } from '../../models';
 
 @Component({
   selector: 'app-session-run',

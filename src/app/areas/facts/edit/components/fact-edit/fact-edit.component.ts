@@ -2,11 +2,12 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { FactEditEntry } from 'src/app/areas/shared-domain/models/fact-edit-entry.model';
+import { FactRepositoryService } from 'src/app/areas/shared-domain/repos/fact-repository.service';
 import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
 
 import { FactsNavigationService } from '../../../common/services';
-import { FactEditEntry } from '../../models';
-import { FactEditDataService, FactEditFormBuilderService } from '../../services';
+import { FactEditFormBuilderService } from '../../services';
 
 @Component({
   selector: 'app-fact-edit',
@@ -14,7 +15,7 @@ import { FactEditDataService, FactEditFormBuilderService } from '../../services'
   styleUrls: ['./fact-edit.component.scss']
 })
 export class FactEditComponent implements OnInit {
-  public editEntry: FactEditEntry;
+  public fact: FactEditEntry;
   public formGroup: FormGroup;
   @ViewChild('autosize', { static: false }) public autosize: CdkTextareaAutosize;
 
@@ -22,28 +23,28 @@ export class FactEditComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FactEditFormBuilderService,
     private formGroupBinder: RxFormGroupBindingService,
-    private dataService: FactEditDataService,
+    private factRepo: FactRepositoryService,
     private navigator: FactsNavigationService) { }
 
   public ngOnInit(): void {
     this.formGroup = this.formBuilder.buildFormGroup();
 
     this.route.data.subscribe(data => {
-      this.editEntry = <FactEditEntry>data['fact'];
-      this.formGroupBinder.bindToFormGroup(this.editEntry, this.formGroup);
+      this.fact = <FactEditEntry>data['fact'];
+      this.formGroupBinder.bindToFormGroup(this.fact, this.formGroup);
     });
   }
 
   public get title(): string {
-    if (this.editEntry.id) {
-      return `Edit Fact - ${this.editEntry.id}`;
+    if (this.fact.id) {
+      return `Edit Fact - ${this.fact.id}`;
     }
 
     return 'New Fact';
   }
 
   public get canCopySavedFact(): boolean {
-    return !!this.editEntry.id;
+    return !!this.fact.id;
   }
 
   public get canSave(): boolean {
@@ -55,12 +56,12 @@ export class FactEditComponent implements OnInit {
   }
 
   public copySavedFact(): void {
-    this.navigator.navigateToEdit(this.editEntry.id!, true);
+    this.navigator.navigateToEdit(this.fact.id!, true);
   }
 
   public async saveAsync(): Promise<void> {
-    this.formGroupBinder.bindToModel(this.formGroup, this.editEntry);
-    await this.dataService.saveEntryAsync(this.editEntry);
+    this.formGroupBinder.bindToModel(this.formGroup, this.fact);
+    await this.factRepo.saveEditEntryAsync(this.fact);
     this.navigator.navigateToOverview();
   }
 }

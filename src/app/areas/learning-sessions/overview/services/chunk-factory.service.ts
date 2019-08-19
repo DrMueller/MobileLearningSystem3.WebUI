@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { FactOverviewEntryDataService } from 'src/app/areas/shared-domain/services';
+import { LearningSessionEditEntry } from 'src/app/areas/shared-domain/models';
+import { FactRepositoryService, LearningSessionRepositoryService } from 'src/app/areas/shared-domain/repos';
 import { ArrayExtensions } from 'src/app/utils';
 
-import { LearningSessionEditEntry } from '../../edit/models';
-import { LearningSessionEditDataService } from '../../edit/services';
 import { ChunkDefinition } from '../models/chunk-definition.model';
 
 @Injectable({
@@ -12,11 +11,11 @@ import { ChunkDefinition } from '../models/chunk-definition.model';
 export class ChunkFactoryService {
 
   constructor(
-    private factDataService: FactOverviewEntryDataService,
-    private learningSessionDataService: LearningSessionEditDataService) { }
+    private factRepo: FactRepositoryService,
+    private learningSessionRepo: LearningSessionRepositoryService) { }
 
   public async createChunksAsync(chunkDefinition: ChunkDefinition): Promise<void> {
-    let allFacts = await this.factDataService.loadOverviewAsync();
+    let allFacts = await this.factRepo.loadOverviewAsync();
     allFacts = ArrayExtensions.shuffleEntries(allFacts);
     const chunks = ArrayExtensions.chunk(allFacts, chunkDefinition.chunkSize);
     const creationPromises: Promise<void>[] = [];
@@ -26,7 +25,7 @@ export class ChunkFactoryService {
       const eeditEntry = new LearningSessionEditEntry();
       eeditEntry.factIds = chunk.map(f => f.id);
       eeditEntry.sessionName = chunkDefinition.chunkName + ' ' + i;
-      creationPromises.push(this.learningSessionDataService.saveEntryAsync(eeditEntry));
+      creationPromises.push(this.learningSessionRepo.saveEditEntryAsync(eeditEntry));
     }
 
     await Promise.all(creationPromises);

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { LearningSessionEditEntry } from 'src/app/areas/shared-domain/models';
+import { LearningSessionRepositoryService } from 'src/app/areas/shared-domain/repos';
 import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
 
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
-import { LearningSessionEditEntry } from '../../models';
-import { LearningSessionEditDataService, LearningSessionEditFormBuilderService } from '../../services';
+import {  LearningSessionEditFormBuilderService } from '../../services';
 
 @Component({
   selector: 'app-learning-session-edit',
@@ -21,12 +22,12 @@ export class LearningSessionEditComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: LearningSessionEditFormBuilderService,
     private formGroupBinder: RxFormGroupBindingService,
-    private dataService: LearningSessionEditDataService,
+    private learningSessionRepo: LearningSessionRepositoryService,
     private navigator: LearningSessionsNavigationService) { }
 
   public async saveAsync(): Promise<void> {
     this.formGroupBinder.bindToModel(this.formGroup, this.editEntry);
-    await this.dataService.saveEntryAsync(this.editEntry);
+    await this.learningSessionRepo.saveEditEntryAsync(this.editEntry);
     this.navigator.navigateToOverview();
   }
 
