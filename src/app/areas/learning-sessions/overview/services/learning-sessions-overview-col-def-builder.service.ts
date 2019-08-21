@@ -1,4 +1,5 @@
 import { Injectable, TemplateRef } from '@angular/core';
+import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 import { ColDefBuilderFactoryService } from 'src/app/shared/tables/services';
 
@@ -20,9 +21,9 @@ export class LearningSessionsOverviewColDefBuilderService {
       .startBuilding()
       .withColumn('id', 'ID', 'id-cell').bindingTo<LearningSessionOverviewEntry>('id')
       .withColumn('questionText',
-        'areas.learning-sessions.overview.services.amountOfFacts',
+      marker('areas.learning-sessions.overview.services.amountOfFacts'),
         'facts-cell').bindingTo<LearningSessionOverviewEntry>('amountOfFacts')
-      .withColumn('name', 'common.name').bindingTo<LearningSessionOverviewEntry>('sessionName')
+      .withColumn('name', marker('common.name')).bindingTo<LearningSessionOverviewEntry>('sessionName')
       .withColumn('editTemplate', '', 'button-cell').withTemplate(editTemplate)
       .withColumn('deleteTemplate', '', 'button-cell').withTemplate(deleteTemplate)
       .build();

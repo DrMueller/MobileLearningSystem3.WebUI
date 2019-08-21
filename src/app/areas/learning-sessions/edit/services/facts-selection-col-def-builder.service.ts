@@ -1,4 +1,5 @@
 import { Injectable, TemplateRef } from '@angular/core';
+import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { FactOverviewEntry } from 'src/app/areas/shared-domain/models';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 import { ColDefBuilderFactoryService } from 'src/app/shared/tables/services';
@@ -15,9 +16,9 @@ export class FactsSelectionColDefBuilderService {
     return this.builderFactory
       .startBuilding()
       .withColumn('id', 'ID', 'id-cell').bindingTo<FactOverviewEntry>('id')
-      .withColumn('creationDate', 'Created', 'creation-cell').bindingTo<FactOverviewEntry>('creationDateDescription')
-      .withColumn('existsInRun', 'In Run').withTemplate(existsInRunTemplate)
-      .withColumn('questionText', 'Question').bindingTo<FactOverviewEntry>('questionText')
+      .withColumn('creationDate', marker('common.created'), 'creation-cell').bindingTo<FactOverviewEntry>('creationDateDescription')
+      .withColumn('existsInRun', marker('areas.learning-sessions.edit.services.inRun')).withTemplate(existsInRunTemplate)
+      .withColumn('questionText', marker('common.question')).bindingTo<FactOverviewEntry>('questionText')
       .build();
   }
 }

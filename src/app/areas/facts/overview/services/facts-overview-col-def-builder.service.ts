@@ -1,4 +1,5 @@
 import { Injectable, TemplateRef } from '@angular/core';
+import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 import { ColDefBuilderFactoryService } from 'src/app/shared/tables/services';
 
@@ -20,10 +21,10 @@ export class FactsOverviewColDefBuilderService {
       .startBuilding()
       .withColumn('id', 'ID', 'id-cell').bindingTo<FactOverviewEntry>('id')
       .withColumn('creationDate',
-        'areas.facts.overview.services.questionHeading',
+        marker('common.created'),
         'creation-cell')
       .bindingTo<FactOverviewEntry>('creationDateDescription')
-      .withColumn('questionText', 'common.created').bindingTo<FactOverviewEntry>('questionText')
+      .withColumn('questionText', marker('common.question')).bindingTo<FactOverviewEntry>('questionText')
       .withColumn('editTemplate', '', 'button-cell').withTemplate(editTemplate)
       .withColumn('deleteTemplate', '', 'button-cell').withTemplate(deleteTemplate)
       .build();

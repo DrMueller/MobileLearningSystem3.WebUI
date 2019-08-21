@@ -16,9 +16,6 @@
 						"deleteAllFactsHeading": "Deleting all Facts",
 						"deleteAllFactsQuestion": "Are you sure to delete all Facts?"
 					}
-				},
-				"services": {
-					"questionHeading": "Question"
 				}
 			}
 		},
@@ -55,6 +52,9 @@
 					"learning-session-edit": {
 						"enterSessionName": "Enter Session Name"
 					}
+				},
+				"services": {
+					"inRun": "In Run"
 				}
 			},
 			"overview": {
@@ -95,6 +95,7 @@
 		"name": "Name",
 		"no": "No",
 		"overview": "Overview",
+		"question": "Question",
 		"save": "Save",
 		"yes": "Yes"
 	},
