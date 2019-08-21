@@ -1,9 +1,13 @@
 <mat-card class="mat-card">
-    <mat-card-title>{{ 'areas.learning-sessions.edit.components.facts-selection.factsSelectionHeading' | translate }}
-    </mat-card-title>
-    <mat-card-content>
-        <app-mat-table (selectionChanged)="selectionChanged($event)" [rowSelectionType]="2" [columnDefinitions]="columnDefinitions" idSelector="id"
-            [data]="overviewEntries">
-        </app-mat-table>
-    </mat-card-content>
+  <mat-card-title>{{ 'areas.learning-sessions.edit.components.facts-selection.factsSelectionHeading' | translate }}
+  </mat-card-title>
+  <mat-card-content>
+    <app-mat-table (selectionChanged)="selectionChanged($event)" [rowSelectionType]="2"
+      [columnDefinitions]="columnDefinitions" idSelector="id" [data]="overviewEntries">
+      <ng-template #existsInRunTemplate let-row="row">
+        <app-fact-exists-in-run [existsInRun]="row.existsInRun">
+        </app-fact-exists-in-run>
+      </ng-template>
+    </app-mat-table>
+  </mat-card-content>
 </mat-card>

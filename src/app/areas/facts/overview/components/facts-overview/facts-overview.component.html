@@ -14,12 +14,12 @@
         </app-mat-table>
 
         <ng-template #deleteTemplate>
-            <app-button-template #deleteTemplate materialIcon="delete_outline" materialColor="warn"
+            <app-button-template materialIcon="delete_outline" materialColor="warn"
                 (buttonClick)=deleteAsync($event)></app-button-template>
         </ng-template>
 
         <ng-template #editTemplate>
-            <app-button-template #editTemplate materialIcon="edit" materialColor="primary" (buttonClick)=edit($event)>
+            <app-button-template materialIcon="edit" materialColor="primary" (buttonClick)=edit($event)>
             </app-button-template>
         </ng-template>
     </mat-card-content>

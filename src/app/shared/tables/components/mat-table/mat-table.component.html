@@ -26,7 +26,8 @@
           <ng-container *ngIf="isSelectionAllowed">
             <ng-container matColumnDef="Select">
               <th mat-header-cell *matHeaderCellDef class="selected-row"
-                [class.header-multi-selection]="canToggleAllSelections" (click)="toggleAllSelections()">{{ 'shared.tables.components.mat-table.selected' | translate }}</th>
+                [class.header-multi-selection]="canToggleAllSelections" (click)="toggleAllSelections()">
+                {{ 'shared.tables.components.mat-table.selected' | translate }}</th>
               <td mat-cell class="selected-row" *matCellDef="let row">
                 <mat-checkbox (click)="toggleRowSelection(row)" [checked]="isRowSelected(row)">
                 </mat-checkbox>
@@ -42,7 +43,9 @@
             </ng-container>
             <ng-container *ngIf="colDef.template">
               <td mat-cell [ngClass]="colDef.className" [attr.data-row-id]="row[idSelector]" *matCellDef="let row">
-                <ng-container #colDefTemplate [ngTemplateOutlet]="colDef.template"></ng-container>
+                <ng-container #colDefTemplate [ngTemplateOutlet]="colDef.template"
+                  [ngTemplateOutletContext]="{row: row}">
+                </ng-container>
               </td>
             </ng-container>
           </ng-container>

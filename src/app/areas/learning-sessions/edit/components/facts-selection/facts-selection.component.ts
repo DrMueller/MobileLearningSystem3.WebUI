@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FactOverviewEntry } from 'src/app/areas/shared-domain/models';
 import { FactRepositoryService } from 'src/app/areas/shared-domain/repos';
 import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
@@ -15,6 +15,7 @@ export class FactsSelectionComponent implements OnInit {
   @Output() public factsSelectionChanged = new EventEmitter<number[]>();
   public columnDefinitions: ColumnDefinitionsContainer;
   @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<FactOverviewEntry>;
+  @ViewChild('existsInRunTemplate', { static: true }) public existsInRunTemplate: TemplateRef<any>;
   public overviewEntries: FactOverviewEntry[] = [];
 
   private _selectedFactIds: number[];
@@ -24,7 +25,7 @@ export class FactsSelectionComponent implements OnInit {
     private colDefBuilder: FactsSelectionColDefBuilderService) { }
 
   public async ngOnInit(): Promise<void> {
-    this.columnDefinitions = this.colDefBuilder.buildDefinitions();
+    this.columnDefinitions = this.colDefBuilder.buildDefinitions(this.existsInRunTemplate);
     this.overviewEntries = await this.factRepo.loadOverviewAsync();
     this.toggleSelectionIfReady();
   }

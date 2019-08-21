@@ -1,5 +1,4 @@
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FactEditEntry } from 'src/app/areas/shared-domain/models/fact-edit-entry.model';
@@ -17,7 +16,6 @@ import { FactEditFormBuilderService } from '../../services';
 export class FactEditComponent implements OnInit {
   public fact: FactEditEntry;
   public formGroup: FormGroup;
-  @ViewChild('autosize', { static: false }) public autosize: CdkTextareaAutosize;
 
   constructor(
     private route: ActivatedRoute,

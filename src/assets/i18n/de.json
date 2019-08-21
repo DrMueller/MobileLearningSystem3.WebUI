@@ -104,7 +104,7 @@
         "validation": {
           "implementation": {
             "validation-error-maxlength": "Die erwartete Länge ist maximal {{requiredLength}}, die tatsächliche Länge ist {{actualLength}}.",
-            "validation-error-minlength": "Die erwartete Länge ist minimal {{requiredLength}}, die tatsächliche Länge ist {{requiredLength}}.",
+            "validation-error-minlength": "Die erwartete Länge ist minimal {{requiredLength}}, die tatsächliche Länge ist {{actualLength}}.",
             "validation-error-required": "Das Feld muss ausgefüllt werden."
           }
         }

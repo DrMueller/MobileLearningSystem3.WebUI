@@ -15,3 +15,7 @@
     flex-basis: 50%;
   }
 }
+
+::ng-deep.creation-cell {
+  width: 200px;
+}

@@ -10,6 +10,7 @@ import { TablesModule } from 'src/app/shared/tables';
 import { AppAreaProviderToken } from 'src/app/shell/app-areas/constants';
 
 import { LearningSessionsAreaProviderService } from './common/services';
+import { FactExistsInRunComponent } from './edit/components/fact-exists-in-run';
 import { FactsSelectionComponent } from './edit/components/facts-selection';
 import { LearningSessionEditComponent } from './edit/components/learning-session-edit/learning-session-edit.component';
 import { LearningSessionsComponent } from './entry-point/components/learning-sessions/learning-sessions.component';
@@ -25,6 +26,7 @@ import { SessionRunComponent } from './runs/components/session-run';
     LearningSessionsComponent,
     LearningSessionsOverviewComponent,
     LearningSessionEditComponent,
+    FactExistsInRunComponent,
     FactsSelectionComponent,
     SessionRunComponent
   ],
