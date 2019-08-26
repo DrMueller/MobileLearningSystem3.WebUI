@@ -3,8 +3,8 @@ import { IAppAreaProviderService } from 'src/app/shell/app-areas/interfaces';
 import { AppArea } from 'src/app/shell/app-areas/models';
 
 @Injectable()
-export class HomeAreaProviderService implements IAppAreaProviderService {
+export class TensorflowAreaProviderService implements IAppAreaProviderService {
   public provideArea(): AppArea {
-    return new AppArea('Home', '/home', false, 0);
+    return new AppArea('Tensorflow', '/tensorflow', false, 3);
   }
 }

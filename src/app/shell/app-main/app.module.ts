@@ -8,6 +8,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FactsModule } from 'src/app/areas/facts';
 import { HomeModule } from 'src/app/areas/home/home.module';
 import { LearningSessionsModule } from 'src/app/areas/learning-sessions/learning-sessions.module';
+import { TensorflowModule } from 'src/app/areas/tensorflow/tensorflow.module';
 import { MatDependenciesModule } from 'src/app/mat-deps';
 import { BusyIndicationModule } from 'src/app/shared/busy-indication/busy-indication.module';
 import { RxFormsModule } from 'src/app/shared/rx-forms';
@@ -58,7 +59,8 @@ export function initializeApp(appInitService: AppInitService): Function {
     // Areas
     HomeModule.forRoot(),
     FactsModule.forRoot(),
-    LearningSessionsModule.forRoot()
+    LearningSessionsModule.forRoot(),
+    TensorflowModule.forRoot(),
 
   ],
   providers: [

@@ -1,0 +1,28 @@
+<div class="classifier-container">
+  <div class="classifier-container-item">
+    <mat-card class="mat-card">
+      <mat-card-title>{{ 'areas.tensorflow.webcam.components.webcam-classifier.webcamClassification' | translate }}
+      </mat-card-title>
+      <mat-card-content>
+        <div>
+          <webcam (click)="takeImage()" (imageCapture)="handleImageAsync($event)" [allowCameraSwitch]="false"
+            [captureImageData]="true" [trigger]="trigger$" [videoOptions]="mediaTrackConstraints" [imageQuality]="1"
+            (initError)="handleInitError($event)">
+          </webcam>
+        </div>
+        <div>
+          <button [color]="accent" mat-icon-button (click)="takeImage()">
+            <mat-icon>camera_alt</mat-icon>
+          </button>
+        </div>
+        <div>
+          <ul>
+            <li class="predictions" *ngFor="let prediction of predictions">
+              {{ prediction.className }} - {{ prediction.probabilityDescription }}
+            </li>
+          </ul>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

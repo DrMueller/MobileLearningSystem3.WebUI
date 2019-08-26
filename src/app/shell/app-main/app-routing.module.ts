@@ -25,6 +25,11 @@ const routes: Routes = [
     canActivate: [AuthorizationGuard]
   },
   {
+    path: 'tensorflow',
+    loadChildren: () => import('../../areas/tensorflow/tensorflow.module').then(m => m.TensorflowModule),
+    canActivate: [AuthorizationGuard]
+  },
+  {
     path: 'login',
     component: LogInComponent
   },

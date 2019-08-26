@@ -11,7 +11,7 @@ export class AppAreaLocatorService {
   private _areas: AppArea[];
 
   public constructor(@Inject(AppAreaProviderToken) areaProviders: IAppAreaProviderService[]) {
-    this._areas = areaProviders.map(ap => ap.provideArea());
+    this._areas = areaProviders.map(ap => ap.provideArea()).sort((a, b) => a.sortIndex < b.sortIndex ? -1 : 1);
   }
 
   public locateAllAreas(): AppArea[] {

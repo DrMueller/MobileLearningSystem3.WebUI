@@ -1,0 +1,15 @@
+.classifier-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.classifier-container-item {
+  width: 100%;
+  text-align: center;
+}
+
+.predictions {
+  list-style: none;
+}

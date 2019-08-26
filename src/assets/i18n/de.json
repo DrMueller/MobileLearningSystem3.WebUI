@@ -84,6 +84,15 @@
           }
         }
       }
+    },
+    "tensorflow": {
+      "webcam": {
+        "components": {
+          "webcam-classifier": {
+            "webcamClassification": "Klassifizierungen"
+          }
+        }
+      }
     }
   },
   "common": {

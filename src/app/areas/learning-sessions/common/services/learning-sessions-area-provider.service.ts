@@ -5,6 +5,6 @@ import { AppArea } from 'src/app/shell/app-areas/models';
 @Injectable()
 export class LearningSessionsAreaProviderService implements IAppAreaProviderService {
   public provideArea(): AppArea {
-    return new AppArea('Learning Sessions', '/learningsessions', false);
+    return new AppArea('Learning Sessions', '/learningsessions', false, 2);
   }
 }
