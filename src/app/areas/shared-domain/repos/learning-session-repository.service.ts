@@ -31,6 +31,10 @@ export class LearningSessionRepositoryService {
     return await this.httpService.getAsync(`${sessionId}/runfacts`);
   }
 
+  public async loadNextSessionIdAsync(currentSessionId: number): Promise<number> {
+    return await this.httpService.getAsync(`${currentSessionId}/nextid`);
+  }
+
   public async saveEditEntryAsync(editEntry: LearningSessionEditEntry): Promise<void> {
     await this.httpService.putAsync('edit', editEntry);
   }

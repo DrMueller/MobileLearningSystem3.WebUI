@@ -1,51 +1,56 @@
 <div *ngIf="currentFact">
-    <div class="main">
-        <div class="main-flex-container">
-            <div class="command-flex-row">
-                <div>
-                    <button mat-icon-button color="primary" (click)="showPreviousFact()"
-                        [disabled]="!canShowPreviousFact">
-                        <mat-icon>arrow_backward</mat-icon>
-                    </button>
-                </div>
-
-                <div class="state-description">
-                    <label>{{ runStateDescription }}</label>
-                </div>
-
-                <div>
-                    <button mat-icon-button color="primary" (click)="showNextFact()" [disabled]="!canShowNextFact">
-                        <mat-icon>arrow_forward</mat-icon>
-                    </button>
-                </div>
-            </div>
-
-            <div class="question-flex-container">
-                <div>
-                    <label>{{ currentFact.questionText }}</label>
-                </div>
-            </div>
-
-            <div *ngIf="!isAnswerShown" class="answer-flex-container">
-                <button class="command-button" mat-icon-button color="accent" (click)="showAnswer()">
-                    <mat-icon>slideshow</mat-icon>
-                </button>
-            </div>
-
-            <div *ngIf="isAnswerShown" class="answer-flex-container">
-                <div class="answer-flex-editor">
-                    <p-editor readonly="true" [(ngModel)]="currentFact.answerText">
-                        <p-header>
-                        </p-header>
-                    </p-editor>
-                </div>
-            </div>
-
-            <div class="bottom-command-flex-row">
-                <button mat-stroked-button color="primary"
-                    (click)="reShuffleRun()">{{ 'areas.learning-sessions.runs.components.session-run.reshuffle' | translate }}
-                </button>
-            </div>
+  <div class="main">
+    <div class="main-flex-container">
+      <div class="command-flex-row">
+        <div>
+          <button mat-icon-button color="primary" (click)="showPreviousFact()" [disabled]="!canShowPreviousFact">
+            <mat-icon>arrow_backward</mat-icon>
+          </button>
         </div>
+
+        <div class="state-description">
+          <label>{{ runStateDescription }}</label>
+        </div>
+
+        <div *ngIf="showNavigateToNextRun">
+          <button mat-icon-button color="accent" (click)="navigateToNextRunAsync()">
+            <mat-icon>double_arrow</mat-icon>
+          </button>
+        </div>
+
+        <div>
+          <button mat-icon-button color="primary" (click)="showNextFact()" [disabled]="!canShowNextFact">
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="question-flex-container">
+        <div>
+          <label>{{ currentFact.questionText }}</label>
+        </div>
+      </div>
+
+      <div *ngIf="!isAnswerShown" class="answer-flex-container">
+        <button class="command-button" mat-icon-button color="accent" (click)="showAnswer()">
+          <mat-icon>slideshow</mat-icon>
+        </button>
+      </div>
+
+      <div *ngIf="isAnswerShown" class="answer-flex-container">
+        <div class="answer-flex-editor">
+          <p-editor readonly="true" [(ngModel)]="currentFact.answerText">
+            <p-header>
+            </p-header>
+          </p-editor>
+        </div>
+      </div>
+
+      <div class="bottom-command-flex-row">
+        <button mat-stroked-button color="primary"
+          (click)="reShuffleRun()">{{ 'areas.learning-sessions.runs.components.session-run.reshuffle' | translate }}
+        </button>
+      </div>
     </div>
+  </div>
 </div>
