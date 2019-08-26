@@ -6,11 +6,11 @@ import { Injectable } from '@angular/core';
 export class StorageService {
   public save<T>(key: string, item: T): void {
     const serializedItem = JSON.stringify(item);
-    localStorage.setItem(key, serializedItem);
+    sessionStorage.setItem(key, serializedItem);
   }
 
   public load<T>(key: string): T | null {
-    const item = localStorage.getItem(key);
+    const item = sessionStorage.getItem(key);
     if (item == null) {
       return null;
     }

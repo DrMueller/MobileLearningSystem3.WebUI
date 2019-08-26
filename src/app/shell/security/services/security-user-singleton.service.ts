@@ -9,7 +9,6 @@ import { SecurityUser } from '../models';
   providedIn: 'root'
 })
 export class SecurityUserSingletonService {
-
   public get instance(): SecurityUser {
     const user = this.sessionStorage.load<SecurityUser>(this.Key);
     if (!user) {
@@ -30,30 +29,32 @@ export class SecurityUserSingletonService {
   constructor(
     private sessionStorage: StorageService,
     private translator: TranslateService) {
+
+    this.createUnauthenticated();
     this._userChanged$ = new BehaviorSubject<SecurityUser>(this.instance);
 
     this.translator.onLangChange.subscribe(async () => {
-      await this.createUnauthenticatedUserAsync();
+      this.createUnauthenticated();
       if (!this.instance.isAuthenticated) {
         this.saveAndPublish(this._unauthenticatedUser);
       }
     });
   }
 
-  public async initializeAsync(): Promise<void> {
-    this.createUnauthenticatedUserAsync();
-  }
-
   public clearUser(): void {
     this.saveAndPublish(this._unauthenticatedUser);
+  }
+
+  public initialize(): void {
+    this.createUnauthenticated();
   }
 
   public setUser(securityUser: SecurityUser): void {
     this.saveAndPublish(securityUser);
   }
 
-  private async createUnauthenticatedUserAsync(): Promise<void> {
-    const guestDescription = await this.translator.get('shell.security.services.guest').toPromise();
+  private createUnauthenticated(): void {
+    const guestDescription = this.translator.instant('shell.security.services.guest');
     this._unauthenticatedUser = new SecurityUser(guestDescription, false, '');
   }
 

@@ -12,7 +12,6 @@ import { AppNavigationEntryFactoryService } from '../../services';
 })
 
 export class AppNavigationComponent implements OnInit {
-
   public get isSidebarOpen(): boolean {
     return this._isSidebarOpen;
   }

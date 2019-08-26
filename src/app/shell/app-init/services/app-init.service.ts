@@ -20,11 +20,10 @@ export class AppInitService {
 
   public async initializeAppAsync(): Promise<void> {
     await this.appSettingsSingleton.initializeAsync();
-    await this.securityUserSingleton.initializeAsync();
+    this.securityUserSingleton.initialize();
     this.appConnectivity.initialize();
     this.installPwaPrompt.registerUpdateAvaliableCallback();
     this.initializeTranslations();
-
   }
 
   private initializeTranslations(): void {
