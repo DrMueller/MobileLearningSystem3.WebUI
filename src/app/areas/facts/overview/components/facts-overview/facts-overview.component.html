@@ -12,23 +12,18 @@
   <mat-card-content>
     <app-mat-table [rowSelectionType]="0" [columnDefinitions]="columnDefinitions" idSelector="id"
       [data]="overviewEntries">
+      <ng-template #actions let-row="row">
+        <app-context-menu-template>
+          <div class="button">
+            <button mat-menu-item (click)="edit(row.id)">{{ 'common.edit' | translate }}
+            </button>
+          </div>
+          <div class="button">
+            <button mat-menu-item (click)="deleteAsync(row.id)">{{ 'common.delete' | translate }}
+            </button>
+          </div>
+        </app-context-menu-template>
+      </ng-template>
     </app-mat-table>
-
-    <ng-template #actions>
-      <app-context-menu-template>
-        <button mat-menu-item>Test 1</button>
-        <button mat-menu-item>Test 2</button>
-      </app-context-menu-template>
-    </ng-template>
-
-    <!-- <ng-template #deleteTemplate>
-            <app-button-template materialIcon="delete_outline" materialColor="warn"
-                (buttonClick)=deleteAsync($event)></app-button-template>
-        </ng-template>
-
-        <ng-template #editTemplate>
-            <app-button-template materialIcon="edit" materialColor="primary" (buttonClick)=edit($event)>
-            </app-button-template>
-        </ng-template> -->
   </mat-card-content>
 </mat-card>

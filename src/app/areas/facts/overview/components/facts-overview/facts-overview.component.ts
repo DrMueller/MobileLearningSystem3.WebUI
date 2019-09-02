@@ -19,11 +19,10 @@ import { FactsOverviewColDefBuilderService } from '../../services';
   styleUrls: ['./facts-overview.component.scss']
 })
 export class FactsOverviewComponent implements OnInit {
-
   public columnDefinitions: ColumnDefinitionsContainer;
+  @ViewChild('actions', { static: true }) public actionsTemplate: TemplateRef<any>;
   @ViewChild('deleteTemplate', { static: true }) public deleteTemplate: TemplateRef<any>;
   @ViewChild('editTemplate', { static: true }) public editTemplate: TemplateRef<any>;
-  @ViewChild('actions', { static: true }) public actionsTemplate: TemplateRef<any>;
   @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<FactOverviewEntry>;
   public overviewEntries: FactOverviewEntry[] = [];
 
@@ -35,25 +34,6 @@ export class FactsOverviewComponent implements OnInit {
     private busyIndicator: BusyIndicatorService,
     private translator: TranslateService,
     private snackBarService: SnackBarService) { }
-
-  public async deleteAsync(factId: string): Promise<void> {
-    const factIdParsed = parseInt(factId, 10);
-    await this.factRepo.deleteFactAsync(factIdParsed);
-
-    const entry = this.overviewEntries.find(f => f.id === factIdParsed)!;
-    this.table.deleteEntries([entry]);
-  }
-
-  public async ngOnInit(): Promise<void> {
-    this.busyIndicator.withBusyIndicator(async () => {
-      this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.actionsTemplate);
-      this.overviewEntries = await this.factRepo.loadOverviewAsync();
-    });
-  }
-
-  public createFact(): void {
-    this.navigator.navigateToEdit(-1, false);
-  }
 
   public async deleteAllFactsAsync(): Promise<void> {
     const deleteHeading = await this.translator.get('areas.facts.overview.components.facts-overview.deleteAllFactsHeading').toPromise();
@@ -72,6 +52,25 @@ export class FactsOverviewComponent implements OnInit {
           this.snackBarService.showSnackBar(allFactsDeletedInfo);
         }
       });
+  }
+
+  public async deleteAsync(factId: string): Promise<void> {
+    const factIdParsed = parseInt(factId, 10);
+    await this.factRepo.deleteFactAsync(factIdParsed);
+
+    const entry = this.overviewEntries.find(f => f.id === factIdParsed)!;
+    this.table.deleteEntries([entry]);
+  }
+
+  public async ngOnInit(): Promise<void> {
+    this.busyIndicator.withBusyIndicator(async () => {
+      this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.actionsTemplate);
+      this.overviewEntries = await this.factRepo.loadOverviewAsync();
+    });
+  }
+
+  public createFact(): void {
+    this.navigator.navigateToEdit(-1, false);
   }
 
   public edit(factId: string): void {

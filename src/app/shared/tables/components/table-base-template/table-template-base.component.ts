@@ -1,16 +1,18 @@
 export abstract class TableTemplateBaseComponent {
-    protected tryFetchingRowId(event: any): string | undefined {
-        let target = <any>event.target;
-        if (target) {
+  protected tryFetchingRowId(event: any): string | undefined {
+    let target = <any>event.target;
+    if (target) {
+      while (target.localName && target.localName !== 'td') {
+        target = target.parentNode;
+      }
 
-            while (target.localName !== 'td') {
-                target = target.parentNode;
-            }
+      if (target.getAttribute) {
+        return target.getAttribute('data-row-id');
+      }
 
-            const rowId = target.getAttribute('data-row-id');
-            return rowId;
-        }
-
-        return undefined;
+      return undefined;
     }
+
+    return undefined;
+  }
 }
