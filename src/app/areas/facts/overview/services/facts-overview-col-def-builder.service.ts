@@ -14,8 +14,7 @@ export class FactsOverviewColDefBuilderService {
     private builderFactory: ColDefBuilderFactoryService) { }
 
   public async buildDefinitionsAsync(
-    editTemplate: TemplateRef<any>,
-    deleteTemplate: TemplateRef<any>
+    actionsTemplate: TemplateRef<any>,
   ): Promise<ColumnDefinitionsContainer> {
     return this.builderFactory
       .startBuilding()
@@ -25,8 +24,8 @@ export class FactsOverviewColDefBuilderService {
         'creation-cell')
       .bindingTo<FactOverviewEntry>('creationDateDescription')
       .withColumn('questionText', marker('common.question')).bindingTo<FactOverviewEntry>('questionText')
-      .withColumn('editTemplate', '', 'button-cell').withTemplate(editTemplate)
-      .withColumn('deleteTemplate', '', 'button-cell').withTemplate(deleteTemplate)
+      .withColumn('actions', '', 'button-cell').withTemplate(actionsTemplate)
+      // .withColumn('deleteTemplate', '', 'button-cell').withTemplate(deleteTemplate)
       .build();
   }
 }

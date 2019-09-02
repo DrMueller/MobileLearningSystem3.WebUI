@@ -23,6 +23,7 @@ export class FactsOverviewComponent implements OnInit {
   public columnDefinitions: ColumnDefinitionsContainer;
   @ViewChild('deleteTemplate', { static: true }) public deleteTemplate: TemplateRef<any>;
   @ViewChild('editTemplate', { static: true }) public editTemplate: TemplateRef<any>;
+  @ViewChild('actions', { static: true }) public actionsTemplate: TemplateRef<any>;
   @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<FactOverviewEntry>;
   public overviewEntries: FactOverviewEntry[] = [];
 
@@ -45,7 +46,7 @@ export class FactsOverviewComponent implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     this.busyIndicator.withBusyIndicator(async () => {
-      this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.editTemplate, this.deleteTemplate);
+      this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.actionsTemplate);
       this.overviewEntries = await this.factRepo.loadOverviewAsync();
     });
   }

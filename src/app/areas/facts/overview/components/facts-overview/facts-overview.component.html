@@ -1,19 +1,27 @@
 <mat-card class="mat-card">
-    <mat-card-title>{{ 'common.overview' | translate }}</mat-card-title>
-    <mat-card-content>
-        <button mat-stroked-button color="primary" (click)="createFact()">{{ 'common.create' | translate }}</button>
-        <button mat-stroked-button color="warn" (click)="deleteAllFactsAsync()">{{ 'common.deleteAll' | translate }}</button>
-    </mat-card-content>
+  <mat-card-title>{{ 'common.overview' | translate }}</mat-card-title>
+  <mat-card-content>
+    <button mat-stroked-button color="primary" (click)="createFact()">{{ 'common.create' | translate }}</button>
+    <button mat-stroked-button color="warn"
+      (click)="deleteAllFactsAsync()">{{ 'common.deleteAll' | translate }}</button>
+  </mat-card-content>
 </mat-card>
 
 <mat-card class="mat-card">
-    <mat-card-title>{{ 'common.overview' | translate }}</mat-card-title>
-    <mat-card-content>
-        <app-mat-table [rowSelectionType]="0" [columnDefinitions]="columnDefinitions" idSelector="id"
-            [data]="overviewEntries">
-        </app-mat-table>
+  <mat-card-title>{{ 'common.overview' | translate }}</mat-card-title>
+  <mat-card-content>
+    <app-mat-table [rowSelectionType]="0" [columnDefinitions]="columnDefinitions" idSelector="id"
+      [data]="overviewEntries">
+    </app-mat-table>
 
-        <ng-template #deleteTemplate>
+    <ng-template #actions>
+      <app-context-menu-template>
+        <button mat-menu-item>Test 1</button>
+        <button mat-menu-item>Test 2</button>
+      </app-context-menu-template>
+    </ng-template>
+
+    <!-- <ng-template #deleteTemplate>
             <app-button-template materialIcon="delete_outline" materialColor="warn"
                 (buttonClick)=deleteAsync($event)></app-button-template>
         </ng-template>
@@ -21,6 +29,6 @@
         <ng-template #editTemplate>
             <app-button-template materialIcon="edit" materialColor="primary" (buttonClick)=edit($event)>
             </app-button-template>
-        </ng-template>
-    </mat-card-content>
+        </ng-template> -->
+  </mat-card-content>
 </mat-card>

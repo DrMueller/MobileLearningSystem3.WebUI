@@ -7,15 +7,18 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDependenciesModule } from '../../mat-deps';
 
 import { ButtonTemplateComponent } from './components/button-template';
+import { ContextMenuTemplateComponent } from './components/context-menu-template/context-menu-template.component';
 import { MatTableComponent } from './components/mat-table';
 import { CustomMatPaginatorIntl } from './services';
 
 @NgModule({
   declarations: [
     MatTableComponent,
-    ButtonTemplateComponent
+    ButtonTemplateComponent,
+    ContextMenuTemplateComponent
   ],
   exports: [
+    ContextMenuTemplateComponent,
     MatTableComponent,
     ButtonTemplateComponent
   ],
