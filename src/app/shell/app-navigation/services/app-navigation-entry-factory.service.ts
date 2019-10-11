@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
 
 import { AppAreaLocatorService } from '../../app-areas/services';
-import { SecurityUserSingletonService } from '../../security/services';
+import { getUserIsLoggedIn, IAppState } from '../../app-state';
 import { AppNavigationEntry } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppNavigationEntryFactoryService {
-
   private _cache: Array<AppNavigationEntry> | null = null;
 
   public constructor(
-    private userSingleton: SecurityUserSingletonService,
-    private areaLocator: AppAreaLocatorService) { }
+    private areaLocator: AppAreaLocatorService,
+    private store: Store<IAppState>) { }
 
   public createNavigationEntries(): AppNavigationEntry[] {
     this.assureInitialized();
@@ -24,17 +23,15 @@ export class AppNavigationEntryFactoryService {
   private assureInitialized(): void {
     const areas = this.areaLocator.locateAllAreas();
 
-    const userAuthenticationChanged$ = this.userSingleton
-      .userChanged$.pipe(map(user => user.isAuthenticated));
+    const userAuthenticationChanged$ = this.store.pipe(select(getUserIsLoggedIn));
 
     const entries = areas.map(area => new AppNavigationEntry(
       area.displayText,
       area.baseUrl,
       area.needsAuthentication,
-      this.userSingleton.instance.isAuthenticated,
+      false,
       userAuthenticationChanged$));
 
     this._cache = entries;
   }
-
 }

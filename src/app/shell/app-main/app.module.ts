@@ -3,6 +3,7 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FactsModule } from 'src/app/areas/facts';
@@ -12,7 +13,6 @@ import { TensorflowModule } from 'src/app/areas/tensorflow/tensorflow.module';
 import { MatDependenciesModule } from 'src/app/mat-deps';
 import { BusyIndicationModule } from 'src/app/shared/busy-indication/busy-indication.module';
 import { RxFormsModule } from 'src/app/shared/rx-forms';
-import { TablesModule } from 'src/app/shared/tables';
 import { environment } from 'src/environments/environment';
 
 import { LocalizationModule } from '../../core/localization/localization.module';
@@ -47,7 +47,7 @@ export function initializeApp(appInitService: AppInitService): Function {
     MatDependenciesModule.forRoot(),
     RxFormsModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    TablesModule.forRoot(),
+    StoreModule.forRoot({}),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -56,6 +56,7 @@ export function initializeApp(appInitService: AppInitService): Function {
       }
     }),
     TranslateModule,
+
     // Areas
     HomeModule.forRoot(),
     FactsModule.forRoot(),

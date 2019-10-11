@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 
-import { LoginRequest, LoginResult, SecurityUser } from '../models';
+import { IAppState } from '../../app-state';
+import { LoginRequest, LoginResult } from '../models';
+import { SetSecurityUserAction } from '../state/actions';
 
 import { SecurityHttpService } from './security-http.service';
-import { SecurityUserSingletonService } from './security-user-singleton.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,22 +14,33 @@ import { SecurityUserSingletonService } from './security-user-singleton.service'
 export class AuthenticationService {
 
   constructor(
+    private store: Store<IAppState>,
     private httpService: SecurityHttpService,
-    private securityUserSingleton: SecurityUserSingletonService) { }
+    private translator: TranslateService) { }
 
   public async logInAsync(loginRequest: LoginRequest): Promise<void> {
     const loginResult = await this.httpService.postAsync<LoginResult>('login', loginRequest);
 
     if (loginResult.loginSuccess) {
       const nameClaim = loginResult.claims.find(f => f.type.endsWith('name'));
-      const securityUser = new SecurityUser(nameClaim!.value, true, loginResult.token);
-      this.securityUserSingleton.setUser(securityUser);
+      const action = new SetSecurityUserAction(true, nameClaim!.value);
+      this.store.dispatch(action);
     } else {
-      this.securityUserSingleton.clearUser();
+      this.setUnauthenticated();
     }
   }
 
+  public initialize(): void {
+    this.setUnauthenticated();
+  }
+
+
   public logOut(): void {
-    this.securityUserSingleton.clearUser();
+    this.setUnauthenticated();
+  }
+
+  private setUnauthenticated(): void {
+    const guestDescription = this.translator.instant('shell.security.services.guest');
+    this.store.dispatch(new SetSecurityUserAction(false, guestDescription));
   }
 }
