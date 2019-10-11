@@ -15,4 +15,5 @@ export const getUserName = createSelector(
 export interface ISecurityState {
   userIsLoggedIn: boolean;
   userName: string;
+  userToken: string;
 }

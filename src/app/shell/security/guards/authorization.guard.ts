@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import { AppAreaLocatorService } from '../../app-areas/services';
-import { SecurityUserSingletonService } from '../services';
+import { getUserIsLoggedIn, IAppState } from '../../app-state';
 
 @Injectable({
   providedIn: 'root'
@@ -10,23 +12,25 @@ import { SecurityUserSingletonService } from '../services';
 export class AuthorizationGuard implements CanActivate {
   constructor(
     private router: Router,
-    private securityUserSingleton: SecurityUserSingletonService,
-    private areaLocator: AppAreaLocatorService) {
+    private areaLocator: AppAreaLocatorService,
+    private store: Store<IAppState>) {
   }
 
-  public canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const isAuthenticated = this.securityUserSingleton.instance.isAuthenticated;
+  public canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    return this.store.pipe(
+      select(getUserIsLoggedIn),
+      select(isLoggedIn => {
+        if (isLoggedIn) {
+          return true;
+        }
 
-    if (isAuthenticated) {
-      return true;
-    }
+        const area = this.areaLocator.locateByUrl(state.url);
+        if (!area.needsAuthentication) {
+          return true;
+        }
 
-    const area = this.areaLocator.locateByUrl(state.url);
-    if (!area.needsAuthentication) {
-      return true;
-    }
-
-    this.router.navigate(['/home/welcome'], { queryParams: { returnUrl: state.url } });
-    return false;
+        this.router.navigate(['/home/welcome'], { queryParams: { returnUrl: state.url } });
+        return false;
+      }));
   }
 }

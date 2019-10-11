@@ -4,7 +4,7 @@ import { AppSettingsSingletonService } from 'src/app/core/app-settings/services'
 import { AppConnectivityService } from 'src/app/shared/pwa/app-connectivity/services';
 import { InstallPwaPromptService } from 'src/app/shared/pwa/pwa-installation/services';
 
-import { SecurityUserSingletonService } from '../../security/services';
+import { AuthenticationService } from '../../security/services';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +15,15 @@ export class AppInitService {
     private appConnectivity: AppConnectivityService,
     private installPwaPrompt: InstallPwaPromptService,
     private translator: TranslateService,
-    private securityUserSingleton: SecurityUserSingletonService
+    private authenticationService: AuthenticationService
   ) { }
 
   public async initializeAppAsync(): Promise<void> {
+    this.initializeTranslations();
     await this.appSettingsSingleton.initializeAsync();
-    this.securityUserSingleton.initialize();
+    this.authenticationService.initialize();
     this.appConnectivity.initialize();
     this.installPwaPrompt.registerUpdateAvaliableCallback();
-    this.initializeTranslations();
   }
 
   private initializeTranslations(): void {

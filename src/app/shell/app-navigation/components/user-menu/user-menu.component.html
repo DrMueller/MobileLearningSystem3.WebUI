@@ -19,12 +19,12 @@
         [matMenuTriggerFor]="subMenu">{{ 'shell.app-navigation.components.user-menu.switchLanguage' | translate }}</button>
       <mat-divider></mat-divider>
 
-      <ng-container *ngIf=" !isUserAuthenticated">
+      <ng-container *ngIf="!(isUserAuthenticated$ | async)">
         <button mat-menu-item
           (click)="logIn()">{{ 'shell.app-navigation.components.user-menu.logIn' | translate }}</button>
       </ng-container>
 
-      <ng-container *ngIf="isUserAuthenticated">
+      <ng-container *ngIf="(isUserAuthenticated$ | async)">
         <button mat-menu-item
           (click)="logOut()">{{ 'shell.app-navigation.components.user-menu.logOut' | translate }}</button>
       </ng-container>

@@ -7,6 +7,9 @@ export class SetSecurityUserAction implements Action {
     return SecurityActionTypes.SetSecurityUser;
   }
 
-  public constructor(public readonly userIsLoggedIn: boolean, public userName: string) {
+  public constructor(
+    public readonly userIsLoggedIn: boolean,
+    public readonly userName: string,
+    public readonly userToken: string) {
   }
 }

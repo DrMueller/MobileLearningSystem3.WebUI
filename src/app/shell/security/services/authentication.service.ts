@@ -23,7 +23,7 @@ export class AuthenticationService {
 
     if (loginResult.loginSuccess) {
       const nameClaim = loginResult.claims.find(f => f.type.endsWith('name'));
-      const action = new SetSecurityUserAction(true, nameClaim!.value);
+      const action = new SetSecurityUserAction(true, nameClaim!.value, loginResult.token);
       this.store.dispatch(action);
     } else {
       this.setUnauthenticated();
@@ -34,13 +34,12 @@ export class AuthenticationService {
     this.setUnauthenticated();
   }
 
-
   public logOut(): void {
     this.setUnauthenticated();
   }
 
   private setUnauthenticated(): void {
     const guestDescription = this.translator.instant('shell.security.services.guest');
-    this.store.dispatch(new SetSecurityUserAction(false, guestDescription));
+    this.store.dispatch(new SetSecurityUserAction(false, guestDescription, ''));
   }
 }

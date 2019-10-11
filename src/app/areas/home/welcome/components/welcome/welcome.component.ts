@@ -1,25 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { HelloHttpService } from 'src/app/areas/hello/common/services';
 import { SnackBarConfiguration } from 'src/app/core/snack-bar/models';
 import { SnackBarService } from 'src/app/core/snack-bar/services';
 import { PwaInstallationService } from 'src/app/shared/pwa/pwa-installation/services';
-import { SecurityUserSingletonService } from 'src/app/shell/security/services';
+import { getUserName, ISecurityState } from 'src/app/shell/app-state';
 
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss']
 })
-export class WelcomeComponent {
+export class WelcomeComponent implements OnInit {
   public isBusyIndicatorShown = false;
+  public userName: string;
 
   public constructor(
     private pwaInstallationService: PwaInstallationService,
     private snackBarService: SnackBarService,
     private translator: TranslateService,
-    private userSingleton: SecurityUserSingletonService,
-    private helloHttpService: HelloHttpService) { }
+    private helloHttpService: HelloHttpService,
+    private store: Store<ISecurityState>) { }
 
   public toggleBusyIndicator(): void {
     this.isBusyIndicatorShown = !this.isBusyIndicatorShown;
@@ -38,8 +40,14 @@ export class WelcomeComponent {
     this.snackBarService.showSnackBar(helloWorld);
   }
 
+  public ngOnInit(): void {
+    this.store.pipe(select(getUserName)).subscribe(name => {
+      this.userName = name;
+    });
+  }
+
   public async sayHelloFromServerAsync(): Promise<void> {
-    const returnedMessage = await this.helloHttpService.getAsync<any>(this.userSingleton.instance.userName);
+    const returnedMessage = await this.helloHttpService.getAsync<any>(this.userName);
     const snackbarInfo = await this.translator.get('areas.home.welcome.components.welcome.serverResponseInfo').toPromise();
 
     const info = snackbarInfo + returnedMessage.helloMessage;
