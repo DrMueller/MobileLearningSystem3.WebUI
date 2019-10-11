@@ -5,7 +5,8 @@ import { SecurityActions } from './security.actions';
 
 const initialSecurityState: ISecurityState = {
   userIsLoggedIn: false,
-  userName: ''
+  userName: '',
+  userToken: ''
 };
 
 export function securityReducer(state: ISecurityState = initialSecurityState, actions: SecurityActions): ISecurityState {
@@ -14,7 +15,8 @@ export function securityReducer(state: ISecurityState = initialSecurityState, ac
       return {
         ...state,
         userIsLoggedIn: actions.userIsLoggedIn,
-        userName: actions.userName
+        userName: actions.userName,
+        userToken: actions.userToken
       };
 
     default:

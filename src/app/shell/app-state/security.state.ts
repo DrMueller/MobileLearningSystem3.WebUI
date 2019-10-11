@@ -1,6 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-const getSecurityState = createFeatureSelector<ISecurityState>('security');
+export const securityFeatureKey = 'security';
+
+const getSecurityState = createFeatureSelector<ISecurityState>(securityFeatureKey);
 
 export const getUserIsLoggedIn = createSelector(
   getSecurityState,

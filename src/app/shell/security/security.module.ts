@@ -20,7 +20,7 @@ import { securityReducer } from './state/security.reducer';
     CommonModule,
     RxFormsModule,
     MatDependenciesModule,
-    StoreModule.forFeature('security', securityReducer),
+    StoreModule.forFeature('', securityReducer),
     TranslateModule
   ],
   providers: [
