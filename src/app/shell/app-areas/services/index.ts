@@ -1,1 +1,1 @@
-export * from '../services/app-area-locator.service';
+export * from './app-area-factory.service';

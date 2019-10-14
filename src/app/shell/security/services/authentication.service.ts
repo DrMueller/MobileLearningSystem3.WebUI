@@ -12,7 +12,6 @@ import { SecurityHttpService } from './security-http.service';
   providedIn: 'root'
 })
 export class AuthenticationService {
-
   constructor(
     private store: Store<IAppState>,
     private httpService: SecurityHttpService,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 
-import { AppAreaLocatorService } from '../../app-areas/services';
+import { AppAreaFactoryService } from '../../app-areas/services';
 import { getUserIsLoggedIn, IAppState } from '../../app-state';
 import { AppNavigationEntry } from '../models';
 
@@ -12,7 +12,7 @@ export class AppNavigationEntryFactoryService {
   private _cache: Array<AppNavigationEntry> | null = null;
 
   public constructor(
-    private areaLocator: AppAreaLocatorService,
+    private areaFactory: AppAreaFactoryService,
     private store: Store<IAppState>) { }
 
   public createNavigationEntries(): AppNavigationEntry[] {
@@ -21,7 +21,7 @@ export class AppNavigationEntryFactoryService {
   }
 
   private assureInitialized(): void {
-    const areas = this.areaLocator.locateAllAreas();
+    const areas = this.areaFactory.createAllAreas();
 
     const userAuthenticationChanged$ = this.store.pipe(select(getUserIsLoggedIn));
 

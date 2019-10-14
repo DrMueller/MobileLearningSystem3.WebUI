@@ -25,7 +25,6 @@ export class FactsOverviewColDefBuilderService {
       .bindingTo<FactOverviewEntry>('creationDateDescription')
       .withColumn('questionText', marker('common.question')).bindingTo<FactOverviewEntry>('questionText')
       .withColumn('actions', '', 'button-cell').withTemplate(actionsTemplate)
-      // .withColumn('deleteTemplate', '', 'button-cell').withTemplate(deleteTemplate)
       .build();
   }
 }
