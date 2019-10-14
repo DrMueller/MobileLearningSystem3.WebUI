@@ -12,7 +12,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('../../areas/home/home.module').then(m => m.HomeModule)
+    loadChildren: () => import('../../areas/home/home.module').then(m => m.HomeModule),
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'facts',
