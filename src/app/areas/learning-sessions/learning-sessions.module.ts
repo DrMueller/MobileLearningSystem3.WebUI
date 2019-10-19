@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { EditorModule } from 'primeng/editor';
 import { MatDependenciesModule } from 'src/app/mat-deps';
@@ -8,6 +10,9 @@ import { EnquiryDialogModule } from 'src/app/shared/enquiry-dialog';
 import { RxFormsModule } from 'src/app/shared/rx-forms';
 import { TablesModule } from 'src/app/shared/tables';
 
+import { LearningSessionRepositoryService } from '../shared-domain/repos';
+
+import { learningSessionsFeatureKey, learningSessionsReducer } from './common/state';
 import { FactExistsInRunComponent } from './edit/components/fact-exists-in-run';
 import { FactsSelectionComponent } from './edit/components/facts-selection';
 import { LearningSessionEditComponent } from './edit/components/learning-session-edit/learning-session-edit.component';
@@ -40,6 +45,8 @@ import { SessionRunComponent } from './runs/components/session-run';
     LearningSessionsServicesModule,
     MatDependenciesModule,
     RxFormsModule,
+    StoreModule.forFeature(learningSessionsFeatureKey, learningSessionsReducer),
+    EffectsModule.forFeature([LearningSessionRepositoryService]),
     TablesModule,
     TranslateModule
   ]

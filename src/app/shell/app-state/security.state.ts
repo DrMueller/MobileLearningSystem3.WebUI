@@ -9,6 +9,11 @@ export const getUserIsLoggedIn = createSelector(
   state => state.userIsLoggedIn
 );
 
+export const getUserToken = createSelector(
+  getSecurityState,
+  state => state.userToken
+);
+
 export const getUserName = createSelector(
   getSecurityState,
   state => state.userName

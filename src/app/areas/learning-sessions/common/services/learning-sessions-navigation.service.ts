@@ -13,8 +13,8 @@ export class LearningSessionsNavigationService {
     this.navigateTo('overview');
   }
 
-  public navigateToEdit(sessionId: number) {
-    this.navigateTo('edit', sessionId);
+  public navigateToEdit() {
+    this.navigateTo('edit');
   }
 
   public navigateToSessionRun(sessionId: number) {

@@ -28,6 +28,13 @@ export abstract class HttpBaseService {
     return this.processResponse(this.httpClient.get<T>(completeUrl, requestOptions));
   }
 
+  public get$<T>(relativeUrl: string): Observable<T> {
+    const completeUrl = this.createCompleteUrl(relativeUrl);
+    const requestOptions = this.createOptions();
+
+    return this.httpClient.get<T>(completeUrl, requestOptions);
+  }
+
   public async postAsync<T>(
     relativeUrl: string,
     body: any): Promise<T> {
@@ -35,6 +42,12 @@ export abstract class HttpBaseService {
 
     const requestOptions = this.createOptions();
     return this.processResponse(this.httpClient.post<T>(completeUrl, body, requestOptions));
+  }
+
+  public put$<T>(relativeUrl: string, body: any): Observable<T> {
+    const completeUrl = this.createCompleteUrl(relativeUrl);
+    const requestOptions = this.createOptions();
+    return this.httpClient.put<T>(completeUrl, body, requestOptions);
   }
 
   public async putAsync<T>(

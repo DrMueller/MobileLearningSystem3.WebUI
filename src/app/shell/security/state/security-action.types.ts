@@ -1,3 +1,4 @@
 export enum SecurityActionTypes {
-  SetSecurityUser = 'Set the Security User'
+  SetSecurityUser = 'Set the Security User',
+  InitializeSecurityUser = 'Initialize the Security User'
 }

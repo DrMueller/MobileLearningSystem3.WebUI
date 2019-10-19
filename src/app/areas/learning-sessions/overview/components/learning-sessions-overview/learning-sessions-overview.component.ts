@@ -1,6 +1,8 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
+import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { LearningSessionRepositoryService } from 'src/app/areas/shared-domain/repos/learning-session-repository.service';
 import { BusyIndicatorService } from 'src/app/core/loading-indication/services';
 import { SnackBarService } from 'src/app/core/snack-bar/services';
@@ -10,6 +12,8 @@ import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
+import { getOverview, ILearningSessionsState } from '../../../common/state';
+import { LoadAction, LoadEditAction } from '../../../common/state/actions';
 import { LearningSessionOverviewEntry } from '../../models';
 import { ChunkDefinition } from '../../models/chunk-definition.model';
 import { ChunkFactoryService } from '../../services/chunk-factory.service';
@@ -21,12 +25,14 @@ import { ChunkEditDialogComponent } from '../chunk-edit-dialog/chunk-edit-dialog
   templateUrl: './learning-sessions-overview.component.html',
   styleUrls: ['./learning-sessions-overview.component.scss']
 })
-export class LearningSessionsOverviewComponent implements OnInit {
+export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
   @ViewChild('deleteTemplate', { static: true }) public deleteTemplate: TemplateRef<any>;
   @ViewChild('editTemplate', { static: true }) public editTemplate: TemplateRef<any>;
   @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<LearningSessionOverviewEntry>;
   public columnDefinitions: ColumnDefinitionsContainer;
   public overviewEntries: LearningSessionOverviewEntry[] = [];
+
+  private _overviewSubscription: Subscription;
 
   private _selectedEntry: LearningSessionOverviewEntry | undefined;
 
@@ -39,7 +45,8 @@ export class LearningSessionsOverviewComponent implements OnInit {
     private translator: TranslateService,
     private snackBarService: SnackBarService,
     private dialog: MatDialog,
-    private chunkFactory: ChunkFactoryService) { }
+    private chunkFactory: ChunkFactoryService,
+    private store: Store<ILearningSessionsState>) { }
 
   public async deleteAllSessionsAsync(): Promise<void> {
     const deleteHeading = await this
@@ -65,23 +72,30 @@ export class LearningSessionsOverviewComponent implements OnInit {
       });
   }
 
+  public ngOnDestroy(): void {
+    this._overviewSubscription.unsubscribe();
+  }
+
   public async deleteAsync(sessionId: string): Promise<void> {
     const factIdParsed = parseInt(sessionId, 10);
     await this.learningSessionRepo.deleteAsync(factIdParsed);
-
     const entry = this.overviewEntries.find(f => f.id === factIdParsed)!;
     this.table.deleteEntries([entry]);
   }
 
   public async ngOnInit(): Promise<void> {
+    this._overviewSubscription = this.store
+      .pipe(select(getOverview))
+      .subscribe(sr => this.overviewEntries = sr);
+
     this.busyIndicator.withBusyIndicator(async () => {
       this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.editTemplate, this.deleteTemplate);
-      this.overviewEntries = await this.learningSessionRepo.loadOverviewAsync();
+      this.store.dispatch(new LoadAction());
     });
   }
 
   public createSession(): void {
-    this.navigator.navigateToEdit(-1);
+    this.navigator.navigateToEdit();
   }
 
   public createSessionChunks(): void {
@@ -94,7 +108,7 @@ export class LearningSessionsOverviewComponent implements OnInit {
         const chunkDefinition = <ChunkDefinition | undefined>sr;
         if (chunkDefinition) {
           await this.chunkFactory.createChunksAsync(chunkDefinition);
-          this.overviewEntries = await this.learningSessionRepo.loadOverviewAsync();
+          this.store.dispatch(new LoadAction());
           const chunksCreatedInfo = await this.
             translator.get('areas.learning-sessions.overview.components.learning-sessions-overview.chunksCreated').toPromise();
           this.snackBarService.showSnackBar(chunksCreatedInfo);
@@ -105,7 +119,9 @@ export class LearningSessionsOverviewComponent implements OnInit {
 
   public edit(sessionId: string): void {
     const f = parseInt(sessionId, 10);
-    this.navigator.navigateToEdit(f);
+
+    this.store.dispatch(new LoadEditAction(f));
+    this.navigator.navigateToEdit();
   }
 
   public get canRunSession(): boolean {

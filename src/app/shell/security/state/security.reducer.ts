@@ -1,13 +1,24 @@
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { ISecurityState } from '../../app-state';
 
 import { SecurityActionTypes } from './security-action.types';
 import { SecurityActions } from './security.actions';
 
-const initialSecurityState: ISecurityState = {
+export const securityFeatureKey = 'security';
+
+export const initialSecurityState: ISecurityState = {
   userIsLoggedIn: false,
   userName: '',
   userToken: ''
 };
+
+const getFeature = createFeatureSelector<ISecurityState>(securityFeatureKey);
+
+export const getUserIsLoggedIn = createSelector(
+  getFeature,
+  state => state.userIsLoggedIn
+);
 
 export function securityReducer(state: ISecurityState = initialSecurityState, actions: SecurityActions): ISecurityState {
   switch (actions.type) {

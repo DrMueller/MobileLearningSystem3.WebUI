@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppAreaFactoryService } from '../../app-areas/services';
-import { getUserIsLoggedIn, IAppState } from '../../app-state';
+import {  getUserIsLoggedIn, IAppState } from '../../app-state';
 
 @Injectable({
   providedIn: 'root'

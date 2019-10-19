@@ -9,7 +9,7 @@ import { RxFormsModule } from 'src/app/shared/rx-forms';
 
 import { LogInComponent } from './components/log-in/log-in.component';
 import { BearerAuthInterceptor } from './interceptors';
-import { securityReducer } from './state/security.reducer';
+import { securityFeatureKey, securityReducer } from './state/security.reducer';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { securityReducer } from './state/security.reducer';
     CommonModule,
     RxFormsModule,
     MatDependenciesModule,
-    StoreModule.forFeature('', securityReducer),
+    StoreModule.forFeature(securityFeatureKey, securityReducer),
     TranslateModule
   ],
   providers: [

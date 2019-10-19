@@ -1,23 +1,26 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { ISecurityState } from '../../app-state';
+import { getUserToken, IAppState } from '../../app-state';
+import { getUserIsLoggedIn } from '../state';
 
 @Injectable()
 export class BearerAuthInterceptor implements HttpInterceptor {
-  private securityState: ISecurityState;
+  private _userIsLoggedIn: boolean;
+  private _userToken: string;
 
-  public constructor(store: Store<ISecurityState>) {
-    store.subscribe(sr => this.securityState = sr);
+  public constructor(store: Store<IAppState>) {
+    store.pipe(select(getUserIsLoggedIn)).subscribe(loggedIn => this._userIsLoggedIn = loggedIn);
+    store.pipe(select(getUserToken)).subscribe(token => this._userToken = token);
   }
 
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.securityState.userIsLoggedIn) {
+    if (this._userIsLoggedIn) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.securityState.userToken}`
+          Authorization: `Bearer ${this._userToken}`
         }
       });
     }

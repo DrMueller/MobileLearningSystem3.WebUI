@@ -1,5 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 
+import { LearningSessionsActionTypes } from '../../learning-sessions/common/state';
+import {
+  LoadEditAction,
+  LoadEditSuccessAction,
+  OverviewLoadSuccesssAction,
+  SaveEditAction, SaveEditSuccessAction
+} from '../../learning-sessions/common/state/actions';
 import { LearningSessionEditEntry, LearningSessionOverviewEntry, RunFact } from '../models';
 
 import { LearningSessionsHttpService } from './http/learning-sessions-http.service';
@@ -8,7 +18,21 @@ import { LearningSessionsHttpService } from './http/learning-sessions-http.servi
   providedIn: 'root'
 })
 export class LearningSessionRepositoryService {
-  public constructor(private httpService: LearningSessionsHttpService) { }
+  public constructor(
+    private actions$: Actions,
+    private httpService: LearningSessionsHttpService) { }
+
+  @Effect()
+  public loadOverview$(): Observable<OverviewLoadSuccesssAction> {
+    return this.actions$.pipe(
+      ofType(LearningSessionsActionTypes.LoadOverview),
+      mergeMap(_ =>
+        this.httpService.get$<LearningSessionOverviewEntry[]>('').pipe(
+          map(entries => (new OverviewLoadSuccesssAction(entries)))
+        ))
+    );
+  }
+
 
   public async deleteAllAsync(): Promise<void> {
     await this.httpService.deleteAsync('');
@@ -18,13 +42,18 @@ export class LearningSessionRepositoryService {
     await this.httpService.deleteAsync(sessionId.toString());
   }
 
-  public async loadEditEntryAsync(sessionId: number): Promise<LearningSessionEditEntry> {
-    const factEdit = await this.httpService.getAsync<LearningSessionEditEntry>(`edit/${sessionId}`);
-    return factEdit;
-  }
-
-  public async loadOverviewAsync(): Promise<LearningSessionOverviewEntry[]> {
-    return await this.httpService.getAsync('');
+  @Effect()
+  public loadEdit$(): Observable<LoadEditSuccessAction> {
+    return this.actions$.pipe(
+      ofType(LearningSessionsActionTypes.LoadEdit),
+      map((action: LoadEditAction) => action.sessionId),
+      mergeMap(sessionId =>
+        this.httpService.get$<LearningSessionEditEntry>(`edit/${sessionId}`).pipe(
+          map(entry => {
+            return new LoadEditSuccessAction(entry);
+          })
+        ))
+    );
   }
 
   public async loadRunFactsAsync(sessionId: number): Promise<RunFact[]> {
@@ -35,7 +64,19 @@ export class LearningSessionRepositoryService {
     return await this.httpService.getAsync(`${currentSessionId}/nextid`);
   }
 
-  public async saveEditEntryAsync(editEntry: LearningSessionEditEntry): Promise<void> {
-    await this.httpService.putAsync('edit', editEntry);
+  @Effect()
+  public saveEdit$(): Observable<SaveEditSuccessAction> {
+    return this.actions$.pipe(
+      ofType(LearningSessionsActionTypes.SaveEdit),
+      map((action: SaveEditAction) => action.editEntry),
+      mergeMap(editEntry =>
+        this.httpService.put$<LearningSessionEditEntry>('edit', editEntry).pipe(
+          map(entry => {
+            debugger;
+            here;
+            return new SaveEditSuccessAction(entry);
+          })
+        ))
+    );
   }
 }

@@ -6,8 +6,8 @@
     "mls3-webui": {
       "projectType": "application",
       "schematics": {
-        "@ngrx/schematics:component": {
-          "styleext": "scss"
+        "@schematics/angular:component": {
+          "style": "scss"
         }
       },
       "root": "",
@@ -138,5 +138,8 @@
       }
     }
   },
-  "defaultProject": "mls3-webui"
+  "defaultProject": "mls3-webui",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

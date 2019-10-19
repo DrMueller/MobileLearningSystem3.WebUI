@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import { LearningSessionEditEntry } from 'src/app/areas/shared-domain/models';
-import { LearningSessionRepositoryService } from 'src/app/areas/shared-domain/repos';
 import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
 
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
-import {  LearningSessionEditFormBuilderService } from '../../services';
+import { getCurrentSession, ILearningSessionsState } from '../../../common/state';
+import { SaveEditAction } from '../../../common/state/actions';
+import { LearningSessionEditFormBuilderService } from '../../services';
 
 @Component({
   selector: 'app-learning-session-edit',
@@ -19,15 +20,14 @@ export class LearningSessionEditComponent implements OnInit {
   public initiallySelectedFactIds: number[] = [];
 
   public constructor(
-    private route: ActivatedRoute,
     private formBuilder: LearningSessionEditFormBuilderService,
     private formGroupBinder: RxFormGroupBindingService,
-    private learningSessionRepo: LearningSessionRepositoryService,
-    private navigator: LearningSessionsNavigationService) { }
+    private navigator: LearningSessionsNavigationService,
+    private store: Store<ILearningSessionsState>) { }
 
   public async saveAsync(): Promise<void> {
     this.formGroupBinder.bindToModel(this.formGroup, this.editEntry);
-    await this.learningSessionRepo.saveEditEntryAsync(this.editEntry);
+    this.store.dispatch(new SaveEditAction(this.editEntry));
     this.navigator.navigateToOverview();
   }
 
@@ -46,11 +46,13 @@ export class LearningSessionEditComponent implements OnInit {
   public ngOnInit(): void {
     this.formGroup = this.formBuilder.buildFormGroup();
 
-    this.route.data.subscribe(data => {
-      this.editEntry = <LearningSessionEditEntry>data['session'];
-      this.editEntry.factIds.forEach(factId => this.initiallySelectedFactIds.push(factId));
-      this.formGroupBinder.bindToFormGroup(this.editEntry, this.formGroup);
-    });
+    this.store
+      .pipe(select(getCurrentSession))
+      .subscribe(sr => {
+        this.editEntry = sr;
+        this.editEntry.factIds.forEach(factId => this.initiallySelectedFactIds.push(factId));
+        this.formGroupBinder.bindToFormGroup(this.editEntry, this.formGroup);
+      });
   }
 
   public get title(): string {

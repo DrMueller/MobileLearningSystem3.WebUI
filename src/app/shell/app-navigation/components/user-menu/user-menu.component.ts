@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { getUserIsLoggedIn, getUserName } from 'src/app/shell/app-state';
+import { getUserName } from 'src/app/shell/app-state';
+import { getUserIsLoggedIn } from 'src/app/shell/security/state';
 
 import { AuthenticationService } from '../../../security/services/authentication.service';
 
@@ -45,9 +46,9 @@ export class UserMenuComponent implements OnInit {
       this.userName = name;
     });
 
-    this.store.pipe(select(getUserIsLoggedIn)).subscribe(loggedIn => {
-      this.isUserAuthenticated = loggedIn;
-    });
+    // this.store.pipe(select(getUserIsLoggedIn)).subscribe(loggedIn => {
+    //   this.isUserAuthenticated = loggedIn;
+    // });
   }
 
   public switchLanguageToEnglish(): void {
