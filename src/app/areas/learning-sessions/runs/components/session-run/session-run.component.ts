@@ -1,38 +1,27 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { RunFact } from 'src/app/areas/shared-domain/models';
-import { ArrayExtensions } from 'src/app/utils';
 
-import { RunNavigationService } from '../../services';
+import { getRunFacts, getSelectedRunFact, getSelectedSession as getSelectedSessionId, ILearningSessionsState } from '../../../common/state';
+import {
+  LoadRunFactsAction, SelectNextRunFactAction,
+  SelectNextSessionRunFactsAction, SelectPreviousRunFactAction
+} from '../../../common/state/actions';
+import { ReshuffleRunFacts } from '../../../common/state/actions/reshuffle-run-facts.action';
 
 @Component({
   selector: 'app-session-run',
   templateUrl: './session-run.component.html',
   styleUrls: ['./session-run.component.scss']
 })
-export class SessionRunComponent implements OnInit, OnDestroy {
-  private _runFacts: RunFact[] = [];
-  private _selectedFactIndex: number;
-  private _isAnswerShown: boolean;
-  private _sessionId: number;
-  private _sessionIdSubs: Subscription;
-  private _runFactsSubs: Subscription;
-
-  public constructor(
-    private route: ActivatedRoute,
-    private runNavigator: RunNavigationService) { }
+export class SessionRunComponent implements OnInit {
 
   public get canShowNextFact(): boolean {
-    return this._selectedFactIndex < this._runFacts.length - 1;
+    return (this.factIndex + 1) < this._runFacts.length;
   }
 
   public get canShowPreviousFact(): boolean {
-    return this._selectedFactIndex > 0;
-  }
-
-  public get currentFact(): RunFact | undefined {
-    return this._runFacts[this._selectedFactIndex];
+    return this.factIndex > 0;
   }
 
   public get isAnswerShown(): boolean {
@@ -40,54 +29,65 @@ export class SessionRunComponent implements OnInit, OnDestroy {
   }
 
   public get showNavigateToNextRun(): boolean {
-    return this._selectedFactIndex === this._runFacts.length - 1;
+    return this.factIndex === this._runFacts.length - 1;
   }
 
-  public async navigateToNextRunAsync(): Promise<void> {
-    await this.runNavigator.navigateToNextRunAsync(this._sessionId);
+  private get factIndex(): number {
+    if (!this._runFacts || !this.currentFact) {
+      return 0;
+    }
+
+    return this._runFacts.findIndex(f => f.id === this.currentFact!.id);
+  }
+
+  public get runStateDescription(): string {
+    return `${this.factIndex + 1} / ${this._runFacts.length}`;
+  }
+
+  public currentFact: RunFact | undefined;
+  private _runFacts: RunFact[] = [];
+  private _isAnswerShown: boolean;
+  private _sessionId: number;
+
+  public constructor(
+    private store: Store<ILearningSessionsState>) { }
+
+  public showNextRun(): void {
+    this.store.dispatch(new SelectNextSessionRunFactsAction(this._sessionId));
   }
 
   public showAnswer(): void {
     this._isAnswerShown = true;
   }
 
-  public ngOnDestroy(): void {
-    this._sessionIdSubs.unsubscribe();
-    this._runFactsSubs.unsubscribe();
-  }
-
   public ngOnInit(): void {
-    this._runFactsSubs = this.route.data.subscribe(data => {
-      this._runFacts = <RunFact[]>data['runfacts'];
-      this.shuffleAndStart();
-    });
+    this.store
+      .pipe(select(getRunFacts))
+      .subscribe(runFacts => this._runFacts = runFacts);
 
-    this._sessionIdSubs = this.route.paramMap.subscribe(sr => {
-      this._sessionId = parseInt(sr.get('sessionid')!, 10);
-    });
-  }
+    this.store
+      .pipe(select(getSelectedSessionId))
+      .subscribe(sessionId => this._sessionId = sessionId);
 
-  public get runStateDescription(): string {
-    return `${this._selectedFactIndex + 1} / ${this._runFacts.length}`;
-  }
+    this.store
+      .pipe(select(getSelectedRunFact))
+      .subscribe(runFact => {
+        this.currentFact = runFact;
+        this._isAnswerShown = false;
+      });
 
-  public showNextFact(): void {
-    this._isAnswerShown = false;
-    this._selectedFactIndex += 1;
+    this.store.dispatch(new LoadRunFactsAction(this._sessionId));
   }
 
   public reShuffleRun(): void {
-    this.shuffleAndStart();
+    this.store.dispatch(new ReshuffleRunFacts());
+  }
+
+  public showNextFact(): void {
+    this.store.dispatch(new SelectNextRunFactAction());
   }
 
   public showPreviousFact(): void {
-    this._isAnswerShown = false;
-    this._selectedFactIndex -= 1;
-  }
-
-  private shuffleAndStart(): void {
-    this._isAnswerShown = false;
-    this._runFacts = ArrayExtensions.shuffleEntries(this._runFacts);
-    this._selectedFactIndex = 0;
+    this.store.dispatch(new SelectPreviousRunFactAction());
   }
 }

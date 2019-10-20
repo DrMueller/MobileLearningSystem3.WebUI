@@ -1,7 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { LearningSessionEditEntry } from 'src/app/areas/shared-domain/models';
+import { LearningSessionEditEntry, RunFact } from 'src/app/areas/shared-domain/models';
 import { IAppState } from 'src/app/shell/app-state';
 import { initialSecurityState } from 'src/app/shell/security/state';
+import { ArrayExtensions } from 'src/app/utils';
 
 import { LearningSessionsActionTypes } from './learning-sessions-action.types';
 import { LearningSessionsActions } from './learning-sessions.actions';
@@ -20,9 +21,27 @@ export const getCurrentSession = createSelector(
   state => state.currentSession
 );
 
+export const getRunFacts = createSelector(
+  getFeatureState,
+  state => state.runFacts
+);
+
+export const getSelectedRunFact = createSelector(
+  getFeatureState,
+  state => state.selectedRunFact
+);
+
+export const getSelectedSession = createSelector(
+  getFeatureState,
+  state => state.selectedSessionId
+);
+
 export interface ILearningSessionsState extends IAppState {
   overview: ILearningSessionOverviewEntry[];
   currentSession: LearningSessionEditEntry;
+  runFacts: RunFact[];
+  selectedRunFact: RunFact | undefined;
+  selectedSessionId: number;
 }
 
 export interface ILearningSessionOverviewEntry {
@@ -34,7 +53,10 @@ export interface ILearningSessionOverviewEntry {
 export const initialState: ILearningSessionsState = {
   overview: [],
   security: initialSecurityState,
-  currentSession: new LearningSessionEditEntry()
+  currentSession: new LearningSessionEditEntry(),
+  runFacts: [],
+  selectedSessionId: 0,
+  selectedRunFact: undefined
 };
 
 export function learningSessionsReducer(state = initialState, action: LearningSessionsActions): ILearningSessionsState {
@@ -53,15 +75,85 @@ export function learningSessionsReducer(state = initialState, action: LearningSe
       };
     }
 
-    case LearningSessionsActionTypes.SaveEditSuccess: {
-      const mappedOverview = state.overview.map(itm => itm.id === action.savedEntry.id ? action.savedEntry : itm);
+    case LearningSessionsActionTypes.DeleteSuccess: {
+      const mappedOverview = Array.from(state.overview);
+      const index = state.overview.findIndex(f => f.id === action.deletedId);
+
+      if (index > -1) {
+        mappedOverview.splice(index, 1);
+      }
 
       return <ILearningSessionsState>{
         ...state,
-        overview: mappedOverview,
-        currentSession: new LearningSessionEditEntry()
+        overview: mappedOverview
       };
     }
+
+    case LearningSessionsActionTypes.LoadRunFactsSuccess: {
+      const runFacts = ArrayExtensions.shuffleEntries(action.runFacts);
+      let selectedRunFact: RunFact | undefined;
+      if (runFacts.length > 0) {
+        selectedRunFact = runFacts[0];
+      }
+
+      return <ILearningSessionsState>{
+        ...state,
+        runFacts: runFacts,
+        selectedRunFact: selectedRunFact
+      };
+    }
+
+    case LearningSessionsActionTypes.SelectSession: {
+      return <ILearningSessionsState>{
+        ...state,
+        selectedSessionId: action.sessionId
+      };
+    }
+
+    case LearningSessionsActionTypes.SelectNextRunFact: {
+      return <ILearningSessionsState>{
+        ...state,
+        selectedRunFact: state.runFacts[state.runFacts.indexOf(state.selectedRunFact!) + 1]
+      };
+    }
+
+    case LearningSessionsActionTypes.SelectPreviousRunFact: {
+      return <ILearningSessionsState>{
+        ...state,
+        selectedRunFact: state.runFacts[state.runFacts.indexOf(state.selectedRunFact!) - 1]
+      };
+    }
+
+    case LearningSessionsActionTypes.ReshuffleRunFacts: {
+      const runFacts = ArrayExtensions.shuffleEntries(state.runFacts);
+      let selectedRunFact: RunFact | undefined;
+      if (runFacts.length > 0) {
+        selectedRunFact = runFacts[0];
+      }
+
+      return <ILearningSessionsState>{
+        ...state,
+        runFacts: runFacts,
+        selectedRunFact: selectedRunFact
+      };
+    }
+
+    case LearningSessionsActionTypes.SelectNextSessionRunFactsSuccess: {
+      return <ILearningSessionsState>{
+        ...state,
+        selectedSessionId: action.newSessionId
+      };
+    }
+
+    // case LearningSessionsActionTypes.SaveEditSuccess: {
+    //   const mappedOverview = state.overview.map(itm => itm.id === action.savedEntryId ? action.savedEntryId : itm);
+
+    //   return <ILearningSessionsState>{
+    //     ...state,
+    //     overview: mappedOverview,
+    //     currentSession: new LearningSessionEditEntry()
+    //   };
+    // }
 
     default:
       return state;

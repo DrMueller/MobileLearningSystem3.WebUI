@@ -17,8 +17,8 @@ export class LearningSessionsNavigationService {
     this.navigateTo('edit');
   }
 
-  public navigateToSessionRun(sessionId: number) {
-    this.navigateTo('runs', sessionId);
+  public navigateToSessionRun() {
+    this.navigateTo('runs');
   }
 
   private navigateTo(...urlParts: any[]): void {

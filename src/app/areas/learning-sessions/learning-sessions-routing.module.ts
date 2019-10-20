@@ -5,7 +5,6 @@ import { LearningSessionEditComponent } from './edit/components/learning-session
 import { LearningSessionsComponent } from './entry-point/components/learning-sessions';
 import { LearningSessionsOverviewComponent } from './overview/components/learning-sessions-overview/learning-sessions-overview.component';
 import { SessionRunComponent } from './runs/components/session-run';
-import { RunFactResolver } from './runs/resolvers/run-fact.resolver';
 
 const routes: Routes = [
   {
@@ -24,9 +23,8 @@ const routes: Routes = [
         component: LearningSessionEditComponent,
       },
       {
-        path: 'runs/:sessionid',
+        path: 'runs',
         component: SessionRunComponent,
-        resolve: { runfacts: RunFactResolver }
       }
     ]
   }

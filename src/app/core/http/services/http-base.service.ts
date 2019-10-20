@@ -21,6 +21,12 @@ export abstract class HttpBaseService {
     return result;
   }
 
+  public delete$<T>(relativeUrl: string | number): Observable<T> {
+    const completeUrl = this.createCompleteUrl(relativeUrl);
+    const requestOptions = this.createOptions();
+    return this.httpClient.delete<T>(completeUrl, requestOptions);
+  }
+
   public async getAsync<T>(relativeUrl: string): Promise<T> {
     const completeUrl = await this.createCompleteUrl(relativeUrl);
     const requestOptions = this.createOptions();
@@ -60,7 +66,7 @@ export abstract class HttpBaseService {
 
   protected abstract getResourceUrl(): string;
 
-  private createCompleteUrl(relativeUrl: string): string {
+  private createCompleteUrl(relativeUrl: string | number): string {
     let result = this.appSettingsSingleton.instance.serverBaseUrl;
     result = result + this.getResourceUrl() + '/';
     result += relativeUrl;

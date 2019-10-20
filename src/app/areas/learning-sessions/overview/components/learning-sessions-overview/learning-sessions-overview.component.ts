@@ -12,8 +12,8 @@ import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
-import { getOverview, ILearningSessionsState } from '../../../common/state';
-import { LoadAction, LoadEditAction } from '../../../common/state/actions';
+import { getOverview, getSelectedSession as getSelectedSessionId, ILearningSessionsState } from '../../../common/state';
+import { DeleteAction, LoadAction, LoadEditAction, SelectSessionAction } from '../../../common/state/actions';
 import { LearningSessionOverviewEntry } from '../../models';
 import { ChunkDefinition } from '../../models/chunk-definition.model';
 import { ChunkFactoryService } from '../../services/chunk-factory.service';
@@ -33,8 +33,7 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
   public overviewEntries: LearningSessionOverviewEntry[] = [];
 
   private _overviewSubscription: Subscription;
-
-  private _selectedEntry: LearningSessionOverviewEntry | undefined;
+  private _selectedSessionId: number | undefined;
 
   public constructor(
     private colDefBuilder: LearningSessionsOverviewColDefBuilderService,
@@ -59,7 +58,7 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
     this.enquiryService.ask(new Enquiry(deleteHeading, deleteQuestion))
       .subscribe(async qr => {
         if (qr === QuestionResult.Yes) {
-          await this.learningSessionRepo.deleteAllAsync();
+          await this.learningSessionRepo.deleteAll$();
           const clonsedArray = Object.assign([], this.overviewEntries);
           this.table.deleteEntries(clonsedArray);
 
@@ -77,21 +76,25 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public async deleteAsync(sessionId: string): Promise<void> {
-    const factIdParsed = parseInt(sessionId, 10);
-    await this.learningSessionRepo.deleteAsync(factIdParsed);
-    const entry = this.overviewEntries.find(f => f.id === factIdParsed)!;
-    this.table.deleteEntries([entry]);
+    const sessionIdParsed = parseInt(sessionId, 10);
+    this.store.dispatch(new DeleteAction(sessionIdParsed));
   }
 
   public async ngOnInit(): Promise<void> {
     this._overviewSubscription = this.store
       .pipe(select(getOverview))
-      .subscribe(sr => this.overviewEntries = sr);
+      .subscribe(sr => {
+        this.overviewEntries = sr;
+      });
 
-    this.busyIndicator.withBusyIndicator(async () => {
-      this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.editTemplate, this.deleteTemplate);
-      this.store.dispatch(new LoadAction());
-    });
+    this.store
+      .pipe(select(getSelectedSessionId))
+      .subscribe(id => {
+        this._selectedSessionId = id;
+      });
+
+    this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.editTemplate, this.deleteTemplate);
+    this.store.dispatch(new LoadAction());
   }
 
   public createSession(): void {
@@ -125,18 +128,14 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public get canRunSession(): boolean {
-    return !!this._selectedEntry;
+    return !!this._selectedSessionId;
   }
 
   public runSession(): void {
-    this.navigator.navigateToSessionRun(this._selectedEntry!.id);
+    this.navigator.navigateToSessionRun();
   }
 
   public selectionChanged(entries: LearningSessionOverviewEntry[]): void {
-    if (entries.length > 0) {
-      this._selectedEntry = entries[0];
-    } else {
-      this._selectedEntry = undefined;
-    }
+    this.store.dispatch(new SelectSessionAction(entries.length > 0 ? entries[0].id : undefined));
   }
 }

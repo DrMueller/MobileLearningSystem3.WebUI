@@ -4,5 +4,17 @@ export enum LearningSessionsActionTypes {
   LoadEdit = 'Load edit',
   LoadEditSuccess = 'load edit success',
   SaveEdit = 'Save edit',
-  SaveEditSuccess = 'Save edit success'
+  SaveEditSuccess = 'Save edit success',
+  DeleteAll = 'Delete all',
+  DeleteAllSuccess = 'Delete all success',
+  Delete = 'Delete',
+  DeleteSuccess = 'Delete success',
+  LoadRunFacts = 'Load run facts',
+  LoadRunFactsSuccess = 'Load run facts success',
+  SelectNextRunFact = 'Select next run fact',
+  SelectPreviousRunFact = 'Select previous run fact',
+  SelectSession = 'Select session',
+  ReshuffleRunFacts = 'Reshuffle run facts',
+  SelectNextSessionRunFacts = 'Select next session run facts',
+  SelectNextSessionRunFactsSuccess = 'Select next session run facts success'
 }
