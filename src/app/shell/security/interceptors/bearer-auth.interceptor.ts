@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { getUserToken, IAppState } from '../../app-state';
-import { getUserIsLoggedIn } from '../state';
+import { IAppState } from '../../app-state';
+import { getUserIsAuthenticated, getUserToken } from '../state';
 
 @Injectable()
 export class BearerAuthInterceptor implements HttpInterceptor {
@@ -12,7 +12,7 @@ export class BearerAuthInterceptor implements HttpInterceptor {
   private _userToken: string;
 
   public constructor(store: Store<IAppState>) {
-    store.pipe(select(getUserIsLoggedIn)).subscribe(loggedIn => this._userIsLoggedIn = loggedIn);
+    store.pipe(select(getUserIsAuthenticated)).subscribe(loggedIn => this._userIsLoggedIn = loggedIn);
     store.pipe(select(getUserToken)).subscribe(token => this._userToken = token);
   }
 

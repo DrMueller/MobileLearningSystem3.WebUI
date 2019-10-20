@@ -3,7 +3,7 @@
   <mat-card-content>
     <button mat-stroked-button color="primary" (click)="createFact()">{{ 'common.create' | translate }}</button>
     <button mat-stroked-button color="warn"
-      (click)="deleteAllFactsAsync()">{{ 'common.deleteAll' | translate }}</button>
+      (click)="deleteAll()">{{ 'common.deleteAll' | translate }}</button>
   </mat-card-content>
 </mat-card>
 
@@ -19,7 +19,7 @@
             </button>
           </div>
           <div class="button">
-            <button mat-menu-item (click)="deleteAsync(row.id)">{{ 'common.delete' | translate }}
+            <button mat-menu-item (click)="delete(row.id)">{{ 'common.delete' | translate }}
             </button>
           </div>
         </app-context-menu-template>

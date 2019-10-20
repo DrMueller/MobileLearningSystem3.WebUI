@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-title>{{ 'common.actions' | translate }}</mat-card-title>
   <mat-card-content>
-    <button mat-stroked-button color="primary" (click)="saveAsync()"
+    <button mat-stroked-button color="primary" (click)="save()"
       [disabled]="!canSave">{{ 'common.save' | translate }}</button>
     <button mat-stroked-button color="warn" (click)="cancel()">{{ 'common.cancel' | translate }}</button>
   </mat-card-content>

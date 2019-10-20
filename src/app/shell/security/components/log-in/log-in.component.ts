@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
+import { IAppState } from 'src/app/shell/app-state';
 
 import { LoginRequest } from '../../models';
-import { AuthenticationService, LogInFormBuilderService } from '../../services';
+import { LogInFormBuilderService } from '../../services';
+import { LogInAction } from '../../state/actions';
 
 @Component({
   selector: 'app-log-in',
@@ -18,20 +21,19 @@ export class LogInComponent implements OnInit {
 
   public constructor(
     private formGroupBinder: RxFormGroupBindingService,
-    private authenticationService: AuthenticationService,
     private formBuilder: LogInFormBuilderService,
-    private router: Router) { }
+    private router: Router,
+    private store: Store<IAppState>) { }
 
   public ngOnInit(): void {
     this.formGroup = this.formBuilder.buildFormGroup();
   }
 
-  public async logInAsync(): Promise<void> {
+  public logIn(): void {
     this.isLoggingIn = true;
     const request = new LoginRequest();
     this.formGroupBinder.bindToModel(this.formGroup, request);
-
-    await this.authenticationService.logInAsync(request);
+    this.store.dispatch(new LogInAction(request));
     this.isLoggingIn = false;
     this.router.navigate(['home']);
   }

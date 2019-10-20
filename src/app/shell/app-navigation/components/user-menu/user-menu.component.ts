@@ -3,10 +3,8 @@ import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { getUserName } from 'src/app/shell/app-state';
-import { getUserIsLoggedIn } from 'src/app/shell/security/state';
-
-import { AuthenticationService } from '../../../security/services/authentication.service';
+import { getUserIsAuthenticated, getUserName } from 'src/app/shell/security/state';
+import { LogOutAction } from 'src/app/shell/security/state/actions';
 
 @Component({
   selector: 'app-user-menu',
@@ -18,14 +16,13 @@ export class UserMenuComponent implements OnInit {
   public userName: string;
 
   public constructor(
-    private authService: AuthenticationService,
     private router: Router,
     private translator: TranslateService,
     private store: Store<any>) {
   }
 
   public get isUserAuthenticated$(): Observable<boolean> {
-    return this.store.pipe(select(getUserIsLoggedIn));
+    return this.store.pipe(select(getUserIsAuthenticated));
   }
 
   public get currentLanguage(): string {
@@ -37,7 +34,7 @@ export class UserMenuComponent implements OnInit {
   }
 
   public logOut(): void {
-    this.authService.logOut();
+    this.store.dispatch(new LogOutAction());
     this.router.navigate(['/home/welcome']);
   }
 
@@ -45,10 +42,6 @@ export class UserMenuComponent implements OnInit {
     this.store.pipe(select(getUserName)).subscribe(name => {
       this.userName = name;
     });
-
-    // this.store.pipe(select(getUserIsLoggedIn)).subscribe(loggedIn => {
-    //   this.isUserAuthenticated = loggedIn;
-    // });
   }
 
   public switchLanguageToEnglish(): void {

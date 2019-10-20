@@ -9,7 +9,7 @@ import {
   DeleteAction,
   DeleteAllSuccessAction,
   DeleteSuccessAction,
-  LoadEditAction,
+  LoadEditSessionAction,
   LoadEditSuccessAction,
   LoadRunFactsAction,
   OverviewLoadSuccesssAction,
@@ -75,8 +75,8 @@ export class LearningSessionRepositoryService {
   @Effect()
   public loadEdit$(): Observable<LoadEditSuccessAction> {
     return this.actions$.pipe(
-      ofType(LearningSessionsActionTypes.LoadEdit),
-      map((action: LoadEditAction) => action.sessionId),
+      ofType(LearningSessionsActionTypes.LoadEditSession),
+      map((action: LoadEditSessionAction) => action.sessionId),
       mergeMap(sessionId =>
         this.httpService.get$<LearningSessionEditEntry>(`edit/${sessionId}`).pipe(
           map(entry => {

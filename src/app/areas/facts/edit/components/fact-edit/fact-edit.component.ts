@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import { FactEditEntry } from 'src/app/areas/shared-domain/models/fact-edit-entry.model';
-import { FactRepositoryService } from 'src/app/areas/shared-domain/repos/fact-repository.service';
 import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
+import { selectQueryParam, selectRouteParam } from 'src/app/shell/app-state';
 
 import { FactsNavigationService } from '../../../common/services';
+import { IFactsState, selectDetails } from '../../../common/state';
+import { SaveFactDetailsAction } from '../../../common/state/actions';
+import { LoadFactDetailsAction } from '../../../common/state/actions/load-fact-details.action';
 import { FactEditFormBuilderService } from '../../services';
 
 @Component({
@@ -16,21 +19,39 @@ import { FactEditFormBuilderService } from '../../services';
 export class FactEditComponent implements OnInit {
   public fact: FactEditEntry;
   public formGroup: FormGroup;
+  private _createCopy: boolean;
 
   constructor(
-    private route: ActivatedRoute,
+    private store: Store<IFactsState>,
     private formBuilder: FactEditFormBuilderService,
     private formGroupBinder: RxFormGroupBindingService,
-    private factRepo: FactRepositoryService,
     private navigator: FactsNavigationService) { }
 
   public ngOnInit(): void {
     this.formGroup = this.formBuilder.buildFormGroup();
 
-    this.route.data.subscribe(data => {
-      this.fact = <FactEditEntry>data['fact'];
-      this.formGroupBinder.bindToFormGroup(this.fact, this.formGroup);
-    });
+    this.store
+      .pipe(select(selectDetails))
+      .subscribe(sr => {
+        this.fact = sr;
+        this.formGroupBinder.bindToFormGroup(this.fact, this.formGroup);
+      });
+
+    this.store
+      .pipe(select(selectRouteParam('factid')))
+      .subscribe(factid => {
+        if (factid) {
+          this.store.dispatch(new LoadFactDetailsAction(parseInt(factid, 10)));
+        }
+      });
+
+    this.store
+      .pipe(select(selectQueryParam('createCopy')))
+      .subscribe(createCopy => {
+        if (createCopy) {
+          this._createCopy = createCopy === 'true';
+        }
+      });
   }
 
   public get title(): string {
@@ -57,9 +78,14 @@ export class FactEditComponent implements OnInit {
     this.navigator.navigateToEdit(this.fact.id!, true);
   }
 
-  public async saveAsync(): Promise<void> {
+  public save(): void {
     this.formGroupBinder.bindToModel(this.formGroup, this.fact);
-    await this.factRepo.saveEditEntryAsync(this.fact);
+
+    if (this._createCopy) {
+      this.fact.id = undefined;
+    }
+
+    this.store.dispatch(new SaveFactDetailsAction(this.fact));
     this.navigator.navigateToOverview();
   }
 }

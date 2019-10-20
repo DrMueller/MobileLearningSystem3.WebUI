@@ -13,7 +13,7 @@ import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
 import { getOverview, getSelectedSession as getSelectedSessionId, ILearningSessionsState } from '../../../common/state';
-import { DeleteAction, LoadAction, LoadEditAction, SelectSessionAction } from '../../../common/state/actions';
+import { DeleteAction, LoadAction, SelectSessionAction } from '../../../common/state/actions';
 import { LearningSessionOverviewEntry } from '../../models';
 import { ChunkDefinition } from '../../models/chunk-definition.model';
 import { ChunkFactoryService } from '../../services/chunk-factory.service';
@@ -98,7 +98,7 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public createSession(): void {
-    this.navigator.navigateToEdit();
+    this.navigator.navigateToEdit(-1);
   }
 
   public createSessionChunks(): void {
@@ -121,10 +121,7 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public edit(sessionId: string): void {
-    const f = parseInt(sessionId, 10);
-
-    this.store.dispatch(new LoadEditAction(f));
-    this.navigator.navigateToEdit();
+    this.navigator.navigateToEdit(parseInt(sessionId, 10));
   }
 
   public get canRunSession(): boolean {

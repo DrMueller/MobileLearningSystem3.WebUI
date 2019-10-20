@@ -1,7 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { LearningSessionEditEntry, RunFact } from 'src/app/areas/shared-domain/models';
-import { IAppState } from 'src/app/shell/app-state';
-import { initialSecurityState } from 'src/app/shell/security/state';
+import { IAppState, initialAppState } from 'src/app/shell/app-state';
 import { ArrayExtensions } from 'src/app/utils';
 
 import { LearningSessionsActionTypes } from './learning-sessions-action.types';
@@ -52,11 +51,12 @@ export interface ILearningSessionOverviewEntry {
 
 export const initialState: ILearningSessionsState = {
   overview: [],
-  security: initialSecurityState,
+  security: initialAppState.security,
   currentSession: new LearningSessionEditEntry(),
   runFacts: [],
   selectedSessionId: 0,
-  selectedRunFact: undefined
+  selectedRunFact: undefined,
+  router: initialAppState.router,
 };
 
 export function learningSessionsReducer(state = initialState, action: LearningSessionsActions): ILearningSessionsState {

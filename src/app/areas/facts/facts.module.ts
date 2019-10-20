@@ -1,6 +1,8 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { EditorModule } from 'primeng/editor';
 import { MatDependenciesModule } from 'src/app//mat-deps';
@@ -8,6 +10,9 @@ import { EnquiryDialogModule } from 'src/app/shared/enquiry-dialog';
 import { RxFormsModule } from 'src/app/shared/rx-forms';
 import { TablesModule } from 'src/app/shared/tables';
 
+import { FactRepositoryService } from '../shared-domain/repos';
+
+import { factsFeatureKey, factsReducer } from './common/state/facts.reducer';
 import { FactEditComponent } from './edit/components/fact-edit';
 import { FactsComponent } from './entry-point/components/facts';
 import { FactServicesModule } from './fact-services.module';
@@ -27,6 +32,8 @@ import { FactsOverviewComponent } from './overview/components/facts-overview';
     FactsRoutingModule,
     FactServicesModule,
     MatDependenciesModule,
+    StoreModule.forFeature(factsFeatureKey, factsReducer),
+    EffectsModule.forFeature([FactRepositoryService]),
     TablesModule,
     TextFieldModule,
     TranslateModule,

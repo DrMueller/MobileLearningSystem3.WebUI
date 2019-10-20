@@ -21,7 +21,7 @@ export abstract class HttpBaseService {
     return result;
   }
 
-  public delete$<T>(relativeUrl: string | number): Observable<T> {
+  public delete$<T>(relativeUrl?: string | number): Observable<T> {
     const completeUrl = this.createCompleteUrl(relativeUrl);
     const requestOptions = this.createOptions();
     return this.httpClient.delete<T>(completeUrl, requestOptions);
@@ -34,11 +34,18 @@ export abstract class HttpBaseService {
     return this.processResponse(this.httpClient.get<T>(completeUrl, requestOptions));
   }
 
-  public get$<T>(relativeUrl: string): Observable<T> {
+  public get$<T>(relativeUrl?: string): Observable<T> {
     const completeUrl = this.createCompleteUrl(relativeUrl);
     const requestOptions = this.createOptions();
 
     return this.httpClient.get<T>(completeUrl, requestOptions);
+  }
+
+  public post$<T>(relativeUrl: string, body: any): Observable<T> {
+    const completeUrl = this.createCompleteUrl(relativeUrl);
+
+    const requestOptions = this.createOptions();
+    return this.httpClient.post<T>(completeUrl, body, requestOptions);
   }
 
   public async postAsync<T>(
@@ -66,10 +73,14 @@ export abstract class HttpBaseService {
 
   protected abstract getResourceUrl(): string;
 
-  private createCompleteUrl(relativeUrl: string | number): string {
+  private createCompleteUrl(relativeUrl?: string | number): string {
     let result = this.appSettingsSingleton.instance.serverBaseUrl;
     result = result + this.getResourceUrl() + '/';
-    result += relativeUrl;
+
+    if (relativeUrl) {
+      result += relativeUrl;
+    }
+
     return result;
   }
 

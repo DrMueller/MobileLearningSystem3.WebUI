@@ -4,7 +4,8 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppAreaFactoryService } from '../../app-areas/services';
-import {  getUserIsLoggedIn, IAppState } from '../../app-state';
+import { IAppState } from '../../app-state';
+import { getUserIsAuthenticated } from '../state';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthorizationGuard implements CanActivate {
 
   public canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.store.pipe(
-      select(getUserIsLoggedIn),
+      select(getUserIsAuthenticated),
       select(isLoggedIn => {
         if (isLoggedIn) {
           return true;

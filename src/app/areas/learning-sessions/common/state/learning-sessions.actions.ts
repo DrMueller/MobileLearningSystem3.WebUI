@@ -1,7 +1,8 @@
+
 import {
   DeleteAction, DeleteAllAction,
   DeleteAllSuccessAction, DeleteSuccessAction,
-  LoadAction, LoadEditAction, LoadEditSuccessAction,
+  LoadAction, LoadEditSessionAction, LoadEditSuccessAction,
   LoadRunFactsAction, LoadRunFactsSuccessAction,
   OverviewLoadSuccesssAction, ReshuffleRunFacts, SaveEditAction,
   SaveEditSuccessAction, SelectNextRunFactAction,
@@ -11,7 +12,7 @@ import {
 
 export type LearningSessionsActions =
   LoadAction | OverviewLoadSuccesssAction |
-  LoadEditAction | LoadEditSuccessAction |
+  LoadEditSessionAction | LoadEditSuccessAction |
   SaveEditAction | SaveEditSuccessAction |
   DeleteAction | DeleteSuccessAction |
   DeleteAllAction | DeleteAllSuccessAction |

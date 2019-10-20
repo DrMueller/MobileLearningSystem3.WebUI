@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 
 import { AppAreaFactoryService } from '../../app-areas/services';
-import { getUserIsLoggedIn, IAppState } from '../../app-state';
+import { IAppState } from '../../app-state';
+import { getUserIsAuthenticated } from '../../security/state';
 import { AppNavigationEntry } from '../models';
 
 @Injectable({
@@ -22,8 +23,7 @@ export class AppNavigationEntryFactoryService {
 
   private assureInitialized(): void {
     const areas = this.areaFactory.createAllAreas();
-
-    const userAuthenticationChanged$ = this.store.pipe(select(getUserIsLoggedIn));
+    const userAuthenticationChanged$ = this.store.pipe(select(getUserIsAuthenticated));
 
     const entries = areas.map(area => new AppNavigationEntry(
       area.displayText,

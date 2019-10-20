@@ -3,11 +3,13 @@ import { FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { LearningSessionEditEntry } from 'src/app/areas/shared-domain/models';
 import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
+import { selectRouteParam } from 'src/app/shell/app-state';
 
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
 import { getCurrentSession, ILearningSessionsState } from '../../../common/state';
-import { SaveEditAction } from '../../../common/state/actions';
+import { LoadEditSessionAction, SaveEditAction } from '../../../common/state/actions';
 import { LearningSessionEditFormBuilderService } from '../../services';
+
 
 @Component({
   selector: 'app-learning-session-edit',
@@ -25,7 +27,7 @@ export class LearningSessionEditComponent implements OnInit {
     private navigator: LearningSessionsNavigationService,
     private store: Store<ILearningSessionsState>) { }
 
-  public async saveAsync(): Promise<void> {
+  public save(): void {
     this.formGroupBinder.bindToModel(this.formGroup, this.editEntry);
     this.store.dispatch(new SaveEditAction(this.editEntry));
     this.navigator.navigateToOverview();
@@ -45,6 +47,14 @@ export class LearningSessionEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.formGroup = this.formBuilder.buildFormGroup();
+
+    this.store
+      .pipe(select(selectRouteParam('sessionid')))
+      .subscribe(sessionId => {
+        if (sessionId) {
+          this.store.dispatch(new LoadEditSessionAction(parseInt(sessionId, 10)));
+        }
+      });
 
     this.store
       .pipe(select(getCurrentSession))

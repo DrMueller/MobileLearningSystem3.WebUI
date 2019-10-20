@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDependenciesModule } from 'src/app/mat-deps';
@@ -9,6 +10,7 @@ import { RxFormsModule } from 'src/app/shared/rx-forms';
 
 import { LogInComponent } from './components/log-in/log-in.component';
 import { BearerAuthInterceptor } from './interceptors';
+import { AuthenticationService } from './services';
 import { securityFeatureKey, securityReducer } from './state/security.reducer';
 
 @NgModule({
@@ -21,6 +23,7 @@ import { securityFeatureKey, securityReducer } from './state/security.reducer';
     RxFormsModule,
     MatDependenciesModule,
     StoreModule.forFeature(securityFeatureKey, securityReducer),
+    EffectsModule.forFeature([AuthenticationService]),
     TranslateModule
   ],
   providers: [

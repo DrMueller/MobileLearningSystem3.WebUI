@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { IFactsState, selecetOverview } from 'src/app/areas/facts/common/state';
+import { LoadFactsOverviewAction } from 'src/app/areas/facts/common/state/actions';
 import { FactOverviewEntry } from 'src/app/areas/shared-domain/models';
-import { FactRepositoryService } from 'src/app/areas/shared-domain/repos';
 import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
@@ -21,12 +23,17 @@ export class FactsSelectionComponent implements OnInit {
   private _selectedFactIds: number[];
 
   public constructor(
-    private factRepo: FactRepositoryService,
+    private store: Store<IFactsState>,
     private colDefBuilder: FactsSelectionColDefBuilderService) { }
 
   public async ngOnInit(): Promise<void> {
+    this.store
+      .pipe(select(selecetOverview))
+      .subscribe(sr => this.overviewEntries = sr);
+
+    this.store.dispatch(new LoadFactsOverviewAction());
+
     this.columnDefinitions = this.colDefBuilder.buildDefinitions(this.existsInRunTemplate);
-    this.overviewEntries = await this.factRepo.loadOverviewAsync();
     this.toggleSelectionIfReady();
   }
 

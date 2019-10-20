@@ -1,4 +1,7 @@
 export enum SecurityActionTypes {
-  SetSecurityUser = 'Set the Security User',
-  InitializeSecurityUser = 'Initialize the Security User'
+  InitializeUser = 'Initialize user',
+  LogIn = 'Log in',
+  LogOut = 'Log out',
+  PersistUser = 'Persist user',
+  UserChanged = 'change user success'
 }

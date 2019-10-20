@@ -1,7 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { FactRepositoryService } from 'src/app/areas/shared-domain/repos';
-import { BusyIndicatorService } from 'src/app/core/loading-indication/services';
 import { SnackBarService } from 'src/app/core/snack-bar/services';
 import { Enquiry, QuestionResult } from 'src/app/shared/enquiry-dialog/model';
 import { EnquiryService } from 'src/app/shared/enquiry-dialog/services';
@@ -10,6 +9,8 @@ import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
 import { FactOverviewEntry } from '../../../../shared-domain/models/fact-overview-entry.model';
 import { FactsNavigationService } from '../../../common/services';
+import { IFactsState, selecetOverview as selectOverview } from '../../../common/state';
+import { DeleteAllFactsAction, DeleteFactAction, LoadFactsOverviewAction } from '../../../common/state/actions';
 import { FactsOverviewColDefBuilderService } from '../../services';
 
 
@@ -28,23 +29,20 @@ export class FactsOverviewComponent implements OnInit {
 
   public constructor(
     private colDefBuilder: FactsOverviewColDefBuilderService,
-    private factRepo: FactRepositoryService,
     private navigator: FactsNavigationService,
     private enquiryService: EnquiryService,
-    private busyIndicator: BusyIndicatorService,
     private translator: TranslateService,
-    private snackBarService: SnackBarService) { }
+    private snackBarService: SnackBarService,
+    private store: Store<IFactsState>) { }
 
-  public async deleteAllFactsAsync(): Promise<void> {
+  public async deleteAll(): Promise<void> {
     const deleteHeading = await this.translator.get('areas.facts.overview.components.facts-overview.deleteAllFactsHeading').toPromise();
     const deleteQuestion = await this.translator.get('areas.facts.overview.components.facts-overview.deleteAllFactsQuestion').toPromise();
 
     this.enquiryService.ask(new Enquiry(deleteHeading, deleteQuestion))
       .subscribe(async qr => {
         if (qr === QuestionResult.Yes) {
-          await this.factRepo.deleteAllFactsAsync();
-          const clonsedArray = Object.assign([], this.overviewEntries);
-          this.table.deleteEntries(clonsedArray);
+          this.store.dispatch(new DeleteAllFactsAction());
 
           const allFactsDeletedInfo = await this.translator
             .get('areas.facts.overview.components.facts-overview.allFactsDeleted')
@@ -54,19 +52,17 @@ export class FactsOverviewComponent implements OnInit {
       });
   }
 
-  public async deleteAsync(factId: string): Promise<void> {
-    const factIdParsed = parseInt(factId, 10);
-    await this.factRepo.deleteFactAsync(factIdParsed);
-
-    const entry = this.overviewEntries.find(f => f.id === factIdParsed)!;
-    this.table.deleteEntries([entry]);
+  public delete(factId: string): void {
+    this.store.dispatch(new DeleteFactAction(parseInt(factId, 10)));
   }
 
   public async ngOnInit(): Promise<void> {
-    this.busyIndicator.withBusyIndicator(async () => {
-      this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.actionsTemplate);
-      this.overviewEntries = await this.factRepo.loadOverviewAsync();
-    });
+    this.store
+      .pipe(select(selectOverview))
+      .subscribe(sr => this.overviewEntries = sr);
+
+    this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.actionsTemplate);
+    this.store.dispatch(new LoadFactsOverviewAction());
   }
 
   public createFact(): void {
@@ -74,7 +70,6 @@ export class FactsOverviewComponent implements OnInit {
   }
 
   public edit(factId: string): void {
-    const f = parseInt(factId, 10);
-    this.navigator.navigateToEdit(f, false);
+    this.navigator.navigateToEdit(parseInt(factId, 10), false);
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { LearningSessionEditEntry } from 'src/app/areas/shared-domain/models';
-import { FactRepositoryService } from 'src/app/areas/shared-domain/repos';
+import { select, Store } from '@ngrx/store';
+import { selecetOverview } from 'src/app/areas/facts/common/state';
+import { FactOverviewEntry, LearningSessionEditEntry } from 'src/app/areas/shared-domain/models';
 import { ArrayExtensions } from 'src/app/utils';
 
 import { ILearningSessionsState } from '../../common/state';
@@ -12,15 +12,19 @@ import { ChunkDefinition } from '../models/chunk-definition.model';
   providedIn: 'root'
 })
 export class ChunkFactoryService {
+  private _facts: FactOverviewEntry[];
 
   constructor(
-    private factRepo: FactRepositoryService,
-    private store: Store<ILearningSessionsState>) { }
+    private store: Store<ILearningSessionsState>) {
+    this.store
+      .pipe(select(selecetOverview))
+      .subscribe(sr => this._facts = sr);
+
+  }
 
   public async createChunksAsync(chunkDefinition: ChunkDefinition): Promise<void> {
-    let allFacts = await this.factRepo.loadOverviewAsync();
-    allFacts = ArrayExtensions.shuffleEntries(allFacts);
-    const chunks = ArrayExtensions.chunk(allFacts, chunkDefinition.chunkSize);
+    const facts = ArrayExtensions.shuffleEntries(this._facts);
+    const chunks = ArrayExtensions.chunk(facts, chunkDefinition.chunkSize);
 
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[0];

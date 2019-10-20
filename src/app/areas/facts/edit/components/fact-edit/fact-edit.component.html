@@ -1,7 +1,7 @@
 <mat-card class="mat-card">
     <mat-card-title>{{ 'common.actions' | translate }}</mat-card-title>
     <mat-card-content>
-        <button mat-stroked-button color="primary" (click)="saveAsync()" [disabled]="!canSave">{{ 'common.save' | translate }}
+        <button mat-stroked-button color="primary" (click)="save()" [disabled]="!canSave">{{ 'common.save' | translate }}
         </button>
         <button mat-stroked-button color="accent" (click)="copySavedFact()" [disabled]="!canCopySavedFact">{{ 'areas.facts.edit.components.fact-edit.copySavedFact' | translate }}</button>
         <button mat-stroked-button color="warn" (click)="cancel()">{{ 'common.cancel' | translate }}</button>

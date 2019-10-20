@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppSettingsSingletonService } from 'src/app/core/app-settings/services';
 import { AppConnectivityService } from 'src/app/shared/pwa/app-connectivity/services';
 import { InstallPwaPromptService } from 'src/app/shared/pwa/pwa-installation/services';
 
-import { AuthenticationService } from '../../security/services';
+import { IAppState } from '../../app-state';
+import { InitializeUserAction } from '../../security/state/actions/initialize-user.action';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +17,13 @@ export class AppInitService {
     private appConnectivity: AppConnectivityService,
     private installPwaPrompt: InstallPwaPromptService,
     private translator: TranslateService,
-    private authenticationService: AuthenticationService
+    private store: Store<IAppState>
   ) { }
 
   public async initializeAppAsync(): Promise<void> {
     this.initializeTranslations();
     await this.appSettingsSingleton.initializeAsync();
-    this.authenticationService.initialize();
+    this.store.dispatch(new InitializeUserAction());
     this.appConnectivity.initialize();
     this.installPwaPrompt.registerUpdateAvaliableCallback();
   }

@@ -5,7 +5,8 @@ import { HelloHttpService } from 'src/app/areas/hello/common/services';
 import { SnackBarConfiguration } from 'src/app/core/snack-bar/models';
 import { SnackBarService } from 'src/app/core/snack-bar/services';
 import { PwaInstallationService } from 'src/app/shared/pwa/pwa-installation/services';
-import { getUserName, ISecurityState } from 'src/app/shell/app-state';
+import { IAppState } from 'src/app/shell/app-state';
+import { getUserName } from 'src/app/shell/security/state';
 
 @Component({
   selector: 'app-welcome',
@@ -21,7 +22,7 @@ export class WelcomeComponent implements OnInit {
     private snackBarService: SnackBarService,
     private translator: TranslateService,
     private helloHttpService: HelloHttpService,
-    private store: Store<ISecurityState>) { }
+    private store: Store<IAppState>) { }
 
   public toggleBusyIndicator(): void {
     this.isBusyIndicatorShown = !this.isBusyIndicatorShown;

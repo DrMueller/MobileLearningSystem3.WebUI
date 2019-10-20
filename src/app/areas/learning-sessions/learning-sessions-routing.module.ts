@@ -19,7 +19,7 @@ const routes: Routes = [
         component: LearningSessionsOverviewComponent
       },
       {
-        path: 'edit',
+        path: 'edit/:sessionid',
         component: LearningSessionEditComponent,
       },
       {
