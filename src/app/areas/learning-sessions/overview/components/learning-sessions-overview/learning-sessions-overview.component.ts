@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { LearningSession } from 'src/app/areas/shared-domain/models';
 import { LearningSessionRepositoryService } from 'src/app/areas/shared-domain/repos/learning-session-repository.service';
 import { BusyIndicatorService } from 'src/app/core/loading-indication/services';
 import { SnackBarService } from 'src/app/core/snack-bar/services';
@@ -12,9 +13,8 @@ import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
-import { getOverview, getSelectedSession as getSelectedSessionId, ILearningSessionsState } from '../../../common/state';
-import { DeleteAction, LoadAction, SelectSessionAction } from '../../../common/state/actions';
-import { LearningSessionOverviewEntry } from '../../models';
+import { getSessions, ILearningSessionsState } from '../../../common/state';
+import { DeleteAction } from '../../../common/state/actions';
 import { ChunkDefinition } from '../../models/chunk-definition.model';
 import { ChunkFactoryService } from '../../services/chunk-factory.service';
 import { LearningSessionsOverviewColDefBuilderService } from '../../services/learning-sessions-overview-col-def-builder.service';
@@ -28,9 +28,9 @@ import { ChunkEditDialogComponent } from '../chunk-edit-dialog/chunk-edit-dialog
 export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
   @ViewChild('deleteTemplate', { static: true }) public deleteTemplate: TemplateRef<any>;
   @ViewChild('editTemplate', { static: true }) public editTemplate: TemplateRef<any>;
-  @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<LearningSessionOverviewEntry>;
+  @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<LearningSession>;
   public columnDefinitions: ColumnDefinitionsContainer;
-  public overviewEntries: LearningSessionOverviewEntry[] = [];
+  public overviewEntries: LearningSession[] = [];
 
   private _overviewSubscription: Subscription;
   private _selectedSessionId: number | undefined;
@@ -82,19 +82,19 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
 
   public async ngOnInit(): Promise<void> {
     this._overviewSubscription = this.store
-      .pipe(select(getOverview))
+      .pipe(select(getSessions))
       .subscribe(sr => {
         this.overviewEntries = sr;
       });
 
-    this.store
-      .pipe(select(getSelectedSessionId))
-      .subscribe(id => {
-        this._selectedSessionId = id;
-      });
+    // this.store
+    //   .pipe(select(getSelectedSessionId))
+    //   .subscribe(id => {
+    //     this._selectedSessionId = id;
+    //   });
 
     this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.editTemplate, this.deleteTemplate);
-    this.store.dispatch(new LoadAction());
+    // this.store.dispatch(new LoadAction());
   }
 
   public createSession(): void {
@@ -111,7 +111,7 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
         const chunkDefinition = <ChunkDefinition | undefined>sr;
         if (chunkDefinition) {
           await this.chunkFactory.createChunksAsync(chunkDefinition);
-          this.store.dispatch(new LoadAction());
+          // this.store.dispatch(new LoadAction());
           const chunksCreatedInfo = await this.
             translator.get('areas.learning-sessions.overview.components.learning-sessions-overview.chunksCreated').toPromise();
           this.snackBarService.showSnackBar(chunksCreatedInfo);
@@ -132,7 +132,7 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
     this.navigator.navigateToSessionRun();
   }
 
-  public selectionChanged(entries: LearningSessionOverviewEntry[]): void {
-    this.store.dispatch(new SelectSessionAction(entries.length > 0 ? entries[0].id : undefined));
+  public selectionChanged(_: LearningSession[]): void {
+    // this.store.dispatch(new SelectSessionAction(entries.length > 0 ? entries[0].id : undefined));
   }
 }

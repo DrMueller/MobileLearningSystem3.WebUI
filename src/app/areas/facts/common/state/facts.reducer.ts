@@ -1,6 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { FactOverviewEntry } from 'src/app/areas/shared-domain/models';
-import { FactEditEntry } from 'src/app/areas/shared-domain/models/fact-edit-entry.model';
+import { Fact } from 'src/app/areas/shared-domain/models';
 import { IAppState, initialAppState } from 'src/app/shell/app-state';
 
 import { FactsActions } from '.';
@@ -9,48 +8,41 @@ import { FactsActionTypes } from './facts-action.types';
 export const factsFeatureKey = 'facts';
 
 export interface IFactsState extends IAppState {
-  overview: FactOverviewEntry[];
-  detailsEntry: FactEditEntry;
+  facts: Fact[];
+  currentFact: Fact;
 }
 
 const getFeatureState = createFeatureSelector<IFactsState>(factsFeatureKey);
 
-export const selectDetails = createSelector(
+export const selectFact = createSelector(
   getFeatureState,
-  state => state.detailsEntry
+  state => (id: number) => state.facts.find(f => f.id === id)
 );
 
-export const selecetOverview = createSelector(
+export const selectFacts = createSelector(
   getFeatureState,
-  state => state.overview
+  state => state.facts
 );
 
 export const initialState: IFactsState = {
   security: initialAppState.security,
   router: initialAppState.router,
-  overview: [],
-  detailsEntry: new FactEditEntry()
+  facts: [],
+  currentFact: new Fact()
 };
 
 export function factsReducer(state = initialState, action: FactsActions): IFactsState {
   switch (action.type) {
-    case FactsActionTypes.LoadFactsOverviewSuccess: {
+    case FactsActionTypes.LoadAllFactsSuccess: {
       return <IFactsState>{
         ...state,
-        overview: action.entries
-      };
-    }
-
-    case FactsActionTypes.LoadFactDetailsSuccess: {
-      return <IFactsState>{
-        ...state,
-        detailsEntry: action.entry
+        facts: action.entries
       };
     }
 
     case FactsActionTypes.DeleteFactSuccess: {
-      const mappedOverview = Array.from(state.overview);
-      const index = state.overview.findIndex(f => f.id === action.deleteId);
+      const mappedOverview = Array.from(state.facts);
+      const index = state.facts.findIndex(f => f.id === action.deleteId);
 
       if (index > -1) {
         mappedOverview.splice(index, 1);
@@ -58,19 +50,18 @@ export function factsReducer(state = initialState, action: FactsActions): IFacts
 
       return <IFactsState>{
         ...state,
-        overview: mappedOverview
+        facts: mappedOverview
       };
     }
 
-    case FactsActionTypes.FactOverviewEntryLoadedSuccess: {
-      const mappedOverview = state.overview.map(itm => itm.id === action.entry.id ? action.entry : itm);
+    case FactsActionTypes.SaveFactSuccess: {
+      const mappedOverview = state.facts.map(itm => itm.id === action.savedFact.id ? action.savedFact : itm);
 
       return <IFactsState>{
         ...state,
         overview: mappedOverview
       };
     }
-
 
     default:
       return state;

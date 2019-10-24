@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackBarService } from 'src/app/core/snack-bar/services';
 import { Enquiry, QuestionResult } from 'src/app/shared/enquiry-dialog/model';
@@ -7,12 +7,12 @@ import { EnquiryService } from 'src/app/shared/enquiry-dialog/services';
 import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
-import { FactOverviewEntry } from '../../../../shared-domain/models/fact-overview-entry.model';
 import { FactsNavigationService } from '../../../common/services';
-import { IFactsState, selecetOverview as selectOverview } from '../../../common/state';
-import { DeleteAllFactsAction, DeleteFactAction, LoadFactsOverviewAction } from '../../../common/state/actions';
+import { IFactsState } from '../../../common/state';
+import { DeleteAllFactsAction, DeleteFactAction, LoadAllFactsAction } from '../../../common/state/actions';
 import { FactsOverviewColDefBuilderService } from '../../services';
-
+import { FactsOverviewService } from '../../services/facts-overview.service';
+import { FactOverviewEntryVm } from '../../view-models';
 
 @Component({
   selector: 'app-facts-overview',
@@ -24,8 +24,8 @@ export class FactsOverviewComponent implements OnInit {
   @ViewChild('actions', { static: true }) public actionsTemplate: TemplateRef<any>;
   @ViewChild('deleteTemplate', { static: true }) public deleteTemplate: TemplateRef<any>;
   @ViewChild('editTemplate', { static: true }) public editTemplate: TemplateRef<any>;
-  @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<FactOverviewEntry>;
-  public overviewEntries: FactOverviewEntry[] = [];
+  @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<FactOverviewEntryVm>;
+  public overviewEntries: FactOverviewEntryVm[] = [];
 
   public constructor(
     private colDefBuilder: FactsOverviewColDefBuilderService,
@@ -33,6 +33,7 @@ export class FactsOverviewComponent implements OnInit {
     private enquiryService: EnquiryService,
     private translator: TranslateService,
     private snackBarService: SnackBarService,
+    private factsOverviewService: FactsOverviewService,
     private store: Store<IFactsState>) { }
 
   public async deleteAll(): Promise<void> {
@@ -57,12 +58,9 @@ export class FactsOverviewComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    this.store
-      .pipe(select(selectOverview))
-      .subscribe(sr => this.overviewEntries = sr);
-
+    this.factsOverviewService.overview$.subscribe(entries => this.overviewEntries = entries);
     this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.actionsTemplate);
-    this.store.dispatch(new LoadFactsOverviewAction());
+    this.store.dispatch(new LoadAllFactsAction());
   }
 
   public createFact(): void {

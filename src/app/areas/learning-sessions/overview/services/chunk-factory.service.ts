@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { selecetOverview } from 'src/app/areas/facts/common/state';
-import { FactOverviewEntry, LearningSessionEditEntry } from 'src/app/areas/shared-domain/models';
+import { selectFacts } from 'src/app/areas/facts/common/state';
+import { Fact, LearningSession } from 'src/app/areas/shared-domain/models';
 import { ArrayExtensions } from 'src/app/utils';
 
 import { ILearningSessionsState } from '../../common/state';
-import { SaveEditAction } from '../../common/state/actions';
+import { SaveLearningSessionAction } from '../../common/state/actions';
 import { ChunkDefinition } from '../models/chunk-definition.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChunkFactoryService {
-  private _facts: FactOverviewEntry[];
+  private _facts: Fact[];
 
   constructor(
     private store: Store<ILearningSessionsState>) {
     this.store
-      .pipe(select(selecetOverview))
+      .pipe(select(selectFacts))
       .subscribe(sr => this._facts = sr);
 
   }
@@ -28,10 +28,10 @@ export class ChunkFactoryService {
 
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[0];
-      const editEntry = new LearningSessionEditEntry();
-      editEntry.factIds = chunk.map(f => f.id);
-      editEntry.sessionName = chunkDefinition.chunkName + ' ' + i;
-      this.store.dispatch(new SaveEditAction(editEntry));
+      const learningSession = new LearningSession();
+      learningSession.factIds = chunk.map(f => f.id!);
+      learningSession.sessionName = chunkDefinition.chunkName + ' ' + i;
+      this.store.dispatch(new SaveLearningSessionAction(learningSession));
     }
   }
 }

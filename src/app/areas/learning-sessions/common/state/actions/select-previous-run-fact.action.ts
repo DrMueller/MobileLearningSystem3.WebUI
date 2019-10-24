@@ -1,7 +1,7 @@
-import { Action } from '@ngrx/store';
+// import { Action } from '@ngrx/store';
 
-import { LearningSessionsActionTypes } from '../learning-sessions-action.types';
+// import { LearningSessionsActionTypes } from '../learning-sessions-action.types';
 
-export class SelectPreviousRunFactAction implements Action {
-  public readonly type = LearningSessionsActionTypes.SelectPreviousRunFact;
-}
+// export class SelectPreviousRunFactAction implements Action {
+//   public readonly type = LearningSessionsActionTypes.SelectPreviousRunFact;
+// }

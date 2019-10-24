@@ -1,19 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
 import { FactsActionTypes } from '../../facts/common/state';
-import {
-  LoadFactDetailsAction, LoadFactDetailsSuccessAction,
-  LoadFactsOverviewSuccessAction, SaveFactDetailsAction, SaveFactDetailsSuccessAction
-} from '../../facts/common/state/actions';
-import { DeleteFactSuccessAction } from '../../facts/common/state/actions';
-import { DeleteFactAction } from '../../facts/common/state/actions';
+import { DeleteFactAction, DeleteFactSuccessAction, LoadAllFactsSuccessAction } from '../../facts/common/state/actions';
 import { DeleteAllFactsSuccessAction } from '../../facts/common/state/actions/delete-all-facts-success.action';
-import { FactOverviewEntryLoadedSuccessAction } from '../../facts/common/state/actions/fact-overview-entry-loaded-success.action';
-import { FactOverviewEntry } from '../models';
-import { FactEditEntry } from '../models/fact-edit-entry.model';
+import { SaveFactSuccessAction } from '../../facts/common/state/actions/save-fact-success.action';
+import { SaveFactAction } from '../../facts/common/state/actions/save-faction.action';
+import { Fact } from '../models';
 
 import { FactsHttpService } from './http/facts-http.service';
 
@@ -27,42 +22,25 @@ export class FactRepositoryService {
 
 
   @Effect()
-  public loadOverview$(): Observable<LoadFactsOverviewSuccessAction> {
+  public loadAll$(): Observable<LoadAllFactsSuccessAction> {
     return this.actions$.pipe(
-      ofType(FactsActionTypes.LoadFactsOverview),
+      ofType(FactsActionTypes.LoadAllFacts),
       mergeMap(() =>
-        this.httpService.get$<FactOverviewEntry[]>().pipe(
-          map(entries => (new LoadFactsOverviewSuccessAction(entries)))
+        this.httpService.get$<Fact[]>().pipe(
+          map(entries => (new LoadAllFactsSuccessAction(entries)))
         ))
     );
   }
 
   @Effect()
-  public loadDetails$(): Observable<LoadFactDetailsSuccessAction> {
+  public save$(): Observable<SaveFactSuccessAction> {
     return this.actions$.pipe(
-      ofType(FactsActionTypes.LoadFactDetails),
-      map((action: LoadFactDetailsAction) => action.factId),
-      mergeMap((factId) => {
-        if (factId === -1) {
-          return of(new LoadFactDetailsSuccessAction(new FactEditEntry()));
-        } else {
-          return this.httpService.get$<FactEditEntry>(`edit/${factId}`).pipe(
-            map(editEntry => (new LoadFactDetailsSuccessAction(editEntry)))
-          );
-        }
-      })
-    );
-  }
-
-  @Effect()
-  public saveDetails$(): Observable<SaveFactDetailsSuccessAction> {
-    return this.actions$.pipe(
-      ofType(FactsActionTypes.SaveFactDetails),
-      map((action: SaveFactDetailsAction) => action.entry),
+      ofType(FactsActionTypes.SaveFact),
+      map((action: SaveFactAction) => action.entry),
       mergeMap(entry =>
-        this.httpService.put$<FactEditEntry>('edit', entry).pipe(
+        this.httpService.put$<Fact>('edit', entry).pipe(
           map(savedEntry => {
-            return new SaveFactDetailsSuccessAction(savedEntry.id!);
+            return new SaveFactSuccessAction(savedEntry);
           })
         ))
     );
@@ -90,20 +68,6 @@ export class FactRepositoryService {
         this.httpService.delete$<void>().pipe(
           map(() => {
             return new DeleteAllFactsSuccessAction();
-          })
-        ))
-    );
-  }
-
-  @Effect()
-  public updateOverviewEntry$(): Observable<FactOverviewEntryLoadedSuccessAction> {
-    return this.actions$.pipe(
-      ofType(FactsActionTypes.SaveFactDetailsSuccess),
-      map((action: SaveFactDetailsSuccessAction) => action.savedEntryId),
-      mergeMap(entryId =>
-        this.httpService.get$<FactOverviewEntry>(`overview/${entryId}`).pipe(
-          map(entry => {
-            return new FactOverviewEntryLoadedSuccessAction(entry);
           })
         ))
     );

@@ -1,10 +1,10 @@
-import { Action } from '@ngrx/store';
+// import { Action } from '@ngrx/store';
 
-import { LearningSessionsActionTypes } from '../learning-sessions-action.types';
+// import { LearningSessionsActionTypes } from '../learning-sessions-action.types';
 
-export class SelectNextSessionRunFactsAction implements Action {
-  public readonly type = LearningSessionsActionTypes.SelectNextSessionRunFacts;
+// export class SelectNextSessionRunFactsAction implements Action {
+//   public readonly type = LearningSessionsActionTypes.SelectNextSessionRunFacts;
 
-  public constructor(public readonly currentSessionId: number) {
-  }
-}
+//   public constructor(public readonly currentSessionId: number) {
+//   }
+// }

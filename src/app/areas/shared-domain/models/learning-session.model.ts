@@ -1,4 +1,4 @@
-export class LearningSessionEditEntry {
+export class LearningSession {
     public id: number;
     public factIds: number[];
     public sessionName: string;

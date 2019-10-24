@@ -34,7 +34,7 @@ export abstract class HttpBaseService {
     return this.processResponse(this.httpClient.get<T>(completeUrl, requestOptions));
   }
 
-  public get$<T>(relativeUrl?: string): Observable<T> {
+  public get$<T>(relativeUrl?: string | number): Observable<T> {
     const completeUrl = this.createCompleteUrl(relativeUrl);
     const requestOptions = this.createOptions();
 
