@@ -145,16 +145,6 @@ export function learningSessionsReducer(state = initialState, action: LearningSe
       };
     }
 
-    // case LearningSessionsActionTypes.SaveEditSuccess: {
-    //   const mappedOverview = state.overview.map(itm => itm.id === action.savedEntryId ? action.savedEntryId : itm);
-
-    //   return <ILearningSessionsState>{
-    //     ...state,
-    //     overview: mappedOverview,
-    //     currentSession: new LearningSessionEditEntry()
-    //   };
-    // }
-
     default:
       return state;
   }

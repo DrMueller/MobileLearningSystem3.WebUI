@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
 import { FactsActionTypes } from '../../facts/common/state';
@@ -42,10 +42,15 @@ export class FactRepositoryService {
     return this.actions$.pipe(
       ofType(FactsActionTypes.LoadFactDetails),
       map((action: LoadFactDetailsAction) => action.factId),
-      mergeMap((factId) =>
-        this.httpService.get$<FactEditEntry>(`edit/${factId}`).pipe(
-          map(entries => (new LoadFactDetailsSuccessAction(entries)))
-        ))
+      mergeMap((factId) => {
+        if (factId === -1) {
+          return of(new LoadFactDetailsSuccessAction(new FactEditEntry()));
+        } else {
+          return this.httpService.get$<FactEditEntry>(`edit/${factId}`).pipe(
+            map(editEntry => (new LoadFactDetailsSuccessAction(editEntry)))
+          );
+        }
+      })
     );
   }
 

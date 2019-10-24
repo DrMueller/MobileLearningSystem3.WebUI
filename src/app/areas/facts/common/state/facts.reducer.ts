@@ -52,8 +52,6 @@ export function factsReducer(state = initialState, action: FactsActions): IFacts
       const mappedOverview = Array.from(state.overview);
       const index = state.overview.findIndex(f => f.id === action.deleteId);
 
-      debugger;
-
       if (index > -1) {
         mappedOverview.splice(index, 1);
       }
