@@ -24,7 +24,7 @@ export class FactsSelectionComponent implements OnInit {
 
   @Input() public set selectedFactIds(value: number[]) {
     this._selectedFactIds = value;
-    this.toggleSelectionIfReady();
+    this.selectIfReady();
   }
 
   public get facts(): Fact[] {
@@ -33,12 +33,12 @@ export class FactsSelectionComponent implements OnInit {
 
   @Input() public set facts(value: Fact[]) {
     this._facts = value;
-    this.toggleSelectionIfReady();
+    this.selectIfReady();
   }
 
   public async ngOnInit(): Promise<void> {
     this.columnDefinitions = this.colDefBuilder.buildDefinitions(this.existsInRunTemplate);
-    this.toggleSelectionIfReady();
+    this.selectIfReady();
   }
 
   public selectionChanged(facts: Fact[]) {
@@ -46,10 +46,11 @@ export class FactsSelectionComponent implements OnInit {
     this.factsSelectionChanged.emit(ids);
   }
 
-  private toggleSelectionIfReady(): void {
-    if (this.table && this._selectedFactIds) {
-      const facts = this.facts.filter(f => this._selectedFactIds.indexOf(f.id!) > -1);
-      facts.forEach(f => this.table.toggleRowSelection(f));
+  private selectIfReady(): void {
+    if (this.table && this._selectedFactIds && this.facts) {
+      this.facts
+        .filter(f => this._selectedFactIds.indexOf(f.id!) > -1)
+        .forEach(f => this.table.selectRow(f));
     }
   }
 }

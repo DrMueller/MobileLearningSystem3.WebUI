@@ -9,10 +9,10 @@
         </div>
 
         <div class="state-description">
-          <label>{{ runStateDescription }}</label>
+          <label>{{ runDescription }}</label>
         </div>
 
-        <div *ngIf="showNavigateToNextRun">
+        <div *ngIf="canShowNextRun">
           <button mat-icon-button color="accent" (click)="showNextRun()">
             <mat-icon>double_arrow</mat-icon>
           </button>
@@ -48,7 +48,7 @@
 
       <div class="bottom-command-flex-row">
         <button mat-stroked-button color="primary"
-          (click)="reShuffleRun()">{{ 'areas.learning-sessions.runs.components.session-run.reshuffle' | translate }}
+          (click)="shuffle()">{{ 'areas.learning-sessions.runs.components.session-run.reshuffle' | translate }}
         </button>
       </div>
     </div>

@@ -13,7 +13,6 @@ import { SaveLearningSessionAction } from '../../../common/state/actions';
 import { LoadLearningSessionAction } from '../../../common/state/actions/load-learning-session.action';
 import { LearningSessionEditFormBuilderService } from '../../services';
 
-
 @Component({
   selector: 'app-learning-session-edit',
   templateUrl: './learning-session-edit.component.html',
@@ -22,7 +21,7 @@ import { LearningSessionEditFormBuilderService } from '../../services';
 export class LearningSessionEditComponent implements OnInit {
   public learningSession: LearningSession;
   public formGroup: FormGroup;
-  public initiallySelectedFactIds: number[] = [];
+  public initiallySelectedFactIds: number[];
   public facts: Fact[];
 
   public constructor(
@@ -50,6 +49,7 @@ export class LearningSessionEditComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.store.dispatch(new LoadAllFactsAction());
     this.formGroup = this.formBuilder.buildFormGroup();
 
     this.store
@@ -64,6 +64,7 @@ export class LearningSessionEditComponent implements OnInit {
       .pipe(select(selectAllFacts))
       .subscribe(facts => {
         this.facts = facts;
+        this.alignInitialFacts();
       });
 
     this.store
@@ -71,12 +72,11 @@ export class LearningSessionEditComponent implements OnInit {
       .subscribe(sr => {
         if (sr) {
           this.learningSession = sr;
-          this.learningSession.factIds.forEach(factId => this.initiallySelectedFactIds.push(factId));
           this.formGroupBinder.bindToFormGroup(this.learningSession, this.formGroup);
+          this.alignInitialFacts();
         }
       });
 
-    this.store.dispatch(new LoadAllFactsAction());
   }
 
   public get title(): string {
@@ -85,5 +85,11 @@ export class LearningSessionEditComponent implements OnInit {
     }
 
     return 'New Session';
+  }
+
+  private alignInitialFacts() {
+    if (this.facts && this.learningSession) {
+      this.initiallySelectedFactIds = Array.from(this.learningSession.factIds);
+    }
   }
 }

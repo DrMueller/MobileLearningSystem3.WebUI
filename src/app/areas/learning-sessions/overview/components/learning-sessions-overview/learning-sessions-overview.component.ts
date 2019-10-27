@@ -14,7 +14,7 @@ import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
 import { ILearningSessionsState, LearningSessionsActionTypes } from '../../../common/state';
-import { DeleteAction, DeleteAllLearningSessionsAction, LoadAllLearningSessionsAction } from '../../../common/state/actions';
+import { DeleteAllLearningSessionsAction, DeleteLearningSessionAction, LoadAllLearningSessionsAction } from '../../../common/state/actions';
 import { ChunkDefinition } from '../../models/chunk-definition.model';
 import { ChunkFactoryService } from '../../services/chunk-factory.service';
 import { LearningSessionsOverviewColDefBuilderService } from '../../services/learning-sessions-overview-col-def-builder.service';
@@ -72,7 +72,7 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
 
   public async deleteSessionAsync(sessionId: string): Promise<void> {
     const sessionIdParsed = parseInt(sessionId, 10);
-    this.store.dispatch(new DeleteAction(sessionIdParsed));
+    this.store.dispatch(new DeleteLearningSessionAction(sessionIdParsed));
   }
 
   public async ngOnInit(): Promise<void> {

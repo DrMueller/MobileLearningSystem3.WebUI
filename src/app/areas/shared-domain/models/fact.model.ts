@@ -3,4 +3,5 @@ export class Fact {
   id?: number;
   questionText: string;
   creationDate: Date;
+  public learningSessionIds: number[];
 }

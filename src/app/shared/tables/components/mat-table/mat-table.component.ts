@@ -13,45 +13,19 @@ import { ColumnDefinitionsContainer, TableRowSelectionType } from '../../models/
   styleUrls: ['./mat-table.component.scss']
 })
 export class MatTableComponent<T> implements OnInit {
-  @ViewChild(MatPaginator, { static: false }) public matPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) public matSort: MatSort;
-
-  public searchText: string;
+  @Output() public selectionChanged = new EventEmitter<T[]>();
   @Input() public columnDefinitions: ColumnDefinitionsContainer;
   @Input() public idSelector: keyof T;
-  @Output() public selectionChanged = new EventEmitter<T[]>();
+  @ViewChild(MatPaginator, { static: false }) public matPaginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) public matSort: MatSort;
   @ViewChild(MatTable, { static: false }) public matTable: MatTable<T>;
+
+  public searchText: string;
   public selection: SelectionModel<T>;
+  private _data: T[];
 
   private _dataSource: MatTableDataSource<T>;
-  private _data: T[];
   private _rowSelectionType: TableRowSelectionType;
-
-
-  @Input() public set rowSelectionType(value: TableRowSelectionType) {
-    this._rowSelectionType = value;
-    this.initializeDataSource();
-    this.bindData();
-  }
-
-  @Input() public set data(values: T[]) {
-    this._data = values;
-    if (this.matTable) {
-      this.bindData();
-    }
-  }
-
-  public deleteEntries(entries: T[]): void {
-    entries.forEach(entry => {
-      const dtoIndex = this._data.indexOf(entry);
-      this._data.splice(dtoIndex, 1);
-    });
-
-    this.deSelectEntries(entries);
-    this.bindData();
-    this.selectionChanged.emit(this.selection.selected);
-    this.matTable.renderRows();
-  }
 
   public get allColumnHeaders(): string[] {
     const result: string[] = [];
@@ -68,24 +42,56 @@ export class MatTableComponent<T> implements OnInit {
     return this._rowSelectionType === TableRowSelectionType.Multi;
   }
 
+  @Input() public set data(values: T[]) {
+    this._data = values;
+    if (this.matTable) {
+      this.bindData();
+    }
+  }
+
   public get dataSource(): MatTableDataSource<T> {
     return this._dataSource;
   }
 
-  public get isSelectionAllowed(): boolean {
-    return this._rowSelectionType !== TableRowSelectionType.ReadOnly;
+  public deleteEntries(entries: T[]): void {
+    entries.forEach(entry => {
+      const dtoIndex = this._data.indexOf(entry);
+      this._data.splice(dtoIndex, 1);
+    });
+
+    this.deSelectEntries(entries);
+    this.bindData();
+    this.selectionChanged.emit(this.selection.selected);
+    this.matTable.renderRows();
   }
 
   public isRowSelected(row: T): boolean {
     return this.selection.isSelected(row);
   }
 
+  public get isSelectionAllowed(): boolean {
+    return this._rowSelectionType !== TableRowSelectionType.ReadOnly;
+  }
+
   public ngOnInit(): void {
     this.initializeDataSource();
   }
 
+  @Input() public set rowSelectionType(value: TableRowSelectionType) {
+    this._rowSelectionType = value;
+    this.initializeDataSource();
+    this.bindData();
+  }
+
   public searchTextChanged(newSearchText: string): void {
     this.dataSource.filter = newSearchText.toLocaleLowerCase();
+  }
+
+  public selectRow(row: T): void {
+    if (!this.isRowSelected(row)) {
+      this.selection.select(row);
+      this.selectionChanged.emit(this.selection.selected);
+    }
   }
 
   public toggleAllSelections(): void {

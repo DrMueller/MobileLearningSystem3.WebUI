@@ -1,6 +1,9 @@
 export enum LearningSessionsActionTypes {
   LoadLearningSession = 'Load learning session',
   LoadLearningSessionSuccess = 'Load learning session success',
+  LoadNextRun = 'load next run',
+  LoadNextRunSuccess = 'load next run success',
+  LoadNextLearningSessionIdSuccess = 'load next learning session id success',
   LoadAllLearningSessionsSuccess = 'Loads the overview',
   LoadAllLearningSessions = 'Loading the overview success',
   LoadEditSession = 'Load edit',
@@ -9,14 +12,6 @@ export enum LearningSessionsActionTypes {
   SaveLearningSessionSuccess = 'Save edit success',
   DeleteAllLearningSessions = 'Delete all',
   DeleteAllLearningSessionsSuccess = 'Delete all success',
-  Delete = 'Delete',
+  DeleteLearningSession = 'Delete',
   DeleteLearningSessionSuccess = 'Delete success',
-  LoadRunFacts = 'Load run facts',
-  LoadRunFactsSuccess = 'Load run facts success',
-  SelectNextRunFact = 'Select next run fact',
-  SelectPreviousRunFact = 'Select previous run fact',
-  SelectSession = 'Select session',
-  ReshuffleRunFacts = 'Reshuffle run facts',
-  SelectNextSessionRunFacts = 'Select next session run facts',
-  SelectNextSessionRunFactsSuccess = 'Select next session run facts success'
 }
