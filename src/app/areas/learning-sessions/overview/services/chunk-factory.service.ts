@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { selectFacts } from 'src/app/areas/facts/common/state';
+import { selectAllFacts } from 'src/app/areas/facts/common/state';
 import { Fact, LearningSession } from 'src/app/areas/shared-domain/models';
 import { ArrayExtensions } from 'src/app/utils';
 
@@ -17,7 +17,7 @@ export class ChunkFactoryService {
   constructor(
     private store: Store<ILearningSessionsState>) {
     this.store
-      .pipe(select(selectFacts))
+      .pipe(select(selectAllFacts))
       .subscribe(sr => this._facts = sr);
 
   }

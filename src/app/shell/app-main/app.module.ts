@@ -8,6 +8,7 @@ import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FactsModule } from 'src/app/areas/facts';
 import { MatDependenciesModule } from 'src/app/mat-deps';
 import { BusyIndicationModule } from 'src/app/shared/busy-indication/busy-indication.module';
 import { RxFormsModule } from 'src/app/shared/rx-forms';
@@ -34,6 +35,7 @@ export function initializeApp(appInitService: AppInitService): Function {
     AppComponent
   ],
   imports: [
+    FactsModule,
     AppNavigationModule,
     AppRoutingModule,
     BrowserModule,

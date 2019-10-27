@@ -7,7 +7,7 @@ import { FactsOverviewComponent } from './overview/components/facts-overview';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'facts',
     component: FactsComponent,
     children: [
       {

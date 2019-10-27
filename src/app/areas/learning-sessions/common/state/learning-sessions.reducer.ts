@@ -9,24 +9,19 @@ export const learningSessionsFeatureKey = 'learningSessions';
 
 const getFeatureState = createFeatureSelector<ILearningSessionsState>(learningSessionsFeatureKey);
 
-export const getSessions = createSelector(
+export const selectAllLearningSessions = createSelector(
   getFeatureState,
-  state => state.overview
+  state => state.learningSessions
 );
 
-export const getCurrentSession = createSelector(
+export const selectCurrentLearningSession = createSelector(
   getFeatureState,
   state => state.currentSession
 );
 
-export const getSelectedSession = createSelector(
-  getFeatureState,
-  state => state.selectedSessionId
-);
-
 export interface ILearningSessionsState extends IAppState {
-  overview: LearningSession[];
-  currentSession: LearningSession;
+  learningSessions: LearningSession[];
+  currentSession: LearningSession | null;
   selectedSessionId: number;
 }
 
@@ -37,7 +32,7 @@ export interface ILearningSessionOverviewEntry {
 }
 
 export const initialState: ILearningSessionsState = {
-  overview: [],
+  learningSessions: [],
   security: initialAppState.security,
   currentSession: new LearningSession(),
   selectedSessionId: 0,
@@ -49,7 +44,7 @@ export function learningSessionsReducer(state = initialState, action: LearningSe
     case LearningSessionsActionTypes.LoadAllLearningSessionsSuccess: {
       return <ILearningSessionsState>{
         ...state,
-        overview: action.overview
+        learningSessions: action.overview
       };
     }
 
@@ -60,9 +55,9 @@ export function learningSessionsReducer(state = initialState, action: LearningSe
       };
     }
 
-    case LearningSessionsActionTypes.DeleteSuccess: {
-      const mappedOverview = Array.from(state.overview);
-      const index = state.overview.findIndex(f => f.id === action.deletedId);
+    case LearningSessionsActionTypes.DeleteLearningSessionSuccess: {
+      const mappedOverview = Array.from(state.learningSessions);
+      const index = state.learningSessions.findIndex(f => f.id === action.deletedId);
 
       if (index > -1) {
         mappedOverview.splice(index, 1);
@@ -70,7 +65,32 @@ export function learningSessionsReducer(state = initialState, action: LearningSe
 
       return <ILearningSessionsState>{
         ...state,
-        overview: mappedOverview
+        learningSessions: mappedOverview
+      };
+    }
+
+    case LearningSessionsActionTypes.DeleteAllLearningSessionsSuccess: {
+      return <ILearningSessionsState>{
+        ...state,
+        currentSession: null,
+        learningSessions: [],
+      };
+    }
+
+    case LearningSessionsActionTypes.LoadLearningSessionSuccess: {
+      let newSessions: LearningSession[];
+      const existingEntry = state.learningSessions.find(f => f.id === action.learningSession.id);
+      if (!existingEntry) {
+        newSessions = Array.from(state.learningSessions);
+        newSessions.push(action.learningSession);
+      } else {
+        newSessions = state.learningSessions.map(itm => itm.id === action.learningSession.id ? action.learningSession : itm);
+      }
+
+      return <ILearningSessionsState>{
+        ...state,
+        currentSession: action.learningSession,
+        learningSessions: newSessions
       };
     }
 

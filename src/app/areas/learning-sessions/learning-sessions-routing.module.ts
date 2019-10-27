@@ -23,7 +23,7 @@ const routes: Routes = [
         component: LearningSessionEditComponent,
       },
       {
-        path: 'runs',
+        path: 'runs/:sessionid',
         component: SessionRunComponent,
       }
     ]

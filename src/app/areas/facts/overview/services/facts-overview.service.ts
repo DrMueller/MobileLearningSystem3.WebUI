@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { IFactsState, selectFacts } from '../../common/state';
+import { IFactsState, selectAllFacts } from '../../common/state';
 import { FactOverviewEntryVm } from '../view-models';
 
 @Injectable({
@@ -13,14 +13,13 @@ export class FactsOverviewService {
   constructor(private store: Store<IFactsState>) { }
 
   public get overview$(): Observable<FactOverviewEntryVm[]> {
-    const tra = this.store.pipe(
-      select(selectFacts),
-      select(state => state.map(st => new FactOverviewEntryVm(
-        st.id!,
-        st.creationDate.toLocaleDateString(),
-        st.questionText)))
-    );
-
-    return tra;
+    return this.store.pipe(
+      select(selectAllFacts),
+      select(facts => {
+        return facts.map(st => new FactOverviewEntryVm(
+          st.id!,
+          st.creationDate.toString(),
+          st.questionText));
+      }));
   }
 }

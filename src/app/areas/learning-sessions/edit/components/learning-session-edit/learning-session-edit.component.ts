@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { LearningSession } from 'src/app/areas/shared-domain/models';
+import { select, Store } from '@ngrx/store';
+import { selectAllFacts } from 'src/app/areas/facts/common/state';
+import { LoadAllFactsAction } from 'src/app/areas/facts/common/state/actions';
+import { Fact, LearningSession } from 'src/app/areas/shared-domain/models';
 import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
+import { selectRouteParam } from 'src/app/shell/app-state';
 
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
-import {  ILearningSessionsState } from '../../../common/state';
+import { ILearningSessionsState, selectCurrentLearningSession } from '../../../common/state';
 import { SaveLearningSessionAction } from '../../../common/state/actions';
+import { LoadLearningSessionAction } from '../../../common/state/actions/load-learning-session.action';
 import { LearningSessionEditFormBuilderService } from '../../services';
 
 
@@ -19,6 +23,7 @@ export class LearningSessionEditComponent implements OnInit {
   public learningSession: LearningSession;
   public formGroup: FormGroup;
   public initiallySelectedFactIds: number[] = [];
+  public facts: Fact[];
 
   public constructor(
     private formBuilder: LearningSessionEditFormBuilderService,
@@ -47,21 +52,31 @@ export class LearningSessionEditComponent implements OnInit {
   public ngOnInit(): void {
     this.formGroup = this.formBuilder.buildFormGroup();
 
-    // this.store
-    //   .pipe(select(selectRouteParam('sessionid')))
-    //   .subscribe(sessionId => {
-    //     if (sessionId) {
-    //       this.store.dispatch(new LoadEditSessionAction(parseInt(sessionId, 10)));
-    //     }
-    //   });
+    this.store
+      .pipe(select(selectRouteParam('sessionid')))
+      .subscribe(sessionId => {
+        if (sessionId) {
+          this.store.dispatch(new LoadLearningSessionAction(parseInt(sessionId, 10)));
+        }
+      });
 
-    // this.store
-    //   .pipe(select(getCurrentSession))
-    //   .subscribe(sr => {
-    //     this.learningSession = sr;
-    //     this.learningSession.factIds.forEach(factId => this.initiallySelectedFactIds.push(factId));
-    //     this.formGroupBinder.bindToFormGroup(this.learningSession, this.formGroup);
-    //   });
+    this.store
+      .pipe(select(selectAllFacts))
+      .subscribe(facts => {
+        this.facts = facts;
+      });
+
+    this.store
+      .pipe(select(selectCurrentLearningSession))
+      .subscribe(sr => {
+        if (sr) {
+          this.learningSession = sr;
+          this.learningSession.factIds.forEach(factId => this.initiallySelectedFactIds.push(factId));
+          this.formGroupBinder.bindToFormGroup(this.learningSession, this.formGroup);
+        }
+      });
+
+    this.store.dispatch(new LoadAllFactsAction());
   }
 
   public get title(): string {

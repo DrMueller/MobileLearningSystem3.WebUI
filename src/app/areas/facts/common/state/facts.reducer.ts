@@ -9,17 +9,17 @@ export const factsFeatureKey = 'facts';
 
 export interface IFactsState extends IAppState {
   facts: Fact[];
-  currentFact: Fact;
+  currentFact: Fact | null;
 }
 
 const getFeatureState = createFeatureSelector<IFactsState>(factsFeatureKey);
 
-export const selectFact = createSelector(
+export const selectCurrentFact = createSelector(
   getFeatureState,
-  state => (id: number) => state.facts.find(f => f.id === id)
+  state => state.currentFact
 );
 
-export const selectFacts = createSelector(
+export const selectAllFacts = createSelector(
   getFeatureState,
   state => state.facts
 );
@@ -54,12 +54,44 @@ export function factsReducer(state = initialState, action: FactsActions): IFacts
       };
     }
 
+    case FactsActionTypes.DeleteAllFactsSuccess: {
+      return <IFactsState>{
+        ...state,
+        facts: [],
+        currentFact: null
+      };
+    }
+
     case FactsActionTypes.SaveFactSuccess: {
-      const mappedOverview = state.facts.map(itm => itm.id === action.savedFact.id ? action.savedFact : itm);
+      let newFacts: Fact[];
+      const existingEntry = state.facts.find(f => f.id === action.savedFact.id);
+      if (!existingEntry) {
+        newFacts = Array.from(state.facts);
+        newFacts.push(action.savedFact);
+      } else {
+        newFacts = state.facts.map(itm => itm.id === action.savedFact.id ? action.savedFact : itm);
+      }
 
       return <IFactsState>{
         ...state,
-        overview: mappedOverview
+        overview: newFacts
+      };
+    }
+
+    case FactsActionTypes.LoadFactSuccess: {
+      let newFacts: Fact[];
+      const existingEntry = state.facts.find(f => f.id === action.fact.id);
+      if (!existingEntry) {
+        newFacts = Array.from(state.facts);
+        newFacts.push(action.fact);
+      } else {
+        newFacts = state.facts.map(itm => itm.id === action.fact.id ? action.fact : itm);
+      }
+
+      return <IFactsState>{
+        ...state,
+        currentFact: action.fact,
+        overview: newFacts
       };
     }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { SnackBarService } from 'src/app/core/snack-bar/services';
@@ -8,7 +9,7 @@ import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
 import { FactsNavigationService } from '../../../common/services';
-import { IFactsState } from '../../../common/state';
+import { FactsActionTypes, IFactsState } from '../../../common/state';
 import { DeleteAllFactsAction, DeleteFactAction, LoadAllFactsAction } from '../../../common/state/actions';
 import { FactsOverviewColDefBuilderService } from '../../services';
 import { FactsOverviewService } from '../../services/facts-overview.service';
@@ -33,6 +34,7 @@ export class FactsOverviewComponent implements OnInit {
     private enquiryService: EnquiryService,
     private translator: TranslateService,
     private snackBarService: SnackBarService,
+    private actions$: Actions,
     private factsOverviewService: FactsOverviewService,
     private store: Store<IFactsState>) { }
 
@@ -44,11 +46,6 @@ export class FactsOverviewComponent implements OnInit {
       .subscribe(async qr => {
         if (qr === QuestionResult.Yes) {
           this.store.dispatch(new DeleteAllFactsAction());
-
-          const allFactsDeletedInfo = await this.translator
-            .get('areas.facts.overview.components.facts-overview.allFactsDeleted')
-            .toPromise();
-          this.snackBarService.showSnackBar(allFactsDeletedInfo);
         }
       });
   }
@@ -59,6 +56,16 @@ export class FactsOverviewComponent implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     this.factsOverviewService.overview$.subscribe(entries => this.overviewEntries = entries);
+    this.actions$.pipe(
+      ofType(FactsActionTypes.DeleteAllFactsSuccess)
+    ).subscribe(async () => {
+      const allFactsDeletedInfo = await this.translator
+        .get('areas.facts.overview.components.facts-overview.allFactsDeleted')
+        .toPromise();
+      this.snackBarService.showSnackBar(allFactsDeletedInfo);
+    });
+
+
     this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.actionsTemplate);
     this.store.dispatch(new LoadAllFactsAction());
   }

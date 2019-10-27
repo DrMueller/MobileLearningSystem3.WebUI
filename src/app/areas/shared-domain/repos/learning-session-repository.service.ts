@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
 import { LearningSessionsActionTypes } from '../../learning-sessions/common/state';
 import {
   DeleteAction,
-  DeleteAllSuccessAction,
+  DeleteAllLearningSessionsSuccessAction,
   DeleteSuccessAction,
   LoadAllLearningSessionsSuccessAction,
   SaveLearningSessionAction,
   SaveLearningSessionSuccessAction,
 } from '../../learning-sessions/common/state/actions';
+import { LoadLearningSessionSuccessAction } from '../../learning-sessions/common/state/actions/load-learning-session-success.action';
+import { LoadLearningSessionAction } from '../../learning-sessions/common/state/actions/load-learning-session.action';
 import { LearningSession } from '../models';
 
 import { LearningSessionsHttpService } from './http/learning-sessions-http.service';
@@ -37,12 +39,12 @@ export class LearningSessionRepositoryService {
   }
 
   @Effect()
-  public deleteAll$(): Observable<DeleteAllSuccessAction> {
+  public deleteAll$(): Observable<DeleteAllLearningSessionsSuccessAction> {
     return this.actions$.pipe(
-      ofType(LearningSessionsActionTypes.DeleteAll),
+      ofType(LearningSessionsActionTypes.DeleteAllLearningSessions),
       mergeMap(_ =>
         this.httpService.delete$('').pipe(
-          map(() => (new DeleteAllSuccessAction()))
+          map(() => (new DeleteAllLearningSessionsSuccessAction()))
         ))
     );
   }
@@ -56,6 +58,22 @@ export class LearningSessionRepositoryService {
         this.httpService.delete$(sessionId).pipe(
           map((id: number) => new DeleteSuccessAction(id))
         ))
+    );
+  }
+
+  @Effect()
+  public load$(): Observable<LoadLearningSessionSuccessAction> {
+    return this.actions$.pipe(
+      ofType(LearningSessionsActionTypes.LoadLearningSession),
+      map((action: LoadLearningSessionAction) => action.learningSessionId),
+      mergeMap((entryId: number) => {
+        if (entryId === -1) {
+          return of(new LoadLearningSessionSuccessAction(new LearningSession()));
+        } else {
+          return this.httpService.get$<LearningSession>(entryId)
+            .pipe(map(entry => (new LoadLearningSessionSuccessAction(entry))));
+        }
+      })
     );
   }
 

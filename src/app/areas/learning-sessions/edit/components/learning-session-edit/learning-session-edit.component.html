@@ -25,5 +25,5 @@
   </mat-card-content>
 </mat-card>
 
-<app-facts-selection (factsSelectionChanged)="factsSelectionChanged($event)"
+<app-facts-selection [facts]="facts" (factsSelectionChanged)="factsSelectionChanged($event)"
   [selectedFactIds]="initiallySelectedFactIds"></app-facts-selection>

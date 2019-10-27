@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { selectQueryParam } from 'src/app/shell/app-state';
+
+import { ILearningSessionsState } from '../../../common/state';
 
 @Component({
   selector: 'app-session-run',
@@ -35,13 +39,13 @@ export class SessionRunComponent implements OnInit {
   //   return `${this.factIndex + 1} / ${this._runFacts.length}`;
   // }
 
-  // // public currentFact: RunFact | undefined;
-  // // private _runFacts: RunFact[] = [];
-  // private _isAnswerShown: boolean;
-  // private _sessionId: number;
+  // public currentFact: RunFact | undefined;
+  // private _runFacts: RunFact[] = [];
+  private _isAnswerShown: boolean;
+  private _sessionId: number;
 
-  // public constructor(
-  //   private store: Store<ILearningSessionsState>) { }
+  public constructor(
+    private store: Store<ILearningSessionsState>) { }
 
   // public showNextRun(): void {
   //   // this.store.dispatch(new SelectNextSessionRunFactsAction(this._sessionId));
@@ -51,10 +55,17 @@ export class SessionRunComponent implements OnInit {
   //   this._isAnswerShown = true;
   // }
 
+HERE
   public ngOnInit(): void {
-    // this.store
-    //   .pipe(select(getRunFacts))
-    //   .subscribe(runFacts => this._runFacts = runFacts);
+    this.store
+      .pipe(
+        select(selectQueryParam('sessionId')),
+      )
+      .subscribe(sessionId => {
+        if (sessionId) {
+          this._sessionId = sessionId;
+        }
+      });
 
     // this.store
     //   .pipe(select(getSelectedSessionId))
@@ -66,8 +77,6 @@ export class SessionRunComponent implements OnInit {
     //     this.currentFact = runFact;
     //     this._isAnswerShown = false;
     //   });
-
-    // this.store.dispatch(new LoadRunFactsAction(this._sessionId));
   }
 
   // public reShuffleRun(): void {

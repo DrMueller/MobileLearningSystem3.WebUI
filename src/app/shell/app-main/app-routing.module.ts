@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FactsComponent } from 'src/app/areas/facts/entry-point/components/facts';
 
 import { LogInComponent } from '../security/components/log-in/log-in.component';
 import { AuthorizationGuard } from '../security/guards';
@@ -15,9 +16,14 @@ const routes: Routes = [
     loadChildren: () => import('../../areas/home/home.module').then(m => m.HomeModule),
     canActivate: [AuthorizationGuard]
   },
+  // {
+  //   path: 'facts',
+  //   loadChildren: () => import('../../areas/facts/facts.module').then(m => m.FactsModule),
+  //   canActivate: [AuthorizationGuard]
+  // },
   {
     path: 'facts',
-    loadChildren: () => import('../../areas/facts/facts.module').then(m => m.FactsModule),
+    component: FactsComponent,
     canActivate: [AuthorizationGuard]
   },
   {

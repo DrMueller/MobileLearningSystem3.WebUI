@@ -3,7 +3,7 @@
   </mat-card-title>
   <mat-card-content>
     <app-mat-table (selectionChanged)="selectionChanged($event)" [rowSelectionType]="2"
-      [columnDefinitions]="columnDefinitions" idSelector="id" [data]="overviewEntries">
+      [columnDefinitions]="columnDefinitions" idSelector="id" [data]="facts">
       <ng-template #existsInRunTemplate let-row="row">
         <app-fact-exists-in-run [existsInRun]="row.existsInRun">
         </app-fact-exists-in-run>

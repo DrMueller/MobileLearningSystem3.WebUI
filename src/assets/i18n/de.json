@@ -65,7 +65,7 @@
             "chunkSizePlaceholder": "Chunk-Größe"
           },
           "learning-sessions-overview": {
-            "allSessionsDeleted": "Alle Sitzungen löschen",
+            "allSessionsDeleted": "Alle Sitzungen gelöscht",
             "chunksCreated": "Erstellte Chunks",
             "createChunks": "Erstellen von Chunks",
             "deleteAllSessionsHeading": "Alle Sitzungen löschen",
