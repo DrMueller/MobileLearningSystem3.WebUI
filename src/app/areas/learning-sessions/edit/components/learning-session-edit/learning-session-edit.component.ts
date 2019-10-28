@@ -19,6 +19,18 @@ import { LearningSessionEditFormBuilderService } from '../../services';
   styleUrls: ['./learning-session-edit.component.scss']
 })
 export class LearningSessionEditComponent implements OnInit {
+
+  public get canSave(): boolean {
+    return this.formGroup.valid;
+  }
+
+  public get title(): string {
+    if (this.learningSession.id) {
+      return `Edit Session - ${this.learningSession.id}`;
+    }
+
+    return 'New Session';
+  }
   public learningSession: LearningSession;
   public formGroup: FormGroup;
   public initiallySelectedFactIds: number[];
@@ -34,10 +46,6 @@ export class LearningSessionEditComponent implements OnInit {
     this.formGroupBinder.bindToModel(this.formGroup, this.learningSession);
     this.store.dispatch(new SaveLearningSessionAction(this.learningSession));
     this.navigator.navigateToOverview();
-  }
-
-  public get canSave(): boolean {
-    return this.formGroup.valid;
   }
 
   public cancel(): void {
@@ -77,14 +85,6 @@ export class LearningSessionEditComponent implements OnInit {
         }
       });
 
-  }
-
-  public get title(): string {
-    if (this.learningSession.id) {
-      return `Edit Session - ${this.learningSession.id}`;
-    }
-
-    return 'New Session';
   }
 
   private alignInitialFacts() {

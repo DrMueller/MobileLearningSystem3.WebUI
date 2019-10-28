@@ -16,7 +16,6 @@ export class FactsSelectionComponent implements OnInit {
   @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<Fact>;
   public columnDefinitions: ColumnDefinitionsContainer;
   private _facts: Fact[] = [];
-
   private _selectedFactIds: number[];
 
   public constructor(
@@ -48,9 +47,9 @@ export class FactsSelectionComponent implements OnInit {
 
   private selectIfReady(): void {
     if (this.table && this._selectedFactIds && this.facts) {
-      this.facts
-        .filter(f => this._selectedFactIds.indexOf(f.id!) > -1)
-        .forEach(f => this.table.selectRow(f));
+      this.facts.forEach(fact => this.table.deselectRow(fact));
+      const selectedFacts = this.facts.filter(f => this._selectedFactIds.indexOf(f.id!) > -1);
+      selectedFacts.forEach(f => this.table.selectRow(f));
     }
   }
 }

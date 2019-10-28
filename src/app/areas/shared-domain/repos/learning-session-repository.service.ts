@@ -87,7 +87,6 @@ export class LearningSessionRepositoryService {
       ofType(LearningSessionsActionTypes.LoadNextRun),
       map((action: LoadNextRunAction) => action.currentLearningSessionId),
       mergeMap((sessionId: number) => {
-        debugger;
         return this.httpService.get$<number>(`${sessionId}/next`)
           .pipe(map(nextId => {
             this.navigator.navigateToSessionRun(nextId);

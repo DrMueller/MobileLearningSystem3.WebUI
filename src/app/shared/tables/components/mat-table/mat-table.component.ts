@@ -94,7 +94,14 @@ export class MatTableComponent<T> implements OnInit {
     }
   }
 
-  public toggleAllSelections(): void {
+  public deselectRow(row: T): void {
+    if (this.isRowSelected(row)) {
+      this.selection.deselect(row);
+      this.selectionChanged.emit(this.selection.selected);
+    }
+  }
+
+  public toggleAll(): void {
     if (this._rowSelectionType === TableRowSelectionType.Multi) {
       this._data.forEach(row => this.selection.toggle(row));
       this.selectionChanged.emit(this.selection.selected);
