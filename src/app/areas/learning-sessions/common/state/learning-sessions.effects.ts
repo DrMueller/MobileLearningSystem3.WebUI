@@ -1,56 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import { SnackBarService } from 'src/app/core/snack-bar/services';
 
-import { LearningSessionsNavigationService } from '../../learning-sessions/common/services';
-import { LearningSessionsActionTypes } from '../../learning-sessions/common/state';
+import { LearningSession } from '../models/learning-session.model';
+import { LearningSessionsNavigationService } from '../services';
+
+import { LearningSessionsActionTypes } from '.';
 import {
   DeleteAllLearningSessionsSuccessAction,
-  DeleteLearningSessionAction,
-  DeleteLearningSessionSuccessAction,
-  LoadAllLearningSessionsSuccessAction,
-  LoadNextRunAction,
-  SaveLearningSessionAction,
-  SaveLearningSessionSuccessAction,
-} from '../../learning-sessions/common/state/actions';
-import { LoadLearningSessionSuccessAction } from '../../learning-sessions/common/state/actions/load-learning-session-success.action';
-import { LoadLearningSessionAction } from '../../learning-sessions/common/state/actions/load-learning-session.action';
-import { LoadNextRunSuccessAction } from '../../learning-sessions/common/state/actions/load-next-run-success.action';
-import { LearningSession } from '../models';
-
-import { LearningSessionsHttpService } from './http/learning-sessions-http.service';
+  DeleteLearningSessionAction, DeleteLearningSessionSuccessAction,
+  LoadAllLearningSessionsSuccessAction, LoadLearningSessionAction, LoadLearningSessionSuccessAction,
+  LoadNextRunAction, LoadNextRunSuccessAction, SaveLearningSessionAction, SaveLearningSessionSuccessAction
+} from './actions';
+import { LearningSessionsHttpService } from './http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LearningSessionRepositoryService {
+export class LearningSessionsEffects {
   public constructor(
+    private translator: TranslateService,
+    private snackbarService: SnackBarService,
     private navigator: LearningSessionsNavigationService,
     private actions$: Actions,
     private httpService: LearningSessionsHttpService) {
-  }
-
-  @Effect()
-  public loadAll$(): Observable<LoadAllLearningSessionsSuccessAction> {
-    return this.actions$.pipe(
-      ofType(LearningSessionsActionTypes.LoadAllLearningSessions),
-      mergeMap(_ =>
-        this.httpService.get$<LearningSession[]>().pipe(
-          map(entries => (new LoadAllLearningSessionsSuccessAction(entries)))
-        ))
-    );
-  }
-
-  @Effect()
-  public deleteAll$(): Observable<DeleteAllLearningSessionsSuccessAction> {
-    return this.actions$.pipe(
-      ofType(LearningSessionsActionTypes.DeleteAllLearningSessions),
-      mergeMap(_ =>
-        this.httpService.delete$('').pipe(
-          map(() => (new DeleteAllLearningSessionsSuccessAction()))
-        ))
-    );
   }
 
   @Effect()
@@ -66,6 +42,23 @@ export class LearningSessionRepositoryService {
   }
 
   @Effect()
+  public deleteAll$(): Observable<DeleteAllLearningSessionsSuccessAction> {
+    return this.actions$.pipe(
+      ofType(LearningSessionsActionTypes.DeleteAllLearningSessions),
+      mergeMap(_ =>
+        this.httpService.delete$('').pipe(
+          mergeMap(() => {
+            return this.translator
+              .get('areas.learning-sessions.common.state.allSessionsDeleted')
+              .pipe(map((info: string) => {
+                this.snackbarService.showSnackBar(info);
+                return new DeleteAllLearningSessionsSuccessAction();
+              }));
+          }))
+      ));
+  }
+
+  @Effect()
   public load$(): Observable<LoadLearningSessionSuccessAction> {
     return this.actions$.pipe(
       ofType(LearningSessionsActionTypes.LoadLearningSession),
@@ -75,9 +68,20 @@ export class LearningSessionRepositoryService {
           return of(new LoadLearningSessionSuccessAction(new LearningSession()));
         } else {
           return this.httpService.get$<LearningSession>(entryId)
-            .pipe(map(entry => (new LoadLearningSessionSuccessAction(entry))));
+            .pipe(map(entry => new LoadLearningSessionSuccessAction(entry)));
         }
       })
+    );
+  }
+
+  @Effect()
+  public loadAll$(): Observable<LoadAllLearningSessionsSuccessAction> {
+    return this.actions$.pipe(
+      ofType(LearningSessionsActionTypes.LoadAllLearningSessions),
+      mergeMap(_ =>
+        this.httpService.get$<LearningSession[]>().pipe(
+          map(entries => (new LoadAllLearningSessionsSuccessAction(entries)))
+        ))
     );
   }
 

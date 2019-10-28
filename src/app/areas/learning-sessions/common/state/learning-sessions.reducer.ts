@@ -1,6 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { LearningSession } from 'src/app/areas/shared-domain/models';
 import { IAppState, initialAppState } from 'src/app/shell/app-state';
+import { addOrReplaceArrayEntry as addOrReplaceArrayEntry } from 'src/app/utils/array-utils/add-or-replace-array-entry.func';
+import { deleteArrayEntry } from 'src/app/utils/array-utils/delete-array-entry.func';
+
+import { LearningSession } from '../models/learning-session.model';
 
 import { LearningSessionsActionTypes } from './learning-sessions-action.types';
 import { LearningSessionsActions } from './learning-sessions.actions';
@@ -34,7 +37,7 @@ export interface ILearningSessionOverviewEntry {
 export const initialState: ILearningSessionsState = {
   learningSessions: [],
   security: initialAppState.security,
-  currentSession: new LearningSession(),
+  currentSession: null,
   selectedSessionId: 0,
   router: initialAppState.router,
 };
@@ -49,23 +52,22 @@ export function learningSessionsReducer(state = initialState, action: LearningSe
     }
 
     case LearningSessionsActionTypes.SaveLearningSessionSuccess: {
+      const newSessions = addOrReplaceArrayEntry(
+        state.learningSessions,
+        action.savedLearningSession,
+        (a, b) => a.id === b.id);
+
       return <ILearningSessionsState>{
         ...state,
+        learningSessions: newSessions,
         currentSession: action.savedLearningSession
       };
     }
 
     case LearningSessionsActionTypes.DeleteLearningSessionSuccess: {
-      const mappedOverview = Array.from(state.learningSessions);
-      const index = state.learningSessions.findIndex(f => f.id === action.deletedId);
-
-      if (index > -1) {
-        mappedOverview.splice(index, 1);
-      }
-
       return <ILearningSessionsState>{
         ...state,
-        learningSessions: mappedOverview
+        learningSessions: deleteArrayEntry(state.learningSessions, f => f.id === action.deletedId)
       };
     }
 
@@ -78,14 +80,10 @@ export function learningSessionsReducer(state = initialState, action: LearningSe
     }
 
     case LearningSessionsActionTypes.LoadLearningSessionSuccess: {
-      let newSessions: LearningSession[];
-      const existingEntry = state.learningSessions.find(f => f.id === action.learningSession.id);
-      if (!existingEntry) {
-        newSessions = Array.from(state.learningSessions);
-        newSessions.push(action.learningSession);
-      } else {
-        newSessions = state.learningSessions.map(itm => itm.id === action.learningSession.id ? action.learningSession : itm);
-      }
+      const newSessions = addOrReplaceArrayEntry(
+        state.learningSessions,
+        action.learningSession,
+        (a, b) => a.id === b.id);
 
       return <ILearningSessionsState>{
         ...state,
@@ -93,62 +91,6 @@ export function learningSessionsReducer(state = initialState, action: LearningSe
         learningSessions: newSessions
       };
     }
-
-    // case LearningSessionsActionTypes.LoadRunFactsSuccess: {
-    //   const runFacts = ArrayExtensions.shuffleEntries(action.runFacts);
-    //   let selectedRunFact: RunFact | undefined;
-    //   if (runFacts.length > 0) {
-    //     selectedRunFact = runFacts[0];
-    //   }
-
-    //   return <ILearningSessionsState>{
-    //     ...state,
-    //     runFacts: runFacts,
-    //     selectedRunFact: selectedRunFact
-    //   };
-    // }
-
-    // case LearningSessionsActionTypes.SelectSession: {
-    //   return <ILearningSessionsState>{
-    //     ...state,
-    //     selectedSessionId: action.sessionId
-    //   };
-    // }
-
-    // case LearningSessionsActionTypes.SelectNextRunFact: {
-    //   return <ILearningSessionsState>{
-    //     ...state,
-    //     selectedRunFact: state.runFacts[state.runFacts.indexOf(state.selectedRunFact!) + 1]
-    //   };
-    // }
-
-    // case LearningSessionsActionTypes.SelectPreviousRunFact: {
-    //   return <ILearningSessionsState>{
-    //     ...state,
-    //     selectedRunFact: state.runFacts[state.runFacts.indexOf(state.selectedRunFact!) - 1]
-    //   };
-    // }
-
-    // case LearningSessionsActionTypes.ReshuffleRunFacts: {
-    //   const runFacts = ArrayExtensions.shuffleEntries(state.runFacts);
-    //   let selectedRunFact: RunFact | undefined;
-    //   if (runFacts.length > 0) {
-    //     selectedRunFact = runFacts[0];
-    //   }
-
-    //   return <ILearningSessionsState>{
-    //     ...state,
-    //     runFacts: runFacts,
-    //     selectedRunFact: selectedRunFact
-    //   };
-    // }
-
-    // case LearningSessionsActionTypes.SelectNextSessionRunFactsSuccess: {
-    //   return <ILearningSessionsState>{
-    //     ...state,
-    //     selectedSessionId: action.newSessionId
-    //   };
-    // }
 
     default:
       return state;

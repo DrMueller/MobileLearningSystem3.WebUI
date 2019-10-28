@@ -44,6 +44,13 @@
       }
     },
     "learning-sessions": {
+      "learning-sessions": {
+        "common": {
+          "state": {
+            "allSessionsDeleted": "All Sessions deleted"
+          }
+        }
+      },
       "edit": {
         "components": {
           "facts-selection": {
@@ -65,7 +72,6 @@
             "chunkSizePlaceholder": "Chunk-Größe"
           },
           "learning-sessions-overview": {
-            "allSessionsDeleted": "Alle Sitzungen gelöscht",
             "chunksCreated": "Erstellte Chunks",
             "createChunks": "Erstellen von Chunks",
             "deleteAllSessionsHeading": "Alle Sitzungen löschen",
@@ -101,8 +107,8 @@
     "create": "Erstellen",
     "created": "Erstellt",
     "delete": "Löschen",
-		"deleteAll": "Alle löschen",
-		"edit": "Bearbeiten",
+    "deleteAll": "Alle löschen",
+    "edit": "Bearbeiten",
     "name": "Name",
     "no": "Nein",
     "overview": "Übersicht",

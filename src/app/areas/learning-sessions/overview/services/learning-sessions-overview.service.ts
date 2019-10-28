@@ -10,7 +10,7 @@ import { LearningSessionOverviewVm } from '../view-models/learning-session-overv
 })
 export class LearningSessionsOverviewService {
 
-  constructor(private store: Store<ILearningSessionsState>) { }
+  public constructor(private store: Store<ILearningSessionsState>) { }
 
   public get overview$(): Observable<LearningSessionOverviewVm[]> {
     return this.store.pipe(

@@ -10,8 +10,7 @@ import { EnquiryDialogModule } from 'src/app/shared/enquiry-dialog';
 import { RxFormsModule } from 'src/app/shared/rx-forms';
 import { TablesModule } from 'src/app/shared/tables';
 
-import { FactRepositoryService } from '../shared-domain/repos';
-
+import { FactsEffects } from './common/state/facts.effects';
 import { factsFeatureKey, factsReducer } from './common/state/facts.reducer';
 import { FactEditComponent } from './edit/components/fact-edit';
 import { FactsComponent } from './entry-point/components/facts';
@@ -33,7 +32,7 @@ import { FactsOverviewComponent } from './overview/components/facts-overview';
     FactServicesModule,
     MatDependenciesModule,
     StoreModule.forFeature(factsFeatureKey, factsReducer),
-    EffectsModule.forFeature([FactRepositoryService]),
+    EffectsModule.forFeature([FactsEffects]),
     TablesModule,
     TextFieldModule,
     TranslateModule,

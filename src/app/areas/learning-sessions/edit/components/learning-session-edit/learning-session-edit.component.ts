@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { Fact } from 'src/app/areas/facts/common/models/fact.model';
 import { selectAllFacts } from 'src/app/areas/facts/common/state';
 import { LoadAllFactsAction } from 'src/app/areas/facts/common/state/actions';
-import { Fact, LearningSession } from 'src/app/areas/shared-domain/models';
 import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
 import { selectRouteParam } from 'src/app/shell/app-state';
 
+import { LearningSession } from '../../../common/models/learning-session.model';
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
 import { ILearningSessionsState, selectCurrentLearningSession } from '../../../common/state';
 import { SaveLearningSessionAction } from '../../../common/state/actions';
@@ -18,7 +20,7 @@ import { LearningSessionEditFormBuilderService } from '../../services';
   templateUrl: './learning-session-edit.component.html',
   styleUrls: ['./learning-session-edit.component.scss']
 })
-export class LearningSessionEditComponent implements OnInit {
+export class LearningSessionEditComponent implements OnInit, OnDestroy {
 
   public get canSave(): boolean {
     return this.formGroup.valid;
@@ -36,6 +38,8 @@ export class LearningSessionEditComponent implements OnInit {
   public initiallySelectedFactIds: number[];
   public facts: Fact[];
 
+  private _subscriptions: Subscription[];
+
   public constructor(
     private formBuilder: LearningSessionEditFormBuilderService,
     private formGroupBinder: RxFormGroupBindingService,
@@ -46,6 +50,10 @@ export class LearningSessionEditComponent implements OnInit {
     this.formGroupBinder.bindToModel(this.formGroup, this.learningSession);
     this.store.dispatch(new SaveLearningSessionAction(this.learningSession));
     this.navigator.navigateToOverview();
+  }
+
+  public ngOnDestroy(): void {
+    this._subscriptions.forEach(subs => subs.unsubscribe());
   }
 
   public cancel(): void {
@@ -60,31 +68,32 @@ export class LearningSessionEditComponent implements OnInit {
     this.store.dispatch(new LoadAllFactsAction());
     this.formGroup = this.formBuilder.buildFormGroup();
 
-    this.store
-      .pipe(select(selectRouteParam('sessionid')))
-      .subscribe(sessionId => {
-        if (sessionId) {
-          this.store.dispatch(new LoadLearningSessionAction(parseInt(sessionId, 10)));
-        }
-      });
+    this._subscriptions = [
+      this.store
+        .pipe(select(selectRouteParam('sessionid')))
+        .subscribe(sessionId => {
+          if (sessionId) {
+            this.store.dispatch(new LoadLearningSessionAction(parseInt(sessionId, 10)));
+          }
+        }),
 
-    this.store
-      .pipe(select(selectAllFacts))
-      .subscribe(facts => {
-        this.facts = facts;
-        this.alignInitialFacts();
-      });
-
-    this.store
-      .pipe(select(selectCurrentLearningSession))
-      .subscribe(sr => {
-        if (sr) {
-          this.learningSession = sr;
-          this.formGroupBinder.bindToFormGroup(this.learningSession, this.formGroup);
+      this.store
+        .pipe(select(selectAllFacts))
+        .subscribe(facts => {
+          this.facts = facts;
           this.alignInitialFacts();
-        }
-      });
+        }),
 
+      this.store
+        .pipe(select(selectCurrentLearningSession))
+        .subscribe(sr => {
+          if (sr) {
+            this.learningSession = sr;
+            this.formGroupBinder.bindToFormGroup(this.learningSession, this.formGroup);
+            this.alignInitialFacts();
+          }
+        })
+    ];
   }
 
   private alignInitialFacts() {

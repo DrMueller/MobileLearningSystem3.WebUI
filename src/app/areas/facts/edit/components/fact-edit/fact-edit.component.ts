@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { Fact } from 'src/app/areas/shared-domain/models';
+import { Subscription } from 'rxjs';
 import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
 import { selectQueryParam, selectRouteParam } from 'src/app/shell/app-state';
 
+import { Fact } from '../../../common/models';
 import { FactsNavigationService } from '../../../common/services';
 import { IFactsState, selectCurrentFact } from '../../../common/state';
 import { LoadFactAction } from '../../../common/state/actions/load-fact.action';
@@ -16,7 +17,7 @@ import { FactEditFormBuilderService } from '../../services';
   templateUrl: './fact-edit.component.html',
   styleUrls: ['./fact-edit.component.scss']
 })
-export class FactEditComponent implements OnInit {
+export class FactEditComponent implements OnInit, OnDestroy {
 
   public get title(): string {
     if (this.fact.id) {
@@ -37,6 +38,7 @@ export class FactEditComponent implements OnInit {
   public fact: Fact;
   public formGroup: FormGroup;
   private _createCopy: boolean;
+  private _subscriptions: Subscription[];
 
   constructor(
     private store: Store<IFactsState>,
@@ -44,31 +46,36 @@ export class FactEditComponent implements OnInit {
     private formGroupBinder: RxFormGroupBindingService,
     private navigator: FactsNavigationService) { }
 
+  public ngOnDestroy(): void {
+    this._subscriptions.forEach(subs => subs.unsubscribe());
+  }
+
   public ngOnInit(): void {
     this.formGroup = this.formBuilder.buildFormGroup();
 
-    this.store
-      .pipe(select(selectCurrentFact))
-      .subscribe(fact => {
-        if (fact) {
-          this.fact = fact;
-          this.formGroupBinder.bindToFormGroup(fact, this.formGroup);
-        }
-      });
+    this._subscriptions = [
+      this.store
+        .pipe(select(selectCurrentFact))
+        .subscribe(fact => {
+          if (fact) {
+            this.fact = fact;
+            this.formGroupBinder.bindToFormGroup(fact, this.formGroup);
+          }
+        }),
+      this.store
+        .pipe(select(selectRouteParam('factid')))
+        .subscribe(factId => {
+          this.store.dispatch(new LoadFactAction(parseInt(factId!, 10)));
+        }),
+      this.store
+        .pipe(select(selectQueryParam('createCopy')))
+        .subscribe(createCopy => {
+          if (createCopy) {
+            this._createCopy = createCopy === 'true';
+          }
+        })
+    ];
 
-    this.store
-      .pipe(select(selectRouteParam('factid')))
-      .subscribe(factId => {
-        this.store.dispatch(new LoadFactAction(parseInt(factId!, 10)));
-      });
-
-    this.store
-      .pipe(select(selectQueryParam('createCopy')))
-      .subscribe(createCopy => {
-        if (createCopy) {
-          this._createCopy = createCopy === 'true';
-        }
-      });
   }
 
   public cancel(): void {

@@ -44,6 +44,11 @@
 			}
 		},
 		"learning-sessions": {
+			"common": {
+				"state": {
+					"allSessionsDeleted": "All Sessions deleted"
+				}
+			},
 			"edit": {
 				"components": {
 					"facts-selection": {
@@ -65,7 +70,6 @@
 						"chunkSizePlaceholder": "Chunk size"
 					},
 					"learning-sessions-overview": {
-						"allSessionsDeleted": "All Sessions delete",
 						"chunksCreated": "Chunks created",
 						"createChunks": "Create chunks",
 						"deleteAllSessionsHeading": "Delete all Sessions",

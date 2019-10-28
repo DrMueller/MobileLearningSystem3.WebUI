@@ -10,9 +10,8 @@ import { EnquiryDialogModule } from 'src/app/shared/enquiry-dialog';
 import { RxFormsModule } from 'src/app/shared/rx-forms';
 import { TablesModule } from 'src/app/shared/tables';
 
-import { LearningSessionRepositoryService } from '../shared-domain/repos';
-
 import { learningSessionsFeatureKey, learningSessionsReducer } from './common/state';
+import { LearningSessionsEffects } from './common/state/learning-sessions.effects';
 import { FactExistsInRunComponent } from './edit/components/fact-exists-in-run';
 import { FactsSelectionComponent } from './edit/components/facts-selection';
 import { LearningSessionEditComponent } from './edit/components/learning-session-edit/learning-session-edit.component';
@@ -46,7 +45,7 @@ import { SessionRunComponent } from './runs/components/session-run';
     MatDependenciesModule,
     RxFormsModule,
     StoreModule.forFeature(learningSessionsFeatureKey, learningSessionsReducer),
-    EffectsModule.forFeature([LearningSessionRepositoryService]),
+    EffectsModule.forFeature([LearningSessionsEffects]),
     TablesModule,
     TranslateModule
   ]

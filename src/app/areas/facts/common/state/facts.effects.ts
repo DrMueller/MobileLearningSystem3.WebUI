@@ -3,21 +3,21 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
-import { FactsActionTypes } from '../../facts/common/state';
-import { DeleteFactAction, DeleteFactSuccessAction, LoadAllFactsSuccessAction } from '../../facts/common/state/actions';
-import { DeleteAllFactsSuccessAction } from '../../facts/common/state/actions/delete-all-facts-success.action';
-import { LoadFactSuccessAction } from '../../facts/common/state/actions/load-fact-success.action';
-import { LoadFactAction } from '../../facts/common/state/actions/load-fact.action';
-import { SaveFactSuccessAction } from '../../facts/common/state/actions/save-fact-success.action';
-import { SaveFactAction } from '../../facts/common/state/actions/save-faction.action';
 import { Fact } from '../models';
 
+import { FactsActionTypes } from '.';
+import { DeleteFactAction, DeleteFactSuccessAction, LoadAllFactsSuccessAction } from './actions';
+import { DeleteAllFactsSuccessAction } from './actions/delete-all-facts-success.action';
+import { LoadFactSuccessAction } from './actions/load-fact-success.action';
+import { LoadFactAction } from './actions/load-fact.action';
+import { SaveFactSuccessAction } from './actions/save-fact-success.action';
+import { SaveFactAction } from './actions/save-faction.action';
 import { FactsHttpService } from './http/facts-http.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FactRepositoryService {
+export class FactsEffects {
   public constructor(
     private actions$: Actions,
     private httpService: FactsHttpService) { }
@@ -42,7 +42,9 @@ export class FactRepositoryService {
         if (entryId === -1) {
           return of(new LoadFactSuccessAction(new Fact()));
         } else {
-          return this.httpService.get$<Fact>(entryId).pipe(map(entry => (new LoadFactSuccessAction(entry))));
+          return this.httpService
+            .get$<Fact>(entryId)
+            .pipe(map(entry => new LoadFactSuccessAction(entry)));
         }
       })
     );

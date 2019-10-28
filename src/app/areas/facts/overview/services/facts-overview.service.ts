@@ -9,8 +9,7 @@ import { FactOverviewEntryVm } from '../view-models';
   providedIn: 'root'
 })
 export class FactsOverviewService {
-
-  constructor(private store: Store<IFactsState>) { }
+  public constructor(private store: Store<IFactsState>) { }
 
   public get overview$(): Observable<FactOverviewEntryVm[]> {
     return this.store.pipe(

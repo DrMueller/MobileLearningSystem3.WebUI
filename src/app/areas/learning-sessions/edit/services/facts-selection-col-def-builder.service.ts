@@ -1,6 +1,6 @@
 import { Injectable, TemplateRef } from '@angular/core';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
-import { Fact } from 'src/app/areas/shared-domain/models';
+import { Fact } from 'src/app/areas/facts/common/models';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 import { ColDefBuilderFactoryService } from 'src/app/shared/tables/services';
 

@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
-import { Fact } from 'src/app/areas/shared-domain/models';
 
 import { FactsActionTypes } from '..';
+import { Fact } from '../../models';
 
 export class LoadFactSuccessAction implements Action {
   public readonly type = FactsActionTypes.LoadFactSuccess;

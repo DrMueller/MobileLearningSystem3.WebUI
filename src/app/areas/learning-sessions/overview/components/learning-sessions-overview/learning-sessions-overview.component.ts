@@ -1,26 +1,29 @@
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { LearningSession } from 'src/app/areas/shared-domain/models';
-import { BusyIndicatorService } from 'src/app/core/loading-indication/services';
 import { SnackBarService } from 'src/app/core/snack-bar/services';
 import { Enquiry, QuestionResult } from 'src/app/shared/enquiry-dialog/model';
 import { EnquiryService } from 'src/app/shared/enquiry-dialog/services';
 import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
+import { LearningSession } from '../../../common/models/learning-session.model';
 import { LearningSessionsNavigationService } from '../../../common/services/learning-sessions-navigation.service';
-import { ILearningSessionsState, LearningSessionsActionTypes } from '../../../common/state';
-import { DeleteAllLearningSessionsAction, DeleteLearningSessionAction, LoadAllLearningSessionsAction } from '../../../common/state/actions';
-import { ChunkDefinition } from '../../models/chunk-definition.model';
-import { ChunkFactoryService } from '../../services/chunk-factory.service';
-import { LearningSessionsOverviewColDefBuilderService } from '../../services/learning-sessions-overview-col-def-builder.service';
-import { LearningSessionsOverviewService } from '../../services/learning-sessions-overview.service';
+import { ILearningSessionsState } from '../../../common/state';
+import {
+  DeleteAllLearningSessionsAction, DeleteLearningSessionAction,
+  LoadAllLearningSessionsAction
+} from '../../../common/state/actions';
+import { ChunkDefinition } from '../../models';
+import {
+  ChunkFactoryService,
+  LearningSessionsOverviewColDefBuilderService,
+  LearningSessionsOverviewService
+} from '../../services';
 import { LearningSessionOverviewVm } from '../../view-models';
-import { ChunkEditDialogComponent } from '../chunk-edit-dialog/chunk-edit-dialog.component';
+import { ChunkEditDialogComponent } from '../chunk-edit-dialog';
 
 @Component({
   selector: 'app-learning-sessions-overview',
@@ -41,13 +44,11 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
     private colDefBuilder: LearningSessionsOverviewColDefBuilderService,
     private navigator: LearningSessionsNavigationService,
     private enquiryService: EnquiryService,
-    private busyIndicator: BusyIndicatorService,
     private translator: TranslateService,
     private snackBarService: SnackBarService,
     private dialog: MatDialog,
     private chunkFactory: ChunkFactoryService,
     private store: Store<ILearningSessionsState>,
-    private actions$: Actions,
     private overviewService: LearningSessionsOverviewService) { }
 
   public async deleteAllSessionsAsync(): Promise<void> {
@@ -70,22 +71,12 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
     this._overviewSubscription.unsubscribe();
   }
 
-  public async deleteSessionAsync(sessionId: string): Promise<void> {
-    const sessionIdParsed = parseInt(sessionId, 10);
-    this.store.dispatch(new DeleteLearningSessionAction(sessionIdParsed));
+  public deleteSession(sessionId: string): void {
+    this.store.dispatch(new DeleteLearningSessionAction(parseInt(sessionId, 10)));
   }
 
   public async ngOnInit(): Promise<void> {
     this._overviewSubscription = this.overviewService.overview$.subscribe(entries => this.overviewEntries = entries);
-
-    this.actions$.pipe(
-      ofType(LearningSessionsActionTypes.DeleteAllLearningSessionsSuccess)
-    ).subscribe(async () => {
-      const allSessionsDeletedInfo = await this.translator
-        .get('areas.learning-sessions.overview.components.learning-sessions-overview.allSessionsDeleted')
-        .toPromise();
-      this.snackBarService.showSnackBar(allSessionsDeletedInfo);
-    });
 
     this.columnDefinitions = await this.colDefBuilder.buildDefinitionsAsync(this.editTemplate, this.deleteTemplate);
     this.store.dispatch(new LoadAllLearningSessionsAction());
@@ -100,17 +91,14 @@ export class LearningSessionsOverviewComponent implements OnInit, OnDestroy {
     config.disableClose = true;
 
     const dialogRef = this.dialog.open(ChunkEditDialogComponent, config);
-    dialogRef.afterClosed().subscribe(sr => {
-      this.busyIndicator.withBusyIndicator(async () => {
-        const chunkDefinition = <ChunkDefinition | undefined>sr;
-        if (chunkDefinition) {
-          await this.chunkFactory.createChunksAsync(chunkDefinition);
-          this.store.dispatch(new LoadAllLearningSessionsAction());
-          const chunksCreatedInfo = await this.
-            translator.get('areas.learning-sessions.overview.components.learning-sessions-overview.chunksCreated').toPromise();
-          this.snackBarService.showSnackBar(chunksCreatedInfo);
-        }
-      });
+    dialogRef.afterClosed().subscribe(async sr => {
+      const chunkDefinition = <ChunkDefinition | undefined>sr;
+      if (chunkDefinition) {
+        this.chunkFactory.createChunks(chunkDefinition);
+        const chunksCreatedInfo = await this.
+          translator.get('areas.learning-sessions.overview.components.learning-sessions-overview.chunksCreated').toPromise();
+        this.snackBarService.showSnackBar(chunksCreatedInfo);
+      }
     });
   }
 

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
+import { Fact } from 'src/app/areas/facts/common/models/fact.model';
 import { selectAllFacts } from 'src/app/areas/facts/common/state';
-import { Fact, LearningSession } from 'src/app/areas/shared-domain/models';
-import { ArrayExtensions } from 'src/app/utils';
+import { shuffleArray } from 'src/app/utils/array-utils';
+import { chunkArray } from 'src/app/utils/array-utils/chunk.func';
 
+import { LearningSession } from '../../common/models/learning-session.model';
 import { ILearningSessionsState } from '../../common/state';
 import { SaveLearningSessionAction } from '../../common/state/actions';
 import { ChunkDefinition } from '../models/chunk-definition.model';
@@ -22,9 +24,9 @@ export class ChunkFactoryService {
 
   }
 
-  public async createChunksAsync(chunkDefinition: ChunkDefinition): Promise<void> {
-    const facts = ArrayExtensions.shuffleEntries(this._facts);
-    const chunks = ArrayExtensions.chunk(facts, chunkDefinition.chunkSize);
+  public createChunks(chunkDefinition: ChunkDefinition): void {
+    const facts = shuffleArray(this._facts);
+    const chunks = chunkArray(facts, chunkDefinition.chunkSize);
 
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[0];

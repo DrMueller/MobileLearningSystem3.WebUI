@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
-import { LearningSession } from 'src/app/areas/shared-domain/models';
 
-import { LearningSessionsActionTypes } from '../learning-sessions-action.types';
+import { LearningSessionsActionTypes } from '..';
+import { LearningSession } from '../../models';
 
 export class SaveLearningSessionAction implements Action {
   public readonly type = LearningSessionsActionTypes.SaveLearningSession;

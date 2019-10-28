@@ -1,17 +1,18 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Fact } from 'src/app/areas/shared-domain/models';
 import { IAppState, initialAppState } from 'src/app/shell/app-state';
+import { addOrReplaceArrayEntry, deleteArrayEntry } from 'src/app/utils/array-utils';
+
+import { Fact } from '../models';
 
 import { FactsActions } from '.';
 import { FactsActionTypes } from './facts-action.types';
-
-export const factsFeatureKey = 'facts';
 
 export interface IFactsState extends IAppState {
   facts: Fact[];
   currentFact: Fact | null;
 }
 
+export const factsFeatureKey = 'facts';
 const getFeatureState = createFeatureSelector<IFactsState>(factsFeatureKey);
 
 export const selectCurrentFact = createSelector(
@@ -41,16 +42,9 @@ export function factsReducer(state = initialState, action: FactsActions): IFacts
     }
 
     case FactsActionTypes.DeleteFactSuccess: {
-      const mappedOverview = Array.from(state.facts);
-      const index = state.facts.findIndex(f => f.id === action.deleteId);
-
-      if (index > -1) {
-        mappedOverview.splice(index, 1);
-      }
-
       return <IFactsState>{
         ...state,
-        facts: mappedOverview
+        facts: deleteArrayEntry(state.facts, f => f.id === action.deleteId)
       };
     }
 
@@ -63,14 +57,10 @@ export function factsReducer(state = initialState, action: FactsActions): IFacts
     }
 
     case FactsActionTypes.SaveFactSuccess: {
-      let newFacts: Fact[];
-      const existingEntry = state.facts.find(f => f.id === action.savedFact.id);
-      if (!existingEntry) {
-        newFacts = Array.from(state.facts);
-        newFacts.push(action.savedFact);
-      } else {
-        newFacts = state.facts.map(itm => itm.id === action.savedFact.id ? action.savedFact : itm);
-      }
+      const newFacts = addOrReplaceArrayEntry(
+        state.facts,
+        action.savedFact,
+        (a, b) => a.id === b.id);
 
       return <IFactsState>{
         ...state,
@@ -79,14 +69,10 @@ export function factsReducer(state = initialState, action: FactsActions): IFacts
     }
 
     case FactsActionTypes.LoadFactSuccess: {
-      let newFacts: Fact[];
-      const existingEntry = state.facts.find(f => f.id === action.fact.id);
-      if (!existingEntry) {
-        newFacts = Array.from(state.facts);
-        newFacts.push(action.fact);
-      } else {
-        newFacts = state.facts.map(itm => itm.id === action.fact.id ? action.fact : itm);
-      }
+      const newFacts = addOrReplaceArrayEntry(
+        state.facts,
+        action.fact,
+        (a, b) => a.id === b.id);
 
       return <IFactsState>{
         ...state,
