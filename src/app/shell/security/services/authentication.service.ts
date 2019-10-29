@@ -30,7 +30,7 @@ export class AuthenticationService {
       ofType(SecurityActionTypes.LogIn),
       map((action: LogInAction) => action.request),
       mergeMap(loginRequest =>
-        this.httpService.post$<LoginResult>('login', loginRequest).pipe(
+        this.httpService.post<LoginResult>('login', loginRequest).pipe(
           map(loginResult => {
             const nameClaim = loginResult.claims.find(f => f.type.endsWith('name'));
             const user = new SecurityUser(nameClaim!.value, true, loginResult.token);

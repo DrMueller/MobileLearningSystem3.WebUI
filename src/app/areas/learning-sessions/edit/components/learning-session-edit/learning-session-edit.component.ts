@@ -27,6 +27,10 @@ export class LearningSessionEditComponent implements OnInit, OnDestroy {
   }
 
   public get title(): string {
+    if (!this.learningSession) {
+      return '';
+    }
+
     if (this.learningSession.id) {
       return `Edit Session - ${this.learningSession.id}`;
     }

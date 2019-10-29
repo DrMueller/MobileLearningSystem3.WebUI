@@ -1,6 +1,11 @@
 {
   "areas": {
     "facts": {
+      "common": {
+        "services": {
+          "allFactsDeleted": "Alle Fakten gelöscht"
+        }
+      },
       "edit": {
         "components": {
           "fact-edit": {
@@ -12,7 +17,6 @@
       "overview": {
         "components": {
           "facts-overview": {
-            "allFactsDeleted": "Alle Fakten gelöscht",
             "deleteAllFactsHeading": "Alle Fakten löschen",
             "deleteAllFactsQuestion": "Sind Sie sicher, dass Sie alle Fakten löschen wollen?"
           }
@@ -44,11 +48,9 @@
       }
     },
     "learning-sessions": {
-      "learning-sessions": {
-        "common": {
-          "state": {
-            "allSessionsDeleted": "All Sessions deleted"
-          }
+      "common": {
+        "services": {
+          "allSessionsDeleted": "Alle Sitzungen gelöscht"
         }
       },
       "edit": {

@@ -114,9 +114,9 @@ export class MatTableComponent<T> implements OnInit {
   }
 
   private bindData(): void {
+    this.selection.clear();
     this._dataSource = new MatTableDataSource<T>(this._data);
     this.dataSource.paginator = this.matPaginator;
-
     this.dataSource.sort = this.matSort;
   }
 

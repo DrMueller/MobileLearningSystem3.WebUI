@@ -13,25 +13,10 @@ export abstract class HttpBaseService {
     private httpClient: HttpClient,
     private appSettingsSingleton: AppSettingsSingletonService) { }
 
-  public async deleteAsync(relativeUrl: string): Promise<void> {
-    const completeUrl = await this.createCompleteUrl(relativeUrl);
-    const requestOptions = this.createOptions();
-    const result = this.processResponse<void>(this.httpClient.delete<void>(completeUrl, requestOptions));
-
-    return result;
-  }
-
   public delete$<T>(relativeUrl?: string | number): Observable<T> {
     const completeUrl = this.createCompleteUrl(relativeUrl);
     const requestOptions = this.createOptions();
     return this.httpClient.delete<T>(completeUrl, requestOptions);
-  }
-
-  public async getAsync<T>(relativeUrl: string): Promise<T> {
-    const completeUrl = await this.createCompleteUrl(relativeUrl);
-    const requestOptions = this.createOptions();
-
-    return this.processResponse(this.httpClient.get<T>(completeUrl, requestOptions));
   }
 
   public get$<T>(relativeUrl?: string | number): Observable<T> {
@@ -41,34 +26,17 @@ export abstract class HttpBaseService {
     return this.httpClient.get<T>(completeUrl, requestOptions);
   }
 
-  public post$<T>(relativeUrl: string, body: any): Observable<T> {
+  public post<T>(relativeUrl: string, body: any): Observable<T> {
     const completeUrl = this.createCompleteUrl(relativeUrl);
 
     const requestOptions = this.createOptions();
     return this.httpClient.post<T>(completeUrl, body, requestOptions);
   }
 
-  public async postAsync<T>(
-    relativeUrl: string,
-    body: any): Promise<T> {
-    const completeUrl = await this.createCompleteUrl(relativeUrl);
-
-    const requestOptions = this.createOptions();
-    return this.processResponse(this.httpClient.post<T>(completeUrl, body, requestOptions));
-  }
-
   public put$<T>(relativeUrl: string, body: any): Observable<T> {
     const completeUrl = this.createCompleteUrl(relativeUrl);
     const requestOptions = this.createOptions();
     return this.httpClient.put<T>(completeUrl, body, requestOptions);
-  }
-
-  public async putAsync<T>(
-    relativeUrl: string,
-    body: any): Promise<T> {
-    const completeUrl = await this.createCompleteUrl(relativeUrl);
-    const requestOptions = this.createOptions();
-    return this.processResponse(this.httpClient.put<T>(completeUrl, body, requestOptions));
   }
 
   protected abstract getResourceUrl(): string;
@@ -93,10 +61,5 @@ export abstract class HttpBaseService {
     };
 
     return httpOptions;
-  }
-
-  private processResponse<T>(response: Observable<T>): Promise<T> {
-    const result = response.toPromise();
-    return result;
   }
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
 import { Fact } from '../models';
+import { FactRepositoryService } from '../services';
 
 import { FactsActionTypes } from '.';
 import { DeleteFactAction, DeleteFactSuccessAction, LoadAllFactsSuccessAction } from './actions';
@@ -12,7 +13,6 @@ import { LoadFactSuccessAction } from './actions/load-fact-success.action';
 import { LoadFactAction } from './actions/load-fact.action';
 import { SaveFactSuccessAction } from './actions/save-fact-success.action';
 import { SaveFactAction } from './actions/save-faction.action';
-import { FactsHttpService } from './http/facts-http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,15 +20,16 @@ import { FactsHttpService } from './http/facts-http.service';
 export class FactsEffects {
   public constructor(
     private actions$: Actions,
-    private httpService: FactsHttpService) { }
+    private repo: FactRepositoryService) {
+    }
 
   @Effect()
   public loadAll$(): Observable<LoadAllFactsSuccessAction> {
     return this.actions$.pipe(
       ofType(FactsActionTypes.LoadAllFacts),
       mergeMap(() =>
-        this.httpService.get$<Fact[]>().pipe(
-          map(entries => (new LoadAllFactsSuccessAction(entries)))
+        this.repo.loadAll$().pipe(
+          map(entries => new LoadAllFactsSuccessAction(entries))
         ))
     );
   }
@@ -38,16 +39,9 @@ export class FactsEffects {
     return this.actions$.pipe(
       ofType(FactsActionTypes.LoadFact),
       map((action: LoadFactAction) => action.factId),
-      mergeMap((entryId: number) => {
-        if (entryId === -1) {
-          return of(new LoadFactSuccessAction(new Fact()));
-        } else {
-          return this.httpService
-            .get$<Fact>(entryId)
-            .pipe(map(entry => new LoadFactSuccessAction(entry)));
-        }
-      })
-    );
+      mergeMap(entryId => this.repo.load$(entryId, Fact).pipe(
+        map(loadedEntry => new LoadFactSuccessAction(loadedEntry))
+      )));
   }
 
   @Effect()
@@ -55,13 +49,9 @@ export class FactsEffects {
     return this.actions$.pipe(
       ofType(FactsActionTypes.SaveFact),
       map((action: SaveFactAction) => action.entry),
-      mergeMap(entry =>
-        this.httpService.put$<Fact>('', entry).pipe(
-          map(savedEntry => {
-            return new SaveFactSuccessAction(savedEntry);
-          })
-        ))
-    );
+      mergeMap(entry => this.repo.save$(entry).pipe(
+        map(savedEntry => new SaveFactSuccessAction(savedEntry))
+      )));
   }
 
   @Effect()
@@ -69,25 +59,17 @@ export class FactsEffects {
     return this.actions$.pipe(
       ofType(FactsActionTypes.DeleteFact),
       map((action: DeleteFactAction) => action.factId),
-      mergeMap(factid =>
-        this.httpService.delete$<number>(factid).pipe(
-          map((id) => {
-            return new DeleteFactSuccessAction(id);
-          })
-        ))
-    );
+      mergeMap(factid => this.repo.delete$(factid).pipe(
+        map(deletedId => new DeleteFactSuccessAction(deletedId))
+      )));
   }
 
   @Effect()
   public deleteAll$(): Observable<DeleteAllFactsSuccessAction> {
     return this.actions$.pipe(
       ofType(FactsActionTypes.DeleteAllFacts),
-      mergeMap(() =>
-        this.httpService.delete$<void>().pipe(
-          map(() => {
-            return new DeleteAllFactsSuccessAction();
-          })
-        ))
-    );
+      mergeMap(() => this.repo.deleteAll$().pipe(
+        map(() => new DeleteAllFactsSuccessAction())
+      )));
   }
 }

@@ -44,7 +44,7 @@ export function factsReducer(state = initialState, action: FactsActions): IFacts
     case FactsActionTypes.DeleteFactSuccess: {
       return <IFactsState>{
         ...state,
-        facts: deleteArrayEntry(state.facts, f => f.id === action.deleteId)
+        facts: deleteArrayEntry(state.facts, f => f.id === action.deletedId)
       };
     }
 

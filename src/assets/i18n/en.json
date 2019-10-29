@@ -1,180 +1,184 @@
 {
-	"areas": {
-		"facts": {
-			"edit": {
-				"components": {
-					"fact-edit": {
-						"copySavedFact": "Copy saved Fact",
-						"enterQuestion": "Enter Question"
-					}
-				}
-			},
-			"overview": {
-				"components": {
-					"facts-overview": {
-						"allFactsDeleted": "All Facts deleted",
-						"deleteAllFactsHeading": "Deleting all Facts",
-						"deleteAllFactsQuestion": "Are you sure to delete all Facts?"
-					}
-				}
-			}
-		},
-		"home": {
-			"welcome": {
-				"components": {
-					"welcome": {
-						"accentButton": "Accent",
-						"accentNativeButton": "Accent Native",
-						"busy": "Busy!",
-						"buttonsHeading": "Fun with Buttons",
-						"disabledButton": "Disabled",
-						"helloWorld": "Hello World",
-						"otherFunctionsHeading": "Other functions",
-						"primaryButton": "Primary",
-						"primaryNativeButton": "Primary Native",
-						"progressiveWebApp": "Progressive Web App",
-						"saveAsPwa": "Save as PWA",
-						"sayHelloFromServer": "Say Hello from Server!",
-						"serverResponseInfo": "The Server said: ",
-						"showSnackBar": "Show SnackBar!",
-						"warnButton": "Warn",
-						"warnNativeButton": "Warn Native"
-					}
-				}
-			}
-		},
-		"learning-sessions": {
-			"common": {
-				"state": {
-					"allSessionsDeleted": "All Sessions deleted"
-				}
-			},
-			"edit": {
-				"components": {
-					"facts-selection": {
-						"factsSelectionHeading": "Facts"
-					},
-					"learning-session-edit": {
-						"enterSessionName": "Enter Session Name"
-					}
-				},
-				"services": {
-					"inRun": "In Run"
-				}
-			},
-			"overview": {
-				"components": {
-					"chunk-edit-dialog": {
-						"chunkEditDialog": "Chunk definition",
-						"chunkNamePlaceholder": "Chunk name",
-						"chunkSizePlaceholder": "Chunk size"
-					},
-					"learning-sessions-overview": {
-						"chunksCreated": "Chunks created",
-						"createChunks": "Create chunks",
-						"deleteAllSessionsHeading": "Delete all Sessions",
-						"deleteAllSessionsQuestion": "Are you sure to delete all Sessions?",
-						"run": "Run!"
-					}
-				},
-				"services": {
-					"amountOfFacts": "Facts"
-				}
-			},
-			"runs": {
-				"components": {
-					"session-run": {
-						"reshuffle": "Reshuffle"
-					}
-				}
-			}
-		},
-		"tensorflow": {
-			"webcam": {
-				"components": {
-					"webcam-classifier": {
-						"webcamClassification": "Classifications"
-					}
-				}
-			}
-		}
-	},
-	"common": {
-		"actions": "Actions",
-		"cancel": "Cancel",
-		"create": "Create",
-		"created": "Created",
-		"delete": "Delete",
-		"deleteAll": "Delete all",
-		"edit": "Edit",
-		"name": "Name",
-		"no": "No",
-		"overview": "Overview",
-		"question": "Question",
-		"save": "Save",
-		"yes": "Yes"
-	},
-	"shared": {
-		"rx-forms": {
-			"services": {
-				"validation": {
-					"implementation": {
-						"validation-error-maxlength": "Expected length is maximum of {{requiredLength}}, actual length is {{actualLength}}.",
-						"validation-error-minlength": "Expected length is minimum of {{requiredLength}}, actual length is {{actualLength}}.",
-						"validation-error-required": "Field is required."
-					}
-				}
-			}
-		},
-		"tables": {
-			"components": {
-				"mat-table": {
-					"enterSearchText": "Enter search text",
-					"selected": "Selected"
-				}
-			},
-			"services": {
-				"firstPage": "First page",
-				"itemsPerPage": "Items per page:",
-				"lastPage": "Last page",
-				"nextPage": "Next page",
-				"previousPage": "Previous page"
-			}
-		}
-	},
-	"shell": {
-		"app-navigation": {
-			"components": {
-				"user-menu": {
-					"logIn": "Log in",
-					"logOut": "Log out",
-					"switchLanguage": "Switch language",
-					"switchToEnglish": "English",
-					"switchToGerman": "German",
-					"welcomeHeading": "Welcome, {{userName}}"
-				}
-			}
-		},
-		"error-handling": {
-			"components": {
-				"error-display": {
-					"errorDialogHeading": "Error Ho!",
-					"errorMessage": "Error Message:",
-					"errorName": "Error Name:"
-				}
-			}
-		},
-		"security": {
-			"components": {
-				"log-in": {
-					"security": {
-						"logIn": "Log in!"
-					}
-				}
-			},
-			"services": {
-				"guest": "guest"
-			}
-		}
-	}
+  "areas": {
+    "facts": {
+      "common": {
+        "services": {
+          "allFactsDeleted": "All Facts deleted"
+        }
+      },
+      "edit": {
+        "components": {
+          "fact-edit": {
+            "copySavedFact": "Copy saved Fact",
+            "enterQuestion": "Enter Question"
+          }
+        }
+      },
+      "overview": {
+        "components": {
+          "facts-overview": {
+            "deleteAllFactsHeading": "Deleting all Facts",
+            "deleteAllFactsQuestion": "Are you sure to delete all Facts?"
+          }
+        }
+      }
+    },
+    "home": {
+      "welcome": {
+        "components": {
+          "welcome": {
+            "accentButton": "Accent",
+            "accentNativeButton": "Accent Native",
+            "busy": "Busy!",
+            "buttonsHeading": "Fun with Buttons",
+            "disabledButton": "Disabled",
+            "helloWorld": "Hello World",
+            "otherFunctionsHeading": "Other functions",
+            "primaryButton": "Primary",
+            "primaryNativeButton": "Primary Native",
+            "progressiveWebApp": "Progressive Web App",
+            "saveAsPwa": "Save as PWA",
+            "sayHelloFromServer": "Say Hello from Server!",
+            "serverResponseInfo": "The Server said: ",
+            "showSnackBar": "Show SnackBar!",
+            "warnButton": "Warn",
+            "warnNativeButton": "Warn Native"
+          }
+        }
+      }
+    },
+    "learning-sessions": {
+      "common": {
+        "services": {
+          "allSessionsDeleted": "All sessions deleted"
+        }
+      },
+      "edit": {
+        "components": {
+          "facts-selection": {
+            "factsSelectionHeading": "Facts"
+          },
+          "learning-session-edit": {
+            "enterSessionName": "Enter Session Name"
+          }
+        },
+        "services": {
+          "inRun": "In Run"
+        }
+      },
+      "overview": {
+        "components": {
+          "chunk-edit-dialog": {
+            "chunkEditDialog": "Chunk definition",
+            "chunkNamePlaceholder": "Chunk name",
+            "chunkSizePlaceholder": "Chunk size"
+          },
+          "learning-sessions-overview": {
+            "chunksCreated": "Chunks created",
+            "createChunks": "Create chunks",
+            "deleteAllSessionsHeading": "Delete all Sessions",
+            "deleteAllSessionsQuestion": "Are you sure to delete all Sessions?",
+            "run": "Run!"
+          }
+        },
+        "services": {
+          "amountOfFacts": "Facts"
+        }
+      },
+      "runs": {
+        "components": {
+          "session-run": {
+            "reshuffle": "Reshuffle"
+          }
+        }
+      }
+    },
+    "tensorflow": {
+      "webcam": {
+        "components": {
+          "webcam-classifier": {
+            "webcamClassification": "Classifications"
+          }
+        }
+      }
+    }
+  },
+  "common": {
+    "actions": "Actions",
+    "cancel": "Cancel",
+    "create": "Create",
+    "created": "Created",
+    "delete": "Delete",
+    "deleteAll": "Delete all",
+    "edit": "Edit",
+    "name": "Name",
+    "no": "No",
+    "overview": "Overview",
+    "question": "Question",
+    "save": "Save",
+    "yes": "Yes"
+  },
+  "shared": {
+    "rx-forms": {
+      "services": {
+        "validation": {
+          "implementation": {
+            "validation-error-maxlength": "Expected length is maximum of {{requiredLength}}, actual length is {{actualLength}}.",
+            "validation-error-minlength": "Expected length is minimum of {{requiredLength}}, actual length is {{actualLength}}.",
+            "validation-error-required": "Field is required."
+          }
+        }
+      }
+    },
+    "tables": {
+      "components": {
+        "mat-table": {
+          "enterSearchText": "Enter search text",
+          "selected": "Selected"
+        }
+      },
+      "services": {
+        "firstPage": "First page",
+        "itemsPerPage": "Items per page:",
+        "lastPage": "Last page",
+        "nextPage": "Next page",
+        "previousPage": "Previous page"
+      }
+    }
+  },
+  "shell": {
+    "app-navigation": {
+      "components": {
+        "user-menu": {
+          "logIn": "Log in",
+          "logOut": "Log out",
+          "switchLanguage": "Switch language",
+          "switchToEnglish": "English",
+          "switchToGerman": "German",
+          "welcomeHeading": "Welcome, {{userName}}"
+        }
+      }
+    },
+    "error-handling": {
+      "components": {
+        "error-display": {
+          "errorDialogHeading": "Error Ho!",
+          "errorMessage": "Error Message:",
+          "errorName": "Error Name:"
+        }
+      }
+    },
+    "security": {
+      "components": {
+        "log-in": {
+          "security": {
+            "logIn": "Log in!"
+          }
+        }
+      },
+      "services": {
+        "guest": "guest"
+      }
+    }
+  }
 }

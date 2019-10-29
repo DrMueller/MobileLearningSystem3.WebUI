@@ -48,7 +48,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   public async sayHelloFromServerAsync(): Promise<void> {
-    const returnedMessage = await this.helloHttpService.getAsync<any>(this.userName);
+    const returnedMessage = await this.helloHttpService.get$<any>(this.userName).toPromise();
     const snackbarInfo = await this.translator.get('areas.home.welcome.components.welcome.serverResponseInfo').toPromise();
 
     const info = snackbarInfo + returnedMessage.helloMessage;
