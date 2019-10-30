@@ -11,7 +11,7 @@ export class IgnoredErrorsService {
 
   private isIgnoredRoutingError(error: Error): boolean {
     const signInCallbackError = 'Cannot match any routes. URL Segment: \'id_token\'';
-    if (error.message.indexOf(signInCallbackError) > -1) {
+    if (error.message && error.message.indexOf(signInCallbackError) > -1) {
       return true;
     }
 

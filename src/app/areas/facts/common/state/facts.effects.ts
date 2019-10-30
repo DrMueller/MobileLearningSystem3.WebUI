@@ -21,7 +21,7 @@ export class FactsEffects {
   public constructor(
     private actions$: Actions,
     private repo: FactRepositoryService) {
-    }
+  }
 
   @Effect()
   public loadAll$(): Observable<LoadAllFactsSuccessAction> {

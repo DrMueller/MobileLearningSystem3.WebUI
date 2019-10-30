@@ -24,7 +24,7 @@ export abstract class RepositoryBaseService<T> {
   }
 
   public loadAll$(): Observable<T[]> {
-    return this.httpService.get$<T[]>();
+    return this.httpService.get$<T[]>('');
   }
 
   public save$(entry: T): Observable<T> {
