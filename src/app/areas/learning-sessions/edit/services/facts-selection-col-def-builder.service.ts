@@ -14,11 +14,11 @@ export class FactsSelectionColDefBuilderService {
 
   public buildDefinitions(existsInRunTemplate: TemplateRef<any>): ColumnDefinitionsContainer {
     return this.builderFactory
-      .startBuilding()
-      .withColumn('id', 'ID', 'id-cell').bindingTo<FactSelectionEntryVm>('id')
-      .withColumn('creationDate', marker('common.created'), 'creation-cell').bindingTo<FactSelectionEntryVm>('creationDateDescription')
+      .startBuilding<FactSelectionEntryVm>()
+      .withColumn('id', 'ID', 'id-cell').bindingTo('id')
+      .withColumn('creationDate', marker('common.created'), 'creation-cell').bindingTo('creationDateDescription')
       .withColumn('existsInRun', marker('areas.learning-sessions.edit.services.inRun')).withTemplate(existsInRunTemplate)
-      .withColumn('questionText', marker('common.question')).bindingTo<FactSelectionEntryVm>('questionText')
+      .withColumn('questionText', marker('common.question')).bindingTo('questionText')
       .build();
   }
 }

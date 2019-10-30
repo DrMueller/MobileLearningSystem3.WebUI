@@ -18,12 +18,12 @@ export class LearningSessionsOverviewColDefBuilderService {
     deleteTemplate: TemplateRef<any>): Promise<ColumnDefinitionsContainer> {
 
     return this.builderFactory
-      .startBuilding()
-      .withColumn('id', 'ID', 'id-cell').bindingTo<LearningSessionOverviewVm>('id')
+      .startBuilding<LearningSessionOverviewVm>()
+      .withColumn('id', 'ID', 'id-cell').bindingTo('id')
       .withColumn('amountOfFacts',
         marker('areas.learning-sessions.overview.services.amountOfFacts'),
-        'facts-cell').bindingTo<LearningSessionOverviewVm>('amountOfFacts')
-      .withColumn('name', marker('common.name')).bindingTo<LearningSessionOverviewVm>('sessionName')
+        'facts-cell').bindingTo('amountOfFacts')
+      .withColumn('name', marker('common.name')).bindingTo('sessionName')
       .withColumn('editTemplate', '', 'button-cell').withTemplate(editTemplate)
       .withColumn('deleteTemplate', '', 'button-cell').withTemplate(deleteTemplate)
       .build();

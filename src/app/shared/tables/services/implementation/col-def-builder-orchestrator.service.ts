@@ -4,14 +4,14 @@ import { IColDefBuilderOrchestratorService } from '../col-def-builder-orchestrat
 
 import { ColDefBuilderService } from './col-def-builder.service';
 
-export class ColDefBuilderOrchestratorService implements IColDefBuilderOrchestratorService {
-  private _builders: ColDefBuilderService[];
+export class ColDefBuilderOrchestratorService<T> implements IColDefBuilderOrchestratorService<T> {
+  private _builders: ColDefBuilderService<T>[];
 
   public  constructor() {
     this._builders = [];
   }
 
-  public withColumn(columnKey: string, headerTranslationkey: string, className?: string): IColDefBuilderService {
+  public withColumn(columnKey: string, headerTranslationkey: string, className?: string): IColDefBuilderService<T> {
     const colDefBuilder = new ColDefBuilderService(this, columnKey, headerTranslationkey, className);
     this._builders.push(colDefBuilder);
     return colDefBuilder;

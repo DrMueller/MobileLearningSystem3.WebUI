@@ -5,17 +5,17 @@ import { ColumnDefinitionBase } from '../../models/col-defs';
 
 import { BindingColDefValueBuilderService, IColDefValueBuilderService, TemplateColDefValueBuilderService } from './col-def-values';
 
-export class ColDefBuilderService implements IColDefBuilderService {
+export class ColDefBuilderService<T> implements IColDefBuilderService<T> {
   private _valueBuilder: IColDefValueBuilderService;
 
   public constructor(
-    private orchestrator: IColDefBuilderOrchestratorService,
+    private orchestrator: IColDefBuilderOrchestratorService<T>,
     private columnKey: string,
     private headerTranslationKey: string,
     private className?: string) {
   }
 
-  public bindingTo<T>(propertyName: keyof T): IColDefBuilderOrchestratorService {
+  public bindingTo(propertyName: keyof T): IColDefBuilderOrchestratorService<T> {
     this._valueBuilder = new BindingColDefValueBuilderService(
       this.columnKey,
       this.headerTranslationKey,
@@ -25,7 +25,7 @@ export class ColDefBuilderService implements IColDefBuilderService {
     return this.orchestrator;
   }
 
-  public withTemplate(template: TemplateRef<any>): IColDefBuilderOrchestratorService {
+  public withTemplate(template: TemplateRef<any>): IColDefBuilderOrchestratorService<T> {
     this._valueBuilder = new TemplateColDefValueBuilderService(
       this.columnKey,
       this.headerTranslationKey,

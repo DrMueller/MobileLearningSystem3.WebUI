@@ -7,7 +7,7 @@ import { ColDefBuilderOrchestratorService } from './implementation/col-def-build
   providedIn: 'root'
 })
 export class ColDefBuilderFactoryService {
-  public startBuilding(): IColDefBuilderOrchestratorService {
-    return new ColDefBuilderOrchestratorService();
+  public startBuilding<T>(): IColDefBuilderOrchestratorService<T> {
+    return new ColDefBuilderOrchestratorService<T>();
   }
 }

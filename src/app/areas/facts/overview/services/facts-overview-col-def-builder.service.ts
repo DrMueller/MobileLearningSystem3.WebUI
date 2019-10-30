@@ -17,13 +17,10 @@ export class FactsOverviewColDefBuilderService {
     actionsTemplate: TemplateRef<any>,
   ): Promise<ColumnDefinitionsContainer> {
     return this.builderFactory
-      .startBuilding()
-      .withColumn('id', 'ID', 'id-cell').bindingTo<FactOverviewEntryVm>('id')
-      .withColumn('creationDate',
-        marker('common.created'),
-        'creation-cell')
-      .bindingTo<FactOverviewEntryVm>('creationDateDescription')
-      .withColumn('questionText', marker('common.question')).bindingTo<FactOverviewEntryVm>('questionText')
+      .startBuilding<FactOverviewEntryVm>()
+      .withColumn('id', 'ID', 'id-cell').bindingTo('id')
+      .withColumn('creationDate', marker('common.created'), 'creation-cell').bindingTo('creationDateDescription')
+      .withColumn('questionText', marker('common.question')).bindingTo('questionText')
       .withColumn('actions', '', 'button-cell').withTemplate(actionsTemplate)
       .build();
   }
