@@ -8,7 +8,7 @@ import { SecurityActions } from './security.actions';
 export const securityFeatureKey = 'security';
 
 export const initialSecurityState: ISecurityState = {
-  user: new SecurityUser('', false, '')
+  user: new SecurityUser()
 };
 
 const getFeature = createFeatureSelector<ISecurityState>(securityFeatureKey);

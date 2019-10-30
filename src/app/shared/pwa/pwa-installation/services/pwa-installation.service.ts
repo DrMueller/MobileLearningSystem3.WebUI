@@ -6,7 +6,8 @@ import { InstallPwaPromptService } from './install-pwa-prompt.service';
   providedIn: 'root'
 })
 export class PwaInstallationService {
-  public constructor(private installPwaPromptService: InstallPwaPromptService) { }
+  public constructor(private installPwaPromptService: InstallPwaPromptService) {
+  }
 
   public get canInstallAsPwa(): boolean {
     return !!this.installPwaPromptService.event;

@@ -2,8 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { Fact } from 'src/app/areas/facts/common/models/fact.model';
-import { selectAllFacts } from 'src/app/areas/facts/common/state';
 import { LoadAllFactsAction } from 'src/app/areas/facts/common/state/actions';
 import { RxFormGroupBindingService } from 'src/app/shared/rx-forms/services';
 import { selectRouteParam } from 'src/app/shell/app-state';
@@ -14,6 +12,8 @@ import { ILearningSessionsState, selectCurrentLearningSession } from '../../../c
 import { SaveLearningSessionAction } from '../../../common/state/actions';
 import { LoadLearningSessionAction } from '../../../common/state/actions/load-learning-session.action';
 import { LearningSessionEditFormBuilderService } from '../../services';
+import { FactsSelectionEntryService } from '../../services/facts-selection-entry.service';
+import { FactSelectionEntryVm } from '../../view-models';
 
 @Component({
   selector: 'app-learning-session-edit',
@@ -40,7 +40,7 @@ export class LearningSessionEditComponent implements OnInit, OnDestroy {
   public learningSession: LearningSession;
   public formGroup: FormGroup;
   public initiallySelectedFactIds: number[];
-  public facts: Fact[];
+  public facts: FactSelectionEntryVm[];
 
   private _subscriptions: Subscription[];
 
@@ -48,7 +48,8 @@ export class LearningSessionEditComponent implements OnInit, OnDestroy {
     private formBuilder: LearningSessionEditFormBuilderService,
     private formGroupBinder: RxFormGroupBindingService,
     private navigator: LearningSessionsNavigationService,
-    private store: Store<ILearningSessionsState>) { }
+    private store: Store<ILearningSessionsState>,
+    private factsSelectionEntryService: FactsSelectionEntryService) { }
 
   public save(): void {
     this.formGroupBinder.bindToModel(this.formGroup, this.learningSession);
@@ -81,12 +82,10 @@ export class LearningSessionEditComponent implements OnInit, OnDestroy {
           }
         }),
 
-      this.store
-        .pipe(select(selectAllFacts))
-        .subscribe(facts => {
-          this.facts = facts;
-          this.alignInitialFacts();
-        }),
+      this.factsSelectionEntryService.entries$.subscribe(facts => {
+        this.facts = facts;
+        this.alignInitialFacts();
+      }),
 
       this.store
         .pipe(select(selectCurrentLearningSession))

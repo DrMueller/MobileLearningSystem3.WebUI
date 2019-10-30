@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { Fact } from 'src/app/areas/facts/common/models/fact.model';
+import { FactOverviewEntryVm } from 'src/app/areas/facts/overview/view-models';
 import { MatTableComponent } from 'src/app/shared/tables/components/mat-table';
 import { ColumnDefinitionsContainer } from 'src/app/shared/tables/models';
 
@@ -13,9 +13,9 @@ import { FactsSelectionColDefBuilderService } from '../../services';
 export class FactsSelectionComponent implements OnInit {
   @Output() public factsSelectionChanged = new EventEmitter<number[]>();
   @ViewChild('existsInRunTemplate', { static: true }) public existsInRunTemplate: TemplateRef<any>;
-  @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<Fact>;
+  @ViewChild(MatTableComponent, { static: false }) public table: MatTableComponent<FactOverviewEntryVm>;
   public columnDefinitions: ColumnDefinitionsContainer;
-  private _facts: Fact[] = [];
+  private _facts: FactOverviewEntryVm[] = [];
   private _selectedFactIds: number[];
 
   public constructor(
@@ -26,11 +26,11 @@ export class FactsSelectionComponent implements OnInit {
     this.selectIfReady();
   }
 
-  public get facts(): Fact[] {
+  public get facts(): FactOverviewEntryVm[] {
     return this._facts;
   }
 
-  @Input() public set facts(value: Fact[]) {
+  @Input() public set facts(value: FactOverviewEntryVm[]) {
     this._facts = value;
     this.selectIfReady();
   }
@@ -40,7 +40,7 @@ export class FactsSelectionComponent implements OnInit {
     this.selectIfReady();
   }
 
-  public selectionChanged(facts: Fact[]) {
+  public selectionChanged(facts: FactOverviewEntryVm[]) {
     const ids = facts.map(f => f.id!);
     this.factsSelectionChanged.emit(ids);
   }

@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { StorageService } from 'src/app/core/storage/services';
 
-import { LoginResult, SecurityUser } from '../models';
-import { SecurityActionTypes } from '../state';
-import { LogInAction, PersistUserAction } from '../state/actions';
-import { UserChangedAction } from '../state/actions/user-changed.action';
+import { LoginRequest, LoginResult, SecurityUser } from '../models';
 
 import { SecurityHttpService } from './security-http.service';
 
@@ -18,66 +14,49 @@ import { SecurityHttpService } from './security-http.service';
 export class AuthenticationService {
   private readonly _userKey = 'User';
 
-  constructor(
+  public constructor(
     private httpService: SecurityHttpService,
     private translator: TranslateService,
-    private storage: StorageService,
-    private actions$: Actions) { }
+    private storage: StorageService) { }
 
-  @Effect()
-  public logIn$(): Observable<PersistUserAction> {
-    return this.actions$.pipe(
-      ofType(SecurityActionTypes.LogIn),
-      map((action: LogInAction) => action.request),
-      mergeMap(loginRequest =>
-        this.httpService.post<LoginResult>('login', loginRequest).pipe(
-          map(loginResult => {
-            const nameClaim = loginResult.claims.find(f => f.type.endsWith('name'));
-            const user = new SecurityUser(nameClaim!.value, true, loginResult.token);
-            return new PersistUserAction(user);
-          })
-        ))
-    );
-  }
-
-  @Effect()
-  public logOut$(): Observable<PersistUserAction> {
-    return this.actions$.pipe(
-      ofType(SecurityActionTypes.LogOut),
-      map(() => {
-        const guestDescription = this.translator.instant('shell.security.services.guest');
-        const guestUser = new SecurityUser(guestDescription, false, '');
-        return new PersistUserAction(guestUser);
+  public createGuestUser$(): Observable<SecurityUser> {
+    return this.translator.get('shell.security.services.guest').pipe(
+      map(guestDescription => {
+        const guestUser = new SecurityUser();
+        guestUser.isAuthenticated = false;
+        guestUser.token = '';
+        guestUser.userName = guestDescription;
+        return guestUser;
       })
     );
   }
 
-  @Effect()
-  public persistUser$(): Observable<UserChangedAction> {
-    return this.actions$.pipe(
-      ofType(SecurityActionTypes.PersistUser),
-      map((action: PersistUserAction) => action.user),
-      map((user: SecurityUser) => {
-        this.storage.save(this._userKey, user);
-        return new UserChangedAction(user);
-      })
-    );
+  public initializeUser$(): Observable<SecurityUser> {
+    const user = this.storage.load<SecurityUser>(this._userKey);
+    if (!user) {
+      return this.createGuestUser$().pipe(tap(guestUser => this.saveUser(guestUser)));
+    } else {
+      return of(user);
+    }
   }
 
-  @Effect()
-  public initializeUser$(): Observable<UserChangedAction> {
-    return this.actions$.pipe(
-      ofType(SecurityActionTypes.InitializeUser),
-      map(() => {
-        let user = this.storage.load<SecurityUser>(this._userKey);
-        if (!user) {
-          const guestDescription = this.translator.instant('shell.security.services.guest');
-          user = new SecurityUser(guestDescription, false, '');
+  public logIn$(loginRequest: LoginRequest): Observable<SecurityUser> {
+    return this.httpService.post<LoginResult>('login', loginRequest).pipe(
+      mergeMap(loginResult => {
+        if (loginResult.loginSuccess) {
+          const nameClaim = loginResult.claims.find(f => f.type.endsWith('name'));
+          const user = new SecurityUser();
+          user.userName = nameClaim!.value;
+          user.isAuthenticated = true;
+          user.token = loginResult.token;
+          return of(user);
+        } else {
+          return this.createGuestUser$();
         }
-
-        this.storage.save(this._userKey, user);
-        return new UserChangedAction(user);
       }));
   }
-}
 
+  public saveUser(user: SecurityUser): void {
+    this.storage.save(this._userKey, user);
+  }
+}

@@ -4,7 +4,8 @@ import { createFeatureSelector } from '@ngrx/store';
 
 import { initialSecurityState, ISecurityState } from '../security/state';
 
-export const selectRouterFeature = createFeatureSelector<IAppState, fromRouter.RouterReducerState<any>>('router');
+export const routerFeatureKey = 'router';
+export const selectRouterFeature = createFeatureSelector<IAppState, fromRouter.RouterReducerState<any>>(routerFeatureKey);
 
 export const {
   selectQueryParams,    // select the current route query params

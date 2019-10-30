@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDependenciesModule } from 'src/app/mat-deps';
 import { BusyIndicationModule } from 'src/app/shared/busy-indication/busy-indication.module';
@@ -10,8 +9,7 @@ import { RxFormsModule } from 'src/app/shared/rx-forms';
 
 import { LogInComponent } from './components/log-in/log-in.component';
 import { BearerAuthInterceptor } from './interceptors';
-import { AuthenticationService } from './services';
-import { securityFeatureKey, securityReducer } from './state/security.reducer';
+import { SecurityEffects } from './state/security.effects';
 
 @NgModule({
   declarations: [
@@ -22,8 +20,7 @@ import { securityFeatureKey, securityReducer } from './state/security.reducer';
     CommonModule,
     RxFormsModule,
     MatDependenciesModule,
-    StoreModule.forFeature(securityFeatureKey, securityReducer),
-    EffectsModule.forFeature([AuthenticationService]),
+    EffectsModule.forFeature([SecurityEffects]),
     TranslateModule
   ],
   providers: [
