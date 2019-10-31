@@ -17,7 +17,7 @@ export class FactsSelectionColDefBuilderService {
       .startBuilding<FactSelectionEntryVm>()
       .withColumn('id', 'ID', 'id-cell').bindingTo('id')
       .withColumn('creationDate', marker('common.created'), 'creation-cell').bindingTo('creationDateDescription')
-      .withColumn('existsInRun', marker('areas.learning-sessions.edit.services.inRun')).withTemplate(existsInRunTemplate)
+      .withColumn('existsInRun', marker('areas.learning-sessions.edit.services.inRun'), 'in-run-cell').withTemplate(existsInRunTemplate)
       .withColumn('questionText', marker('common.question')).bindingTo('questionText')
       .build();
   }

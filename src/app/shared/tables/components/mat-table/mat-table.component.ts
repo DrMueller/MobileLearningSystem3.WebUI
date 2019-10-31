@@ -65,6 +65,13 @@ export class MatTableComponent<T> implements OnInit {
     this.matTable.renderRows();
   }
 
+  public deselectRow(row: T): void {
+    if (this.isRowSelected(row)) {
+      this.selection.deselect(row);
+      this.selectionChanged.emit(this.selection.selected);
+    }
+  }
+
   public isRowSelected(row: T): boolean {
     return this.selection.isSelected(row);
   }
@@ -94,14 +101,7 @@ export class MatTableComponent<T> implements OnInit {
     }
   }
 
-  public deselectRow(row: T): void {
-    if (this.isRowSelected(row)) {
-      this.selection.deselect(row);
-      this.selectionChanged.emit(this.selection.selected);
-    }
-  }
-
-  public toggleAll(): void {
+  public toggleAllSelections(): void {
     if (this._rowSelectionType === TableRowSelectionType.Multi) {
       this._data.forEach(row => this.selection.toggle(row));
       this.selectionChanged.emit(this.selection.selected);
