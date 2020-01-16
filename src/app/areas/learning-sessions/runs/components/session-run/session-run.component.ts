@@ -17,7 +17,6 @@ import { LoadNextRunAction } from '../../../common/state/actions';
 })
 export class SessionRunComponent implements OnInit, OnDestroy {
   private _allFacts: Fact[];
-
   private _currentIndex: number;
   private _facts: Fact[];
   private _isAnswerShown: boolean;
@@ -79,6 +78,7 @@ export class SessionRunComponent implements OnInit, OnDestroy {
 
   public showNextFact(): void {
     this._currentIndex++;
+    this._isAnswerShown = false;
   }
 
   public showNextRun(): void {
@@ -87,10 +87,13 @@ export class SessionRunComponent implements OnInit, OnDestroy {
 
   public showPreviousFact(): void {
     this._currentIndex--;
+    this._isAnswerShown = false;
   }
 
   public shuffle(): void {
     this._facts = shuffleArray(this._facts);
+    this._currentIndex = 0;
+    this._isAnswerShown = false;
   }
 
   private alignFacts(): void {
@@ -98,7 +101,6 @@ export class SessionRunComponent implements OnInit, OnDestroy {
       this._facts = this._allFacts.filter(f => f.learningSessionIds.includes(this._sessionId));
       if (this._facts.length > 0) {
         this.shuffle();
-        this._currentIndex = 0;
       }
     }
   }
