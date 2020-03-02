@@ -1,11 +1,6 @@
 {
   "areas": {
     "facts": {
-      "common": {
-        "services": {
-          "allFactsDeleted": "Alle Fakten gelöscht"
-        }
-      },
       "edit": {
         "components": {
           "fact-edit": {

@@ -17,7 +17,6 @@ export class CultureInterceptor implements HttpInterceptor {
           'Accept-Language': currentLanguage
         }
       });
-
     }
 
     return next.handle(request);
