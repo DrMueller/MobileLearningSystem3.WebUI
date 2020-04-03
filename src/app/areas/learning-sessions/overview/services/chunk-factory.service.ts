@@ -21,7 +21,6 @@ export class ChunkFactoryService {
     this.store
       .pipe(select(selectAllFacts))
       .subscribe(sr => this._facts = sr);
-
   }
 
   public createChunks(chunkDefinition: ChunkDefinition): void {
@@ -29,7 +28,7 @@ export class ChunkFactoryService {
     const chunks = chunkArray(facts, chunkDefinition.chunkSize);
 
     for (let i = 0; i < chunks.length; i++) {
-      const chunk = chunks[0];
+      const chunk = chunks[i];
       const learningSession = new LearningSession();
       learningSession.factIds = chunk.map(f => f.id!);
       learningSession.sessionName = chunkDefinition.chunkName + ' ' + i;

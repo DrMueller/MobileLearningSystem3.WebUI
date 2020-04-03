@@ -27,10 +27,12 @@ export class LogInComponent implements OnInit {
   }
 
   public logIn(): void {
-    this.isLoggingIn = true;
-    const request = new LoginRequest();
-    this.formGroupBinder.bindToModel(this.formGroup, request);
-    this.store.dispatch(new LogInAction(request));
+    if (this.canLogIn && !this.isLoggingIn) {
+      this.isLoggingIn = true;
+      const request = new LoginRequest();
+      this.formGroupBinder.bindToModel(this.formGroup, request);
+      this.store.dispatch(new LogInAction(request));
+    }
   }
 
   public get canLogIn(): boolean {
