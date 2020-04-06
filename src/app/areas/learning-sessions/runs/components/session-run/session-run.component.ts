@@ -7,8 +7,8 @@ import { LoadAllFactsAction } from 'src/app/areas/facts/common/state/actions';
 import { selectRouteParam } from 'src/app/shell/app-state';
 import { shuffleArray } from 'src/app/utils/array-utils';
 
-import { ILearningSessionsState } from '../../../common/state';
-import { LoadNextRunAction } from '../../../common/state/actions';
+import { ILearningSessionsState, selectCurrentLearningSession } from '../../../common/state';
+import { LoadLearningSessionAction, LoadNextRunAction } from '../../../common/state/actions';
 
 @Component({
   selector: 'app-session-run',
@@ -22,6 +22,7 @@ export class SessionRunComponent implements OnInit, OnDestroy {
   private _isAnswerShown: boolean;
   private _sessionId: number;
   private _subscriptions: Subscription[];
+  private _sessionName: string;
 
   public constructor(
     private store: Store<ILearningSessionsState>) { }
@@ -53,14 +54,18 @@ export class SessionRunComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.store.dispatch(new LoadAllFactsAction());
 
+
     this._subscriptions = [
+      this.store.pipe(select(selectCurrentLearningSession)).subscribe(ls => {
+        this._sessionName = ls?.sessionName ?? 'Not loaded';
+      }),
       this.store.pipe(select(selectRouteParam('sessionid'))).subscribe(sessionId => {
         if (sessionId) {
           this._sessionId = parseInt(sessionId, 10);
+          this.store.dispatch(new LoadLearningSessionAction(this._sessionId));
           this.alignFacts();
         }
       }),
-
       this.store.pipe(select(selectAllFacts)).subscribe(facts => {
         this._allFacts = facts;
         this.alignFacts();
@@ -69,7 +74,7 @@ export class SessionRunComponent implements OnInit, OnDestroy {
   }
 
   public get runDescription(): string {
-    return `${this._currentIndex + 1} / ${this._facts.length}`;
+    return `${this._currentIndex + 1} / ${this._facts.length} (${this._sessionId} - ${this._sessionName})`;
   }
 
   public showAnswer(): void {
