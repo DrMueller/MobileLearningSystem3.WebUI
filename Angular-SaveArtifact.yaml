@@ -8,14 +8,7 @@ resources:
     ref: refs/heads/master
     endpoint: GitHub-DrMueller
 
-
 jobs:
-- steps:
-  - task: Npm@1
-    displayName: 'npm audit'
-    inputs:
-      command: custom
-      customCommand: 'audit --registry=https://registry.npmjs.org/'
 - template: AzureDevOps/BuildTemplates/Angular/Jobs/Build_And_Save_Artifact.yaml@ALMStuff
   parameters:
     ZipArtifacts: false
